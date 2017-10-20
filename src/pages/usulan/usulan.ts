@@ -262,7 +262,7 @@ export class UsulancreatePage {
       }
     );
   }
-  tombolkamera(options){
+  /*tombolkamera(options){
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
@@ -271,7 +271,7 @@ export class UsulancreatePage {
      }, (err) => {
       // Handle error
      });
-  }
+  }*/
 }
 
 // EDIT USULAN //
