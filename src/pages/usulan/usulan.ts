@@ -221,12 +221,12 @@ export class UsulancreatePage {
 
   constructor(private camera: Camera,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
-      const options: CameraOptions = {
+      /*const options: CameraOptions = {
         quality: 100,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE
-      }
+      }*/
     }
 
   
