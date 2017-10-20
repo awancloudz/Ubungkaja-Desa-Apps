@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar color="primary">
+    
+    <ion-title>
+      Usulan Baru
+    </ion-title>
+   
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list>
+    <ion-input type="hidden" [(ngModel)]="id"></ion-input>
+
+  <ion-item>
+    <ion-label floating>Tanggal</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" min="2017" max="2030" [(ngModel)]="tanggal"
+    monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des"
+    ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Judul Usulan</ion-label>
+    <ion-input type="text" [(ngModel)]="judul"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Kategori</ion-label>
+    <ion-select [(ngModel)]="id_kategori" interface="popover">
+      <ion-option value="1">Pembangunan Fasilitas</ion-option>
+      <ion-option value="2">Pemberdayaan Fasilitas</ion-option>
+      <ion-option value="3">Gangguan Lingkungan</ion-option>
+      <ion-option value="4">Bencana Alam</ion-option>
+      <ion-option value="5">Perencanaan Acara</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-input type="hidden" [(ngModel)]="id_warga" value="2"></ion-input>
+  <ion-input type="hidden" [(ngModel)]="foto" value="foto"></ion-input>
+
+  <ion-item>
+    <ion-label floating>Deskripsi Usulan</ion-label>
+    <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi"></ion-textarea>
+  </ion-item>
+
+  <ion-input type="hidden" [(ngModel)]="status" value="1"></ion-input>
+
+  <ion-fab bottom right>
+    
+    <ion-buttons>
+      <button ion-fab (click)="tambahusulan()" style="margin-bottom:10px">
+        <ion-icon name="checkmark"style="zoom:1.4"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons>
+      <button ion-fab (click)="tombolkamera(options)">
+        <ion-icon name="ios-camera-outline" style="zoom:1.6" ></ion-icon>
+      </button>
+    </ion-buttons>
+ 
+  </ion-fab>
+
+</ion-list>
+  
+</ion-content>

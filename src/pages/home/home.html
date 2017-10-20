@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -8,11 +8,15 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
+  <h3 *ngFor="let user of warga">Selamat Datang, {{ user.nama }}</h3>
+  <p align="justify">
+  Aplikasi Desa Terpadu ini diciptakan untuk memenuhi kebutuhan masyarakat desa agar bisa terhubung langsung dengan Kepala Desa beserta perangkatnya.
+  Salurkan aspirasi anda untuk mendukung pembangunan desa dengan mengusulkan rencana anggaran, maupun antrian pengurusan surat menyurat, bahkan pengaduan masalah secara online. Untuk memulai silahkan klik tombol di bawah ini.
   </p>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-row>
+    <ion-col style="text-align:center">
+    <button ion-button secondary menuToggle color="primary" round>Mulai</button>
+    </ion-col>
+  </ion-row>
 </ion-content>

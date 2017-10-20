@@ -1,0 +1,86 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    
+    <ion-title>Profile</ion-title>
+    
+    <ion-buttons end>
+      <button ion-button icon-only (click)="editprofile(item)">
+        <ion-icon name="ios-checkmark-circle-outline" style="zoom:1.4"></ion-icon>
+      </button>
+    </ion-buttons>
+  
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding >
+<ion-list>
+  
+  <ion-input type="hidden" [(ngModel)]="id"></ion-input>
+  
+  <ion-item>
+    <ion-label floating>No.KTP</ion-label>
+    <ion-input type="number" [(ngModel)]="noktp"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Nama</ion-label>
+    <ion-input type="text" [(ngModel)]="nama"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Alamat</ion-label>
+    <ion-textarea rows="5" cols="5" [(ngModel)]="alamat" ></ion-textarea>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Nama Dusun</ion-label>
+    <ion-select interface="popover" [(ngModel)]="id_dusun" >
+      <ion-option value="1">Dusun Dolog</ion-option>
+      <ion-option value="2">Dusun Tlogosari</ion-option>
+      <ion-option value="3">Dusun Sampokong</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Tanggal Lahir</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY"
+    monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des"
+     ></ion-datetime>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Jenis Kelamin</ion-label>
+    <ion-select interface="popover" [(ngModel)]="jenis_kelamin" >
+      <ion-option value="1">Laki-Laki</ion-option>
+      <ion-option value="2">Perempuan</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Nomor Telepon</ion-label>
+    <ion-input type="tel" [(ngModel)]="nomor_telepon"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Email</ion-label>
+    <ion-input type="email" [(ngModel)]="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="password"></ion-input>
+  </ion-item>
+
+</ion-list>
+</ion-content>

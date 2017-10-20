@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Detail Usulan
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>{{ item.judul }}</h3>
+  <p><i>Tanggal : {{ item.tanggal }}</i></p>
+  <p>{{ item.deskripsi }}</p>
+
+    <ion-fab bottom right>
+      <button ion-fab color="primary" style="margin-bottom:10px" (click)="tomboledit(item)">
+          <ion-icon name="create" style="zoom:1.3"></ion-icon>
+      </button>
+
+      <button ion-fab color="primary" (click)="tombolhapus(item)">
+        <ion-icon name="trash" style="zoom:1.3"></ion-icon>
+      </button>
+    </ion-fab>
+    
+</ion-content>

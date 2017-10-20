@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Usulan Saya</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="tomboldetail(item)" (press)="tomboltahan(item)">
+      {{ item.judul }}
+      <ion-badge *ngIf="item.status == 1" color="pending" item-end>Direview</ion-badge>
+      <ion-badge *ngIf="item.status == 2" color="primary" item-end>Diterima</ion-badge>
+      <ion-badge *ngIf="item.status == 3" color="danger" item-end>Ditolak</ion-badge>
+    </button>
+  </ion-list>
+
+  <ion-fab bottom right>
+    <button ion-fab (click)="tombolcreate()">
+      <ion-icon name="md-create" style="zoom:1.3"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

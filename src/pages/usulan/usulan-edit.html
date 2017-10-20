@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar color="primary">
+   
+    <ion-title>
+      Ubah Usulan
+    </ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<ion-list>
+  <ion-input type="hidden" [(ngModel)]="id" value="{{ item.id }}"></ion-input>
+  <ion-item>
+    <ion-label floating>Tanggal</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="tanggal" 
+    monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des"
+    ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Judul Usulan</ion-label>
+    <ion-input type="text" [(ngModel)]="judul" value="{{ item.judul }}"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Kategori</ion-label>
+    <ion-select [(ngModel)]="id_kategori" interface="popover">
+      <ion-option value="1" selected>Pembangunan Fasilitas</ion-option>
+      <ion-option value="2">Pemberdayaan Fasilitas</ion-option>
+      <ion-option value="3">Gangguan Lingkungan</ion-option>
+      <ion-option value="4">Bencana Alam</ion-option>
+      <ion-option value="5">Perencanaan Acara</ion-option>
+    </ion-select>
+  </ion-item>
+  
+  <ion-input type="hidden" [(ngModel)]="id_warga" value="{{ item.id_warga }}"></ion-input>
+  <ion-input type="hidden" [(ngModel)]="foto" value="{{ item.foto }}"></ion-input>
+
+  <ion-item>
+    <ion-label floating>Deskripsi Usulan</ion-label>
+    <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi" value="{{ item.deskripsi }}"></ion-textarea>
+  </ion-item>
+
+  <ion-input type="hidden" [(ngModel)]="status" value="{{ item.status }}"></ion-input>
+
+  <ion-fab bottom right >
+      <button ion-fab>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      
+      <ion-fab-list side="top" style="margin-left:-50px;bottom:-17px">
+          <button ion-fab (click)="tambahusulan()" color="primary">
+              <ion-icon name="checkmark"style="zoom:1.2"></ion-icon>
+          </button>
+      </ion-fab-list>
+      
+      <ion-fab-list side="left" >
+        <button ion-fab (click)="tombolkamera(options)" color="primary">
+        <ion-icon name="ios-camera-outline" style="zoom:1.4" ></ion-icon>
+      </button>
+      </ion-fab-list>
+
+      <ion-fab-list side="top">
+        <button ion-fab color="primary" (click)="tombolhapus(item)">
+          <ion-icon name="trash" style="zoom:1.1"></ion-icon>
+        </button>
+      </ion-fab-list>
+    </ion-fab>
+
+</ion-list>
+</ion-content>

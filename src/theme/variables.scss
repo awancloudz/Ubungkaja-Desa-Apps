@@ -34,9 +34,10 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #2ECC71,
+  secondary:  #3498db,
   danger:     #f53d3d,
+  pending:    #f39c12,
   light:      #f4f4f4,
   dark:       #222
 );

@@ -3,8 +3,14 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+// Mengambil halaman UTAMA yg sudah dibuat
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { UsulanPage } from '../pages/usulan/usulan';
+import { BeritaPage } from '../pages/berita/berita';
+import { ProfilePage } from '../pages/profile/profile';
+import { SettingPage } from '../pages/setting/setting';
+import { LoginPage} from '../pages/login/login';
+import { ProfildesaPage} from '../pages/profildesa/profildesa';
 
 @Component({
   templateUrl: 'app.html'
@@ -12,17 +18,22 @@ import { ListPage } from '../pages/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  //halaman yang pertama kali dipanggil
+  rootPage: any = LoginPage;
 
-  pages: Array<{title: string, component: any}>;
+  //Tipe Variable untuk tombol menu
+  pages: Array<{title: string, icon: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
+    // Value Variable dari tombol menu
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Home', icon: "home", component: HomePage },
+      { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
+      { title: 'Berita Acara',  icon: "md-calendar", component: BeritaPage },
+      { title: 'Profile',  icon: "person", component: ProfilePage },
+      { title: 'Logout',  icon: "power", component: SettingPage },
     ];
 
   }
