@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { NavController, NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
 //Tambahkan Provider
 import { UsulanserviceProvider } from '../../providers/usulanservice/usulanservice';
@@ -218,15 +217,10 @@ export class UsulancreatePage {
   foto:String;
   deskripsi:Text;
   status:Number;
-
-  constructor(private camera: Camera,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
+  
+  constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
-      const options: CameraOptions = {
-        quality: 100,
-        destinationType: this.camera.DestinationType.DATA_URL,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE
-      }
+    
     }
 
   
@@ -262,16 +256,7 @@ export class UsulancreatePage {
       }
     );
   }
-  tombolkamera(options){
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      console.log(base64Image);
-     }, (err) => {
-      // Handle error
-     });
-  }
+  
 }
 
 // EDIT USULAN //

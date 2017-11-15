@@ -12,7 +12,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ProfileserviceProvider {
   private items:ProfileArray[]=[];
-  private url:string="http://desa.indoneseo.com/public/api/warga/";
+  private url:string="http://192.168.43.20:8000/api/warga/";
+  //private url:string="http://desa.indoneseo.com/public/api/warga/";
   constructor(public _http: Http) {
   }
 

@@ -19,11 +19,12 @@ export class LoginserviceProvider {
   //Deklarasi variabel
   private items:LoginArray[]=[];
   //Memanggil URL Api
-  private url:string="http://desa.indoneseo.com/public/api/loginuser/";
+  private url:string="http://192.168.43.20:8000/api/loginuser/";
+  //private url:string="http://desa.indoneseo.com/public/api/loginuser/";
   constructor(public _http: Http) {
   }
 
-//Tambah usulan baru
+//Tambah login
 tambahlogin(item:LoginArray){
   return this._http.get(this.url+item.noktp)
   .map((response:Response)=>response.json());
