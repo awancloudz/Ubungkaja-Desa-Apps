@@ -31,7 +31,7 @@ export class MyApp {
     this.pages = [
       { title: 'Home', icon: "home", component: HomePage },
       { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
-      { title: 'Berita Acara',  icon: "md-calendar", component: BeritaPage },
+      { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
       { title: 'Profile',  icon: "person", component: ProfilePage },
       { title: 'Logout',  icon: "power", component: SettingPage },
     ];

@@ -27,11 +27,7 @@
   <ion-item>
     <ion-label floating>Kategori</ion-label>
     <ion-select [(ngModel)]="id_kategori" interface="popover">
-      <ion-option value="1">Pembangunan Fasilitas</ion-option>
-      <ion-option value="2">Pemberdayaan Fasilitas</ion-option>
-      <ion-option value="3">Gangguan Lingkungan</ion-option>
-      <ion-option value="4">Bencana Alam</ion-option>
-      <ion-option value="5">Perencanaan Acara</ion-option>
+      <ion-option ion-item *ngFor="let item of items.koleksi2" value="{{ item.id }}">{{ item.namakategori }}</ion-option>
     </ion-select>
   </ion-item>
 

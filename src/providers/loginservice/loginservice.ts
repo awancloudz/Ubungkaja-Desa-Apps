@@ -19,8 +19,8 @@ export class LoginserviceProvider {
   //Deklarasi variabel
   private items:LoginArray[]=[];
   //Memanggil URL Api
-  private url:string="http://192.168.43.20:8000/api/loginuser/";
-  //private url:string="http://desa.indoneseo.com/public/api/loginuser/";
+  private url:string="http://192.168.1.37:8000/api/loginuser/";
+  //private url:string="http://aplikasi.indoneseo.com/public/api/loginuser/";
   constructor(public _http: Http) {
   }
 

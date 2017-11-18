@@ -18,6 +18,14 @@ export class UsulanPage {
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController) {
   
   }
+  doRefresh(refresher) {
+    //console.log('Begin async operation', refresher);
+    setTimeout(() => {
+      this.ionViewDidLoad();
+      //console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
+  }
 
   //Tampil data awal
   ionViewDidLoad() {
@@ -75,8 +83,9 @@ export class UsulanPage {
                         duration:2000,
                         position:'top'
                         });
-                        this.items.splice(this.items.indexOf(item),1);
+                        //this.items.splice(this.items.indexOf(item),1);
                         mes.present();
+                        this.nav.setRoot(UsulanPage);
                       }
                     );
                     //End Hapus Susulan
@@ -179,7 +188,7 @@ export class UsulandetailPage {
                 duration:2000,
                 position:'top'
                 });
-                this.items.splice(this.items.indexOf(item),1);
+                //this.items.splice(this.items.indexOf(item),1);
                 mes.present();
                 this.nav.setRoot(UsulanPage);
               }
@@ -223,7 +232,28 @@ export class UsulancreatePage {
     
     }
 
-  
+  //Tampil data awal
+  ionViewDidLoad() {
+    //Loading bar
+    let loadingdata=this.loadincontroller.create({
+      content:"Loading..."
+    });
+    loadingdata.present();
+    //Tampilkan data dari server
+    this.usulanservice.tampilkanusulan().subscribe(
+      //Jika data sudah berhasil di load
+      (data:UsulanArray[])=>{
+        this.items=data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+        loadingdata.dismiss();
+      }
+    );
+  }
   //Simpan Data Usulan
   tambahusulan(){
     //Pemberitahuan
@@ -241,10 +271,7 @@ export class UsulancreatePage {
     this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.foto,this.deskripsi,this.status))
     .subscribe(
       (data:UsulanArray)=>{
-        //Kirim Variable UsulanArray ke Usulanservice.ts
-        if(data!=null){
-          this.items.push(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.foto,this.deskripsi,this.status));
-        }
+        //Push
         loadingdata.dismiss();
         this.nav.setRoot(UsulanPage);
       },
@@ -281,6 +308,28 @@ export class UsulaneditPage {
     this.item = params.data.item;
   }
 
+  //Tampil data awal
+  ionViewDidLoad() {
+    //Loading bar
+    let loadingdata=this.loadincontroller.create({
+      content:"Loading..."
+    });
+    loadingdata.present();
+    //Tampilkan data dari server
+    this.usulanservice.tampilkanusulan().subscribe(
+      //Jika data sudah berhasil di load
+      (data:UsulanArray[])=>{
+        this.items=data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+        loadingdata.dismiss();
+      }
+    );
+  }
   editusulan(lama:UsulanArray,baru:UsulanArray){
     //Pemberitahuan
     let alert = this.alertCtrl.create({

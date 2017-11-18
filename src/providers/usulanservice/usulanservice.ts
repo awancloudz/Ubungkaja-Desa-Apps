@@ -20,8 +20,8 @@ export class UsulanserviceProvider {
   //Deklarasi variabel
   private items:UsulanArray[]=[];
   //Memanggil URL Api
-  private url:string="http://192.168.43.20:8000/api/usulan";
-  //private url:string="http://desa.indoneseo.com/public/api/usulan";
+  private url:string="http://192.168.1.37:8000/api/usulan";
+  //private url:string="http://aplikasi.indoneseo.com/public/api/usulan";
   constructor(public _http: Http) {
   }
 
@@ -31,7 +31,7 @@ export class UsulanserviceProvider {
    return this._http.get(this.url)
    .map((response:Response)=>response.json());
   }
-
+  
   //Tambah usulan baru
   tambahusulan(item:UsulanArray){
     let body = JSON.stringify(item);
