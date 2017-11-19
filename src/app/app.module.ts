@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
-import { Camera } from '@ionic-native/camera';
+//import { Camera } from '@ionic-native/camera';
+import { GoogleMaps } from '@ionic-native/google-maps';
 //Mengambil modul http
 import { HttpModule} from '@angular/http';
 
@@ -25,7 +26,7 @@ import { UsulanserviceProvider } from '../providers/usulanservice/usulanservice'
 import { BeritaserviceProvider } from '../providers/beritaservice/beritaservice';
 import { ProfileserviceProvider } from '../providers/profileservice/profileservice';
 import { LoginserviceProvider } from '../providers/loginservice/loginservice';
-
+ 
 @NgModule({
   //Deklarasi variabel page
   declarations: [
@@ -65,7 +66,7 @@ import { LoginserviceProvider } from '../providers/loginservice/loginservice';
   ],
   //Service Provider
   providers: [
-    Camera,
+    //Camera,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -73,6 +74,7 @@ import { LoginserviceProvider } from '../providers/loginservice/loginservice';
     BeritaserviceProvider,
     ProfileserviceProvider,
     LoginserviceProvider,
+    GoogleMaps,
   ]
 })
 export class AppModule {}

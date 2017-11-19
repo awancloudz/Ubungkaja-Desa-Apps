@@ -32,6 +32,16 @@
   
   <ion-input type="hidden" [(ngModel)]="id_warga" value="{{ item.id_warga }}"></ion-input>
   <ion-input type="hidden" [(ngModel)]="foto" value="{{ item.foto }}"></ion-input>
+  <div style="height: 100%;background-color: rgba(0, 0, 0, 0);" id="map_canvas"></div> 
+  <ion-item>
+    <ion-label floating>Volume</ion-label>
+    <ion-input type="text" [(ngModel)]="volume"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Satuan</ion-label>
+    <ion-input type="text" [(ngModel)]="satuan"></ion-input>
+  </ion-item>
 
   <ion-item>
     <ion-label floating>Deskripsi Usulan</ion-label>

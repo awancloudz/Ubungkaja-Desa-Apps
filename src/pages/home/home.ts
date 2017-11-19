@@ -8,7 +8,7 @@ import { Storage } from '@ionic/storage';
 })
 export class HomePage {
   warga: Array<{nama: string}>;
-  constructor(public navCtrl: NavController,private storage: Storage) {
+  constructor( public navCtrl: NavController,private storage: Storage) {
 
   }
   ionViewDidLoad(){
@@ -18,4 +18,5 @@ export class HomePage {
       ];
     });
   }
+  
 }

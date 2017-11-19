@@ -20,8 +20,8 @@ export class UsulanserviceProvider {
   //Deklarasi variabel
   private items:UsulanArray[]=[];
   //Memanggil URL Api
-  private url:string="http://192.168.1.37:8000/api/usulan";
-  //private url:string="http://aplikasi.indoneseo.com/public/api/usulan";
+  //private url:string="http://192.168.1.37:8000/api/usulan";
+  private url:string="http://indoneseo.com/desa/public/api/usulan";
   constructor(public _http: Http) {
   }
 

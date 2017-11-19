@@ -4,6 +4,8 @@ import { NavController, NavParams, Platform, ActionSheetController, LoadingContr
 import { UsulanserviceProvider } from '../../providers/usulanservice/usulanservice';
 //Tambahkan Variabel Global
 import { UsulanArray } from '../../pages/usulan/usulanarray';
+//Google Maps
+import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
 
 // INDEX USULAN //
 @Component({
@@ -132,6 +134,7 @@ export class UsulanPage {
 
 export class UsulandetailPage {
   item;
+  map: GoogleMap;
   items:UsulanArray[]=[];
   id:Number;
   tanggal:Date;
@@ -142,7 +145,7 @@ export class UsulandetailPage {
   deskripsi:Text;
   status:Number;
 
-  constructor (params: NavParams,public nav: NavController,
+  constructor (private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
     this.item = params.data.item;
   }
@@ -167,6 +170,45 @@ export class UsulandetailPage {
         loadingdata.dismiss();
       }
     );
+    this.loadMap();
+  }
+  loadMap() {
+    let mapOptions: GoogleMapOptions = {
+      camera: {
+        target: {
+          lat: 43.0741904,
+          lng: -89.3809802
+        },
+        zoom: 18,
+        tilt: 30
+      }
+    };
+
+    this.map = this.googleMaps.create('map_canvas', mapOptions);
+
+    // Wait the MAP_READY before using any methods.
+    this.map.one(GoogleMapsEvent.MAP_READY)
+      .then(() => {
+        console.log('Map is ready!');
+
+        // Now you can use all methods safely.
+        this.map.addMarker({
+            title: 'Ionic',
+            icon: 'blue',
+            animation: 'DROP',
+            position: {
+              lat: 43.0741904,
+              lng: -89.3809802
+            }
+          })
+          .then(marker => {
+            marker.on(GoogleMapsEvent.MARKER_CLICK)
+              .subscribe(() => {
+                alert('clicked');
+              });
+          });
+
+      });
   }
   tomboledit(item){
     this.nav.push(UsulaneditPage, { item: item });
