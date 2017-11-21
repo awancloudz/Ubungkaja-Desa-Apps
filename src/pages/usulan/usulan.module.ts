@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { UsulanPage } from './usulan';
+import { UsulanPage,UsulandetailPage,UsulancreatePage,UsulaneditPage } from './usulan';
 
 @NgModule({
   declarations: [
-    UsulanPage,
+    UsulanPage,UsulandetailPage,UsulancreatePage,UsulaneditPage
   ],
   imports: [
     IonicPageModule.forChild(UsulanPage),

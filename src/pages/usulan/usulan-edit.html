@@ -32,7 +32,7 @@
   
   <ion-input type="hidden" [(ngModel)]="id_warga" value="{{ item.id_warga }}"></ion-input>
   <ion-input type="hidden" [(ngModel)]="foto" value="{{ item.foto }}"></ion-input>
-  <div style="height: 100%;background-color: rgba(0, 0, 0, 0);" id="map_canvas"></div> 
+   
   <ion-item>
     <ion-label floating>Volume</ion-label>
     <ion-input type="text" [(ngModel)]="volume"></ion-input>
@@ -50,29 +50,28 @@
 
   <ion-input type="hidden" [(ngModel)]="status" value="{{ item.status }}"></ion-input>
 
-  <ion-fab bottom right >
-      <button ion-fab>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      
-      <ion-fab-list side="top" style="margin-left:-50px;bottom:-17px">
-          <button ion-fab (click)="editusulan()" color="primary">
-              <ion-icon name="checkmark"style="zoom:1.2"></ion-icon>
-          </button>
-      </ion-fab-list>
-      
-      <ion-fab-list side="left" >
-        <button ion-fab (click)="tombolkamera(options)" color="primary">
-        <ion-icon name="ios-camera-outline" style="zoom:1.4" ></ion-icon>
-      </button>
-      </ion-fab-list>
-
-      <ion-fab-list side="top">
-        <button ion-fab color="primary" (click)="tombolhapus(item)">
-          <ion-icon name="trash" style="zoom:1.1"></ion-icon>
-        </button>
-      </ion-fab-list>
-    </ion-fab>
-
 </ion-list>
+  <ion-fab bottom right >
+    <button ion-fab>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    
+    <ion-fab-list side="top" style="margin-left:-50px;bottom:-17px">
+        <button ion-fab (click)="editusulan()" color="primary">
+            <ion-icon name="checkmark"style="zoom:1.2"></ion-icon>
+        </button>
+    </ion-fab-list>
+    
+    <ion-fab-list side="left" >
+      <button ion-fab (click)="tombolkamera(options)" color="primary">
+      <ion-icon name="ios-camera-outline" style="zoom:1.4" ></ion-icon>
+    </button>
+    </ion-fab-list>
+
+    <ion-fab-list side="top">
+      <button ion-fab color="primary" (click)="tombolhapus(item)">
+        <ion-icon name="trash" style="zoom:1.1"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

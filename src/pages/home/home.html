@@ -3,12 +3,12 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Desa Ubung Kaja</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3 *ngFor="let user of warga">Selamat Datang, {{ user.nama }}</h3>
+  <!--<h3 *ngFor="let user of warga">Selamat Datang, {{ user.nama }}</h3>
   <p align="justify">
   Aplikasi Desa Terpadu ini diciptakan untuk memenuhi kebutuhan masyarakat desa agar bisa terhubung langsung dengan Kepala Desa beserta perangkatnya.
   Salurkan aspirasi anda untuk mendukung pembangunan desa dengan mengusulkan rencana anggaran, maupun antrian pengurusan surat menyurat, bahkan pengaduan masalah secara online. Untuk memulai silahkan klik tombol di bawah ini.
@@ -18,5 +18,35 @@
     <ion-col style="text-align:center">
     <button ion-button secondary menuToggle color="primary" round>Mulai</button>
     </ion-col>
-  </ion-row>
+  </ion-row>-->
+  <ion-item><b>Usulan Warga Terbaru</b></ion-item>
+  <ion-card class="adv-map">
+    <div style="position: relative">
+      <img src="assets/img/desa.jpg">
+      <ion-fab right top>
+        <button ion-fab color="primary">
+          <ion-icon name="md-eye"></ion-icon>
+        </button>
+      </ion-fab>
+    </div>
+    <ion-item>
+      <ion-icon color="subtle" large item-start name='ios-create-outline'></ion-icon>
+      <h2>Judul Usulan</h2>
+      <p>Pembangunan Jalan Desa, Dusun A, Gang I</p>
+    </ion-item>
+    <ion-item>
+      <ion-icon color="subtle" large item-start name='ios-navigate-outline'></ion-icon>
+      <h2>Lokasi</h2>
+      <p>Jalan Dusun Kaja, I No.5</p>
+    </ion-item>
+    <ion-item actions>
+      <span ion-text item-start color="subtle">Diusulkan Oleh</span>
+      <span ion-text item-start color="secondary" class="item-bold">Awan A</span>
+      <button ion-button color="secondary" clear item-end icon-start>
+        Detail &nbsp;
+        <ion-icon name='ios-arrow-forward'></ion-icon>
+      </button>
+    </ion-item>
+  
+  </ion-card>
 </ion-content>

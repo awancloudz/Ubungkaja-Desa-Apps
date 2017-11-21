@@ -1,8 +1,8 @@
+import { Storage } from '@ionic/storage';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 // Mengambil halaman UTAMA yg sudah dibuat
 import { HomePage } from '../pages/home/home';
 import { UsulanPage } from '../pages/usulan/usulan';
@@ -11,6 +11,8 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SettingPage } from '../pages/setting/setting';
 import { LoginPage} from '../pages/login/login';
 import { ProfildesaPage} from '../pages/profildesa/profildesa';
+import { PengaduanPage} from '../pages/pengaduan/pengaduan';
+import { AntrianPage} from '../pages/antrian/antrian';
 
 @Component({
   templateUrl: 'app.html'
@@ -23,8 +25,9 @@ export class MyApp {
 
   //Tipe Variable untuk tombol menu
   pages: Array<{title: string, icon: string, component: any}>;
+  warga: Array<{nama: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(private storage: Storage,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // Value Variable dari tombol menu
@@ -32,10 +35,16 @@ export class MyApp {
       { title: 'Home', icon: "home", component: HomePage },
       { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
       { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
+      { title: 'Pengaduan Saya',  icon: "ios-paper-plane", component: PengaduanPage },
+      { title: 'Antrian',  icon: "ios-paper-outline", component: AntrianPage },
       { title: 'Profile',  icon: "person", component: ProfilePage },
       { title: 'Logout',  icon: "power", component: SettingPage },
     ];
-
+    this.storage.get('nama_warga').then((val) => {
+      this.warga = [
+        { nama: val },
+      ];
+    });
   }
 
   initializeApp() {

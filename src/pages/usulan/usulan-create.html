@@ -34,6 +34,11 @@
   <ion-input type="hidden" [(ngModel)]="id_warga" value="1"></ion-input>
   <ion-input type="hidden" [(ngModel)]="foto" value="foto"></ion-input>
 
+  <!--<ion-item>   
+    <ion-label floating>Pilih Lokasi</ion-label> 
+    <ion-input (click)="showAddressModal()" [(ngModel)]="address.place"type="text"></ion-input>
+  </ion-item>-->
+
   <ion-item>
     <ion-label floating>Volume</ion-label>
     <ion-input type="text" [(ngModel)]="volume"></ion-input>
@@ -50,9 +55,8 @@
   </ion-item>
 
   <ion-input type="hidden" [(ngModel)]="status" value="1"></ion-input>
-
+</ion-list>
   <ion-fab bottom right>
-    
     <ion-buttons>
       <button ion-fab (click)="tambahusulan()" style="margin-bottom:10px">
         <ion-icon name="checkmark"style="zoom:1.4"></ion-icon>
@@ -64,9 +68,5 @@
         <ion-icon name="ios-camera-outline" style="zoom:1.6" ></ion-icon>
       </button>
     </ion-buttons>
- 
   </ion-fab>
-
-</ion-list>
-  
 </ion-content>

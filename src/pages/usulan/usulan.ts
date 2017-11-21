@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
+import { NavController, ModalController,NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
 //Tambahkan Provider
 import { UsulanserviceProvider } from '../../providers/usulanservice/usulanservice';
 //Tambahkan Variabel Global
@@ -176,16 +176,16 @@ export class UsulandetailPage {
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
-          lat: 43.0741904,
-          lng: -89.3809802
+          lat: -8.6168606,
+          lng: 115.1797272
         },
         zoom: 18,
         tilt: 30
       }
     };
-
+    
     this.map = this.googleMaps.create('map_canvas', mapOptions);
-
+    
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then(() => {
@@ -193,18 +193,23 @@ export class UsulandetailPage {
 
         // Now you can use all methods safely.
         this.map.addMarker({
-            title: 'Ionic',
+            draggable: true,
+            title: 'Lokasi',
             icon: 'blue',
             animation: 'DROP',
             position: {
-              lat: 43.0741904,
-              lng: -89.3809802
+              lat: -8.6168606,
+              lng: 115.1797272
+            },
+            size:	{ 
+               width: 200,
+               height: 200 
             }
           })
           .then(marker => {
             marker.on(GoogleMapsEvent.MARKER_CLICK)
               .subscribe(() => {
-                alert('clicked');
+                //alert('clicked');
               });
           });
 
@@ -269,9 +274,9 @@ export class UsulancreatePage {
   deskripsi:Text;
   status:Number;
   
-  constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
+  constructor(private modalCtrl:ModalController,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
-    
+
     }
 
   //Tampil data awal
@@ -296,6 +301,7 @@ export class UsulancreatePage {
       }
     );
   }
+  
   //Simpan Data Usulan
   tambahusulan(){
     //Pemberitahuan
