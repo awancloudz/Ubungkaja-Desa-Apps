@@ -11,7 +11,7 @@ import { HttpModule} from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { UsulanPage,UsulandetailPage,UsulancreatePage,UsulaneditPage } from '../pages/usulan/usulan';
-import { BeritaPage } from '../pages/berita/berita';
+import { BeritaPage,BeritaDusunPage } from '../pages/berita/berita';
 import { PengaduanPage } from '../pages/pengaduan/pengaduan';
 import { AntrianPage } from '../pages/antrian/antrian';
 import { ProfilePage } from '../pages/profile/profile';
@@ -77,6 +77,7 @@ import { ProfildesaPageModule } from '../pages/profildesa/profildesa.module';
     UsulancreatePage,
     UsulaneditPage,
     BeritaPage,
+    BeritaDusunPage,
     ProfilePage,
     SettingPage,
     LoginPage,

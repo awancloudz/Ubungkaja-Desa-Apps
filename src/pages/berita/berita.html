@@ -11,21 +11,17 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     
-    <ion-title>Hasil Musyawarah</ion-title>
+    <ion-title>Hasil Musyawarah - Tiap Dusun</ion-title>
   
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item-group *ngFor="let item of items">
-    <ion-item-divider color="light">
-      <b>Tahap {{ item.id }}</b>
-    </ion-item-divider>
-    
-    <ion-item>{{ item.tahap }}</ion-item>
-  
-    <ion-item>Tanggal {{ item.tanggalmulai}} - {{ item.tanggalselesai }}</ion-item>
-  </ion-item-group>
-  
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="tomboldetail(item)">
+      {{ item.nama }}
+      <ion-icon name='ios-arrow-forward' item-end></ion-icon>
+    </button>
+  </ion-list>
 </ion-content>
