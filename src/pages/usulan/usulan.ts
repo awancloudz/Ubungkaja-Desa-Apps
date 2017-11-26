@@ -6,6 +6,9 @@ import { UsulanserviceProvider } from '../../providers/usulanservice/usulanservi
 import { UsulanArray } from '../../pages/usulan/usulanarray';
 //Google Maps
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
+//Camera
+import {Camera, CameraOptions} from '@ionic-native/camera';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 // INDEX USULAN //
 @Component({
@@ -264,6 +267,11 @@ export class UsulandetailPage {
   entryComponents:[ UsulanPage ],
 })
 export class UsulancreatePage {
+  //Camera
+  public photos : any;
+  public imageURI:any;
+  public imageFileName:any;
+
   items:UsulanArray[]=[];
   id:Number;
   tanggal:Date;
@@ -274,10 +282,97 @@ export class UsulancreatePage {
   deskripsi:Text;
   status:Number;
   
-  constructor(private modalCtrl:ModalController,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
+  constructor(
+    private transfer: FileTransfer,
+    private camera: Camera,
+    private modalCtrl:ModalController,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
 
     }
+  
+  ngOnInit() {
+    this.photos = [];
+  }
+  deletePhoto(index) {
+    let confirm = this.alertCtrl.create({
+        title: 'Yakin Menghapus Foto Ini ?',
+        message: '',
+        buttons: [
+          {
+            text: 'Tidak',
+            handler: () => {
+              console.log('Disagree clicked');
+            }
+          }, {
+            text: 'Ya',
+            handler: () => {
+              console.log('Agree clicked');
+              this.photos.splice(index, 1);
+            }
+          }
+        ]
+      });
+    confirm.present();
+  }
+
+  takePhoto() {
+    const options : CameraOptions = {
+      quality: 25, // picture quality
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    }
+    this.camera.getPicture(options).then((imageData) => {
+        this.imageURI = imageData;
+        this.photos.push(this.imageURI);
+        this.photos.reverse();
+        this.uploadFile();
+      }, (err) => {
+        console.log(err);
+        this.presentToast(err);
+      });
+  }
+
+  uploadFile() {
+    let loader = this.loadincontroller.create({
+      content: "Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+  
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: 'image.jpg',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: {}
+    }
+  
+    fileTransfer.upload(this.imageURI, 'http://indoneseo.com/desa/public/api/upload', options)
+      .then((data) => {
+      this.imageFileName = "upload.jpg";
+      loader.dismiss();
+      this.presentToast("Upload Sukses");
+    }, (err) => {
+      console.log(err);
+      loader.dismiss();
+      this.presentToast(err);
+    });
+  }
+
+  presentToast(msg) {
+    let toast = this._toast.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+  
+    toast.onDidDismiss(() => {
+      console.log('Tutup');
+    });
+  
+    toast.present();
+  }
 
   //Tampil data awal
   ionViewDidLoad() {

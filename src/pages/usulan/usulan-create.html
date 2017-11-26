@@ -8,7 +8,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="card-background-page">
 <ion-list>
     <ion-input type="hidden" [(ngModel)]="id"></ion-input>
 
@@ -39,6 +39,13 @@
     <ion-input (click)="showAddressModal()" [(ngModel)]="address.place"type="text"></ion-input>
   </ion-item>-->
 
+  <ion-col col-6 *ngFor="let photo of photos; let id = index">
+    <ion-card class="block">
+      <ion-icon name="close" class="deleteIcon" (click)="deletePhoto(id)"></ion-icon>
+      <img [src]="photo" *ngIf="photo" />
+    </ion-card>
+  </ion-col>
+
   <ion-item>
     <ion-label floating>Volume</ion-label>
     <ion-input type="text" [(ngModel)]="volume"></ion-input>
@@ -64,7 +71,7 @@
     </ion-buttons>
 
     <ion-buttons>
-      <button ion-fab (click)="tombolkamera(options)">
+      <button ion-fab (click)="takePhoto()">
         <ion-icon name="ios-camera-outline" style="zoom:1.6" ></ion-icon>
       </button>
     </ion-buttons>

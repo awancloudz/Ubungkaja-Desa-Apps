@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
-//import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Camera} from '@ionic-native/camera';
 import { GoogleMaps } from '@ionic-native/google-maps';
 //Mengambil modul http
 import { HttpModule} from '@angular/http';
@@ -96,6 +98,9 @@ import { ProfildesaPageModule } from '../pages/profildesa/profildesa.module';
     ProfileserviceProvider,
     LoginserviceProvider,
     GoogleMaps,
+    File,
+    FileTransfer,
+    Camera,
   ]
 })
 export class AppModule {}
