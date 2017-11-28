@@ -15,8 +15,14 @@
   <p *ngIf="item.id_kategori == 4"><b>Kategori :</b> Pemberdayaan Masyarakat</p>
   <p><b>Lokasi</b></p>
   <div style="height: 50%;background-color: rgba(0, 0, 0, 0);" id="map_canvas"></div>
-  <p><b>Volume :</b> </p>
-  <p><b>Satuan :</b> </p>
+  <p><b>Foto</b></p>
+  <ion-slides pager>
+    <ion-slide *ngFor="let photo of item.fotousulan">
+      <img style="height: 70vh; width: auto; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fotoupload/{{photo.foto}}" class="slide-image">
+    </ion-slide>
+  </ion-slides>
+  <p><b>Volume : </b> {{ item.volume }}</p>
+  <p><b>Satuan : </b> {{ item.satuan }}</p>
   <p><b>Detail Usulan</b> </p>
   <p>{{ item.deskripsi }}</p>  
 </ion-content>

@@ -78,6 +78,7 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <allow-navigation href="http://192.168.1.4:8100" />
+    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="cordova-plugin-console" spec="1.0.5" />
     <plugin name="cordova-plugin-device" spec="1.1.4" />
@@ -88,7 +89,7 @@
     <plugin name="cordova-plugin-googlemaps" spec="^2.1.1">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAoEA6pGHkDxYoTX2wFmQAE5X1Il5XtOc0" />
     </plugin>
-    <engine name="android" spec="~6.3.0" />
     <plugin name="cordova-plugin-file" spec="^5.0.0" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.0" />
+    <plugin name="cordova-plugin-geolocation" spec="^3.0.0" />
 </widget>

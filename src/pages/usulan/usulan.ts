@@ -144,7 +144,6 @@ export class UsulandetailPage {
   judul:String;
   id_kategori:Number;
   id_warga:Number;
-  foto:String;
   deskripsi:Text;
   status:Number;
 
@@ -278,10 +277,11 @@ export class UsulancreatePage {
   judul:String;
   id_kategori:Number;
   id_warga:Number;
-  foto:String;
   deskripsi:Text;
   status:Number;
-  
+  volume:String;
+  satuan:String;
+
   constructor(
     private transfer: FileTransfer,
     private camera: Camera,
@@ -342,13 +342,15 @@ export class UsulancreatePage {
   
     let options: FileUploadOptions = {
       fileKey: 'file',
+      params: {'id_warga' : this.id_warga },
       fileName: 'image.jpg',
       chunkedMode: false,
       mimeType: "image/jpeg",
       headers: {}
     }
   
-    fileTransfer.upload(this.imageURI, 'http://indoneseo.com/desa/public/api/upload', options)
+    fileTransfer.upload(this.imageURI, 'http://forkomperbekelbali.com/desa/public/api/upload', options)
+    //fileTransfer.upload(this.imageURI, 'http://192.168.43.19:8000/api/upload', options)
       .then((data) => {
       this.imageFileName = "upload.jpg";
       loader.dismiss();
@@ -411,7 +413,7 @@ export class UsulancreatePage {
     });
     loadingdata.present();
     //Mengambil value dari input field untuk dimasukkan ke UsulanArray
-    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.foto,this.deskripsi,this.status))
+    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan))
     .subscribe(
       (data:UsulanArray)=>{
         //Push
@@ -443,9 +445,12 @@ export class UsulaneditPage {
   judul:String;
   id_kategori:Number;
   id_warga:Number;
-  foto:String;
   deskripsi:Text;
   status:Number;
+  volume:String;
+  satuan:String;
+
+
   constructor(params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
     this.item = params.data.item;
@@ -486,7 +491,7 @@ export class UsulaneditPage {
     });
     loadingdata.present();
     //Mengambil value dari edit field untuk dimasukkan ke UsulanArray
-    this.usulanservice.editusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.foto,this.deskripsi,this.status))
+    this.usulanservice.editusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan))
     .subscribe(
       (data:any)=>{
         //Kirim Variable UsulanArray ke Usulanservice.ts

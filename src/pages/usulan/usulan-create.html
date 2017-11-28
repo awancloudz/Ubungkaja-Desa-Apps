@@ -32,19 +32,29 @@
   </ion-item>
 
   <ion-input type="hidden" [(ngModel)]="id_warga" value="1"></ion-input>
-  <ion-input type="hidden" [(ngModel)]="foto" value="foto"></ion-input>
 
-  <!--<ion-item>   
-    <ion-label floating>Pilih Lokasi</ion-label> 
-    <ion-input (click)="showAddressModal()" [(ngModel)]="address.place"type="text"></ion-input>
-  </ion-item>-->
+  <br> &nbsp;&nbsp;
+  <button ion-button icon-left>
+    <ion-icon name="pin"></ion-icon>
+    Lokasi
+  </button>
 
-  <ion-col col-6 *ngFor="let photo of photos; let id = index">
-    <ion-card class="block">
-      <ion-icon name="close" class="deleteIcon" (click)="deletePhoto(id)"></ion-icon>
-      <img [src]="photo" *ngIf="photo" />
-    </ion-card>
-  </ion-col>
+  <ion-item>
+    Foto
+    <ion-slides pager>
+      <ion-slide *ngFor="let photo of photos; let id = index">
+        <ion-toolbar>
+          <ion-buttons end>
+            <button ion-button color="primary" (click)="deletePhoto(id)">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-toolbar>
+        <img [src]="photo" class="slide-image" style="height: 70vh; width: auto; margin: auto; display: block;"/>
+        <ion-toolbar></ion-toolbar>
+      </ion-slide>
+    </ion-slides>
+  </ion-item>
 
   <ion-item>
     <ion-label floating>Volume</ion-label>
@@ -66,7 +76,7 @@
   <ion-fab bottom right>
     <ion-buttons>
       <button ion-fab (click)="tambahusulan()" style="margin-bottom:10px">
-        <ion-icon name="checkmark"style="zoom:1.4"></ion-icon>
+        <ion-icon name="checkmark" style="zoom:1.4"></ion-icon>
       </button>
     </ion-buttons>
 

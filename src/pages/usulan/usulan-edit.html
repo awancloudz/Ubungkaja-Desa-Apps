@@ -26,21 +26,37 @@
   <ion-item>
     <ion-label floating>Kategori</ion-label>
     <ion-select [(ngModel)]="id_kategori" interface="popover">
+        <ion-option ion-item value="{{ item.id_kategori }}"></ion-option>
       <ion-option ion-item *ngFor="let item of items.koleksi2" value="{{ item.id }}">{{ item.namakategori }}</ion-option>
     </ion-select>
   </ion-item>
   
   <ion-input type="hidden" [(ngModel)]="id_warga" value="{{ item.id_warga }}"></ion-input>
-  <ion-input type="hidden" [(ngModel)]="foto" value="{{ item.foto }}"></ion-input>
-   
+  
+  <br> &nbsp;&nbsp;
+  <button ion-button icon-left>
+    <ion-icon name="pin"></ion-icon>
+    Lokasi
+  </button>
+
+  <ion-item>
+    Foto
+    <ion-slides pager>
+        <ion-slide *ngFor="let photo of item.fotousulan">
+          <img style="height: 70vh; width: auto; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fotoupload/{{photo.foto}}" class="slide-image">
+        </ion-slide>
+      </ion-slides>
+      <ion-toolbar></ion-toolbar>
+  </ion-item>
+
   <ion-item>
     <ion-label floating>Volume</ion-label>
-    <ion-input type="text" [(ngModel)]="volume"></ion-input>
+    <ion-input type="text" [(ngModel)]="volume" value="{{ item.volume }}"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Satuan</ion-label>
-    <ion-input type="text" [(ngModel)]="satuan"></ion-input>
+    <ion-input type="text" [(ngModel)]="satuan" value="{{ item.satuan }}"></ion-input>
   </ion-item>
 
   <ion-item>
@@ -63,7 +79,7 @@
     </ion-fab-list>
     
     <ion-fab-list side="left" >
-      <button ion-fab (click)="tombolkamera(options)" color="primary">
+      <button ion-fab (click)="takePhoto()" color="primary">
       <ion-icon name="ios-camera-outline" style="zoom:1.4" ></ion-icon>
     </button>
     </ion-fab-list>
