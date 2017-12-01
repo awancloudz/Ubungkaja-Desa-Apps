@@ -6,9 +6,11 @@ import { UsulanserviceProvider } from '../../providers/usulanservice/usulanservi
 import { UsulanArray } from '../../pages/usulan/usulanarray';
 //Google Maps
 import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 //Camera
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Item } from 'ionic-angular/components/item/item';
 
 // INDEX USULAN //
 @Component({
@@ -146,7 +148,9 @@ export class UsulandetailPage {
   id_warga:Number;
   deskripsi:Text;
   status:Number;
-
+  latitude:number;
+  longitude:number;
+  
   constructor (private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
     this.item = params.data.item;
@@ -162,7 +166,7 @@ export class UsulandetailPage {
     this.usulanservice.tampilkanusulan().subscribe(
       //Jika data sudah berhasil di load
       (data:UsulanArray[])=>{
-        this.items=data;
+        //this.items=data;
       },
       //Jika Error
       function (error){   
@@ -172,27 +176,25 @@ export class UsulandetailPage {
         loadingdata.dismiss();
       }
     );
-    this.loadMap();
+    this.loadMap(this.item);
   }
-  loadMap() {
+  
+  loadMap(item) {
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
-          lat: -8.6168606,
-          lng: 115.1797272
+          lat: item.latitude,
+          lng: item.longitude
         },
         zoom: 18,
         tilt: 30
       }
     };
-    
     this.map = this.googleMaps.create('map_canvas', mapOptions);
-    
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then(() => {
         console.log('Map is ready!');
-
         // Now you can use all methods safely.
         this.map.addMarker({
             draggable: true,
@@ -200,8 +202,8 @@ export class UsulandetailPage {
             icon: 'blue',
             animation: 'DROP',
             position: {
-              lat: -8.6168606,
-              lng: 115.1797272
+              lat: item.latitude,
+              lng: item.longitude
             },
             size:	{ 
                width: 200,
@@ -211,10 +213,9 @@ export class UsulandetailPage {
           .then(marker => {
             marker.on(GoogleMapsEvent.MARKER_CLICK)
               .subscribe(() => {
-                //alert('clicked');
+                //jika diklik
               });
           });
-
       });
   }
   tomboledit(item){
@@ -270,7 +271,7 @@ export class UsulancreatePage {
   public photos : any;
   public imageURI:any;
   public imageFileName:any;
-
+  map2: GoogleMap;
   items:UsulanArray[]=[];
   id:Number;
   tanggal:Date;
@@ -281,15 +282,89 @@ export class UsulancreatePage {
   status:Number;
   volume:String;
   satuan:String;
+  latitude:any;
+  longitude:any;
 
-  constructor(
+  constructor(private geolocation2: Geolocation,private googleMaps2: GoogleMaps,
     private transfer: FileTransfer,
     private camera: Camera,
     private modalCtrl:ModalController,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
-
     }
+  //Tampil data awal
+  ionViewDidLoad() {
+    //Loading bar
+    let loadingdata=this.loadincontroller.create({
+      content:"Loading..."
+    });
+    loadingdata.present();
+    //Tampilkan data dari server
+    this.usulanservice.tampilkanusulan().subscribe(
+      //Jika data sudah berhasil di load
+      (data:UsulanArray[])=>{
+        this.items=data;
+      },
+      //Jika Error
+      function (error){   
+      },
+      //Tutup Loading
+      function(){
+        loadingdata.dismiss();
+      }
+    );
+    this.loadMap2();
+  }
+  loadMap2() {
+  //Geolocation
+  let watch2 = this.geolocation2.watchPosition();
+  watch2.subscribe((data) => {
   
+  this.latitude = data.coords.latitude;
+  this.longitude = data.coords.longitude;
+
+    let mapOptions2: GoogleMapOptions = {
+      camera: {
+        target: {
+          lat: data.coords.latitude,
+          lng: data.coords.longitude
+        },
+        zoom: 18,
+        tilt: 30
+      }
+    };
+    
+    this.map2 = this.googleMaps2.create('map_canvas2', mapOptions2);
+    
+    // Wait the MAP_READY before using any methods.
+    this.map2.one(GoogleMapsEvent.MAP_READY)
+      .then(() => {
+        console.log('Map is ready!');
+
+        // Now you can use all methods safely.
+        this.map2.addMarker({
+            draggable: true,
+            title: 'Lokasi',
+            icon: 'blue',
+            animation: 'DROP',
+            position: {
+              lat: data.coords.latitude,
+              lng: data.coords.longitude
+            },
+            size:	{ 
+               width: 200,
+               height: 200 
+            }
+          })
+          .then(marker => {
+            marker.on(GoogleMapsEvent.MARKER_CLICK)
+              .subscribe(() => {
+                //alert('clicked');
+              });
+          });
+      });
+    });
+  }
+
   ngOnInit() {
     this.photos = [];
   }
@@ -376,29 +451,6 @@ export class UsulancreatePage {
     toast.present();
   }
 
-  //Tampil data awal
-  ionViewDidLoad() {
-    //Loading bar
-    let loadingdata=this.loadincontroller.create({
-      content:"Loading..."
-    });
-    loadingdata.present();
-    //Tampilkan data dari server
-    this.usulanservice.tampilkanusulan().subscribe(
-      //Jika data sudah berhasil di load
-      (data:UsulanArray[])=>{
-        this.items=data;
-      },
-      //Jika Error
-      function (error){   
-      },
-      //Tutup Loading
-      function(){
-        loadingdata.dismiss();
-      }
-    );
-  }
-  
   //Simpan Data Usulan
   tambahusulan(){
     //Pemberitahuan
@@ -413,7 +465,7 @@ export class UsulancreatePage {
     });
     loadingdata.present();
     //Mengambil value dari input field untuk dimasukkan ke UsulanArray
-    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan))
+    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.latitude,this.longitude))
     .subscribe(
       (data:UsulanArray)=>{
         //Push
@@ -439,6 +491,7 @@ export class UsulancreatePage {
 })
 export class UsulaneditPage {
   item;
+  map3: GoogleMap;
   items:UsulanArray[]=[];
   id:Number;
   tanggal:Date;
@@ -449,13 +502,14 @@ export class UsulaneditPage {
   status:Number;
   volume:String;
   satuan:String;
+  latitude:number;
+  longitude:number;
 
-
-  constructor(params: NavParams,public nav: NavController,
+  constructor(private googleMaps3: GoogleMaps,params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
     this.item = params.data.item;
   }
-
+  
   //Tampil data awal
   ionViewDidLoad() {
     //Loading bar
@@ -477,6 +531,50 @@ export class UsulaneditPage {
         loadingdata.dismiss();
       }
     );
+    this.loadMap3(this.item);
+  }
+  loadMap3(item) {
+
+    let mapOptions3: GoogleMapOptions = {
+      camera: {
+        target: {
+          lat: item.latitude,
+          lng: item.longitude
+        },
+        zoom: 18,
+        tilt: 30
+      }
+    };
+    
+    this.map3 = this.googleMaps3.create('map_canvas3', mapOptions3);
+    
+    // Wait the MAP_READY before using any methods.
+    this.map3.one(GoogleMapsEvent.MAP_READY)
+      .then(() => {
+        console.log('Map is ready!');
+
+        // Now you can use all methods safely.
+        this.map3.addMarker({
+            draggable: true,
+            title: 'Lokasi',
+            icon: 'blue',
+            animation: 'DROP',
+            position: {
+              lat: item.latitude,
+              lng: item.longitude
+            },
+            size:	{ 
+               width: 200,
+               height: 200 
+            }
+          })
+          .then(marker => {
+            marker.on(GoogleMapsEvent.MARKER_CLICK)
+              .subscribe(() => {
+                //alert('clicked');
+              });
+          });
+      });
   }
   editusulan(lama:UsulanArray,baru:UsulanArray){
     //Pemberitahuan
@@ -491,7 +589,7 @@ export class UsulaneditPage {
     });
     loadingdata.present();
     //Mengambil value dari edit field untuk dimasukkan ke UsulanArray
-    this.usulanservice.editusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan))
+    this.usulanservice.editusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.longitude,this.latitude))
     .subscribe(
       (data:any)=>{
         //Kirim Variable UsulanArray ke Usulanservice.ts
@@ -510,6 +608,6 @@ export class UsulaneditPage {
       }
     );  
   }
-
+  
 }
 

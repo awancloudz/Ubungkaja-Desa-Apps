@@ -38,7 +38,9 @@
     <ion-icon name="pin"></ion-icon>
     Lokasi
   </button>
-
+  <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas2"></div>
+  <ion-input type="hidden" [(ngModel)]="longitude"></ion-input>
+  <ion-input type="hidden" [(ngModel)]="latitude"></ion-input>
   <ion-item>
     Foto
     <ion-slides pager>

@@ -6,6 +6,7 @@ import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera} from '@ionic-native/camera';
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 //Mengambil modul http
 import { HttpModule} from '@angular/http';
 
@@ -101,6 +102,7 @@ import { ProfildesaPageModule } from '../pages/profildesa/profildesa.module';
     File,
     FileTransfer,
     Camera,
+    Geolocation
   ]
 })
 export class AppModule {}
