@@ -1,5 +1,5 @@
-import { Component,NgZone } from '@angular/core';
-import { NavController, ModalController,NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
+import { Component, ElementRef, ViewChild, NgZone } from '@angular/core';
+import { ViewController, IonicPage, NavController, ModalController,NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
 //Tambahkan Provider
 import { UsulanserviceProvider } from '../../providers/usulanservice/usulanservice';
 //Tambahkan Variabel Global
@@ -7,10 +7,11 @@ import { UsulanArray } from '../../pages/usulan/usulanarray';
 //Google Maps
 import { GoogleMaps, Geocoder, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
+//import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 //Camera
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { Item } from 'ionic-angular/components/item/item';
+import { LocationSelectPage } from '../../pages/location-select/location-select';
 
 // INDEX USULAN //
 @Component({
@@ -266,7 +267,7 @@ export class UsulandetailPage {
 @Component({
   templateUrl: 'usulan-create.html',
   //Set komponen * Wajib *
-  entryComponents:[ UsulanPage ],
+  entryComponents:[ UsulanPage,LocationSelectPage ],
 })
 export class UsulancreatePage {
   //Camera
@@ -318,7 +319,11 @@ export class UsulancreatePage {
     );
     this.loadMap2();
   }
-  
+
+  bukaModal() {
+    let modal = this.modalCtrl.create(LocationSelectPage);
+    modal.present();
+  }
   loadMap2() {
   //Geolocation
   let watch2 = this.geolocation2.watchPosition();
@@ -615,4 +620,3 @@ export class UsulaneditPage {
   }
   
 }
-

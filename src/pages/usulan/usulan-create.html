@@ -32,11 +32,17 @@
   </ion-item>
 
   <ion-input type="hidden" [(ngModel)]="id_warga" value="1"></ion-input>
-  <!-- Pencarian Otomatis -->
-  <ion-item>        
+  <br>
+  <!-- Pencarian Otomatis 
+  <ion-item (click)="bukaModal()">        
     <ion-label> <ion-icon name="pin"></ion-icon></ion-label>
     <ion-input placeholder="Cari Lokasi"></ion-input>
-  </ion-item>
+  </ion-item>-->
+  <br> &nbsp;&nbsp;
+  <button ion-button icon-left (click)="bukaModal()">
+    <ion-icon name="pin"></ion-icon>
+    Lokasi
+  </button>
   <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas2"></div>
   
   <ion-input type="hidden" [(ngModel)]="longitude"></ion-input>

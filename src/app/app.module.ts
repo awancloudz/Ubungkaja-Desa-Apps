@@ -11,7 +11,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 //Mengambil modul http
 import { HttpModule} from '@angular/http';
-import { Network } from '@ionic-native/network'; // *New* //
+import { Network } from '@ionic-native/network';
 // Mengambil SEMUA halaman yg sudah dibuat
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -23,8 +23,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SettingPage } from '../pages/setting/setting';
 import { LoginPage } from '../pages/login/login';
 import { ProfildesaPage } from '../pages/profildesa/profildesa';
-import { LocationSelectPage } from '../pages/location-select/location-select'; // *New* //
-
+import { LocationSelectPage } from '../pages/location-select/location-select';
 //Modul standart ionic
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,8 +33,8 @@ import { UsulanserviceProvider } from '../providers/usulanservice/usulanservice'
 import { BeritaserviceProvider } from '../providers/beritaservice/beritaservice';
 import { ProfileserviceProvider } from '../providers/profileservice/profileservice';
 import { LoginserviceProvider } from '../providers/loginservice/loginservice';
-import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service'; // *New* //
-import { GoogleMapsProvider } from '../providers/google-maps/google-maps'; // *New* //
+import { ConnectivityServiceProvider } from '../providers/connectivity-service/connectivity-service'; 
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps'; 
 import { BeritaPageModule } from '../pages/berita/berita.module';
 import { PengaduanPageModule } from '../pages/pengaduan/pengaduan.module';
 import { AntrianPageModule } from '../pages/antrian/antrian.module';
@@ -44,7 +43,7 @@ import { UsulanPageModule } from '../pages/usulan/usulan.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { SettingPageModule } from '../pages/setting/setting.module';
 import { ProfildesaPageModule } from '../pages/profildesa/profildesa.module';
-import { LocationSelectPageModule } from '../pages/location-select/location-select.module'; // *New* //
+import { LocationSelectPageModule } from '../pages/location-select/location-select.module';
 
 @NgModule({
   //Deklarasi variabel page
@@ -75,7 +74,7 @@ import { LocationSelectPageModule } from '../pages/location-select/location-sele
     ProfildesaPageModule,
     PengaduanPageModule,
     AntrianPageModule,
-    LocationSelectPageModule // *New* //
+    LocationSelectPageModule
   ],
   bootstrap: [IonicApp],
   //Komponen Aplikasi
@@ -94,11 +93,10 @@ import { LocationSelectPageModule } from '../pages/location-select/location-sele
     ProfildesaPage,
     PengaduanPage,
     AntrianPage,
-    LocationSelectPage // *New* //
+    LocationSelectPage
   ],
   //Service Provider
   providers: [
-    //Camera,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -111,9 +109,9 @@ import { LocationSelectPageModule } from '../pages/location-select/location-sele
     FileTransfer,
     Camera,
     Geolocation,
-    ConnectivityServiceProvider,  // *New* //
-    GoogleMapsProvider,           // *New* //
-    Network                       // *New* //
+    ConnectivityServiceProvider, 
+    GoogleMapsProvider,          
+    Network,                      
   ]
 })
 export class AppModule {}

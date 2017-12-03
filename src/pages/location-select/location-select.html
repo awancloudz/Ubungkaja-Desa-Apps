@@ -1,19 +1,16 @@
 <ion-header>
   <ion-navbar color="primary">
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
       <ion-buttons right>
-          <button [disabled]="saveDisabled" ion-button (click)="save()">Save</button>
+          <button [disabled]="saveDisabled" ion-button (click)="save()">Simpan</button>
       </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar>
-      <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Pencarian Lokasi"></ion-searchbar>
   </ion-toolbar>
 
   <ion-list>
-      <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)" placeholder="Pencarian Lokasi">{{place.description}}</ion-item>
+      <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
   </ion-list>
 
 </ion-header>

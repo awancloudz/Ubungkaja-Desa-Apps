@@ -34,7 +34,7 @@ export class MyApp {
     // Value Variable dari tombol menu
     this.pages = [
       { title: 'Home', icon: "home", component: HomePage },
-      { title: 'Lokasi',  icon: "person", component: LocationSelectPage },
+      { title: 'Cek Lokasi',  icon: "pin", component: LocationSelectPage },
       { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
       { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
       { title: 'Pengaduan Saya',  icon: "ios-paper-plane", component: PengaduanPage },

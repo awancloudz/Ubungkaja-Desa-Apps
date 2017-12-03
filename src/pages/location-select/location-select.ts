@@ -66,7 +66,7 @@ selectPlace(place){
             let marker = new google.maps.Marker({
                 map: this.maps.map,
                 animation: google.maps.Animation.DROP,
-                position: location
+                position: {lat: location.lat, lng: location.lng}
             });
             this.maps.markers.push(marker);
         });

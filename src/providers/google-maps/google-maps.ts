@@ -79,7 +79,7 @@ export class GoogleMapsProvider {
         let mapOptions = {
           center: latLng,
           zoom: 15,
-          mapTypeControl: false,
+          mapTypeControl: false
         }
         //Buat Map
         this.map = new google.maps.Map(this.mapElement, mapOptions);
