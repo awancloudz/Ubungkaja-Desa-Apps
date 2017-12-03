@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component,NgZone } from '@angular/core';
 import { NavController, ModalController,NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
 //Tambahkan Provider
 import { UsulanserviceProvider } from '../../providers/usulanservice/usulanservice';
 //Tambahkan Variabel Global
 import { UsulanArray } from '../../pages/usulan/usulanarray';
 //Google Maps
-import { GoogleMaps, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
+import { GoogleMaps, Geocoder, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 //Camera
 import {Camera, CameraOptions} from '@ionic-native/camera';
@@ -177,6 +177,7 @@ export class UsulandetailPage {
       }
     );
     this.loadMap(this.item);
+    
   }
   
   loadMap(item) {
@@ -218,6 +219,7 @@ export class UsulandetailPage {
           });
       });
   }
+  
   tomboledit(item){
     this.nav.push(UsulaneditPage, { item: item });
   }
@@ -271,6 +273,7 @@ export class UsulancreatePage {
   public photos : any;
   public imageURI:any;
   public imageFileName:any;
+  
   map2: GoogleMap;
   items:UsulanArray[]=[];
   id:Number;
@@ -284,13 +287,14 @@ export class UsulancreatePage {
   satuan:String;
   latitude:any;
   longitude:any;
-
-  constructor(private geolocation2: Geolocation,private googleMaps2: GoogleMaps,
-    private transfer: FileTransfer,
-    private camera: Camera,
-    private modalCtrl:ModalController,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
-    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
-    }
+  
+  constructor(public zone: NgZone,private geolocation2: Geolocation,
+    private googleMaps2: GoogleMaps,private transfer: FileTransfer,
+    private camera: Camera,private modalCtrl:ModalController,
+    public nav: NavController,public platform: Platform,
+    public actionSheetCtrl: ActionSheetController,public loadincontroller:LoadingController,
+    public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) 
+    {}
   //Tampil data awal
   ionViewDidLoad() {
     //Loading bar
@@ -314,6 +318,7 @@ export class UsulancreatePage {
     );
     this.loadMap2();
   }
+  
   loadMap2() {
   //Geolocation
   let watch2 = this.geolocation2.watchPosition();
@@ -321,7 +326,7 @@ export class UsulancreatePage {
   
   this.latitude = data.coords.latitude;
   this.longitude = data.coords.longitude;
-
+    
     let mapOptions2: GoogleMapOptions = {
       camera: {
         target: {
@@ -364,7 +369,7 @@ export class UsulancreatePage {
       });
     });
   }
-
+  
   ngOnInit() {
     this.photos = [];
   }

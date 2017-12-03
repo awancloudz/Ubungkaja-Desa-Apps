@@ -32,15 +32,16 @@
   </ion-item>
 
   <ion-input type="hidden" [(ngModel)]="id_warga" value="1"></ion-input>
-
-  <br> &nbsp;&nbsp;
-  <button ion-button icon-left>
-    <ion-icon name="pin"></ion-icon>
-    Lokasi
-  </button>
+  <!-- Pencarian Otomatis -->
+  <ion-item>        
+    <ion-label> <ion-icon name="pin"></ion-icon></ion-label>
+    <ion-input placeholder="Cari Lokasi"></ion-input>
+  </ion-item>
   <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas2"></div>
+  
   <ion-input type="hidden" [(ngModel)]="longitude"></ion-input>
   <ion-input type="hidden" [(ngModel)]="latitude"></ion-input>
+  <!-- FOTO -->
   <ion-item>
     Foto
     <ion-slides pager>

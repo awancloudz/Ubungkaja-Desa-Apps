@@ -13,6 +13,7 @@ import { LoginPage} from '../pages/login/login';
 import { ProfildesaPage} from '../pages/profildesa/profildesa';
 import { PengaduanPage} from '../pages/pengaduan/pengaduan';
 import { AntrianPage} from '../pages/antrian/antrian';
+import { LocationSelectPage } from '../pages/location-select/location-select';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,6 +34,7 @@ export class MyApp {
     // Value Variable dari tombol menu
     this.pages = [
       { title: 'Home', icon: "home", component: HomePage },
+      { title: 'Lokasi',  icon: "person", component: LocationSelectPage },
       { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
       { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
       { title: 'Pengaduan Saya',  icon: "ios-paper-plane", component: PengaduanPage },
