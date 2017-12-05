@@ -32,12 +32,24 @@
   </ion-item>
 
   <ion-input type="hidden" [(ngModel)]="id_warga" value="1"></ion-input>
-  <br>
-  <!-- Pencarian Otomatis 
-  <ion-item (click)="bukaModal()">        
-    <ion-label> <ion-icon name="pin"></ion-icon></ion-label>
-    <ion-input placeholder="Cari Lokasi"></ion-input>
-  </ion-item>-->
+  <ion-input type="hidden" [(ngModel)]="latitude"></ion-input>
+  <ion-input type="hidden" [(ngModel)]="longitude"></ion-input>
+  <br>&nbsp;
+  <!-- Pencarian Otomatis -->
+   <ion-toolbar>
+      <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Pencarian Lokasi"></ion-searchbar>
+  </ion-toolbar>
+  <ion-list>
+      <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
+  </ion-list>
+  <div #pleaseConnect id="please-connect">
+      <p>Silahkan Konek ke Internet...</p>
+  </div>
+  <div #map id="map" padding style="height: 350px;">
+      <ion-spinner></ion-spinner>
+  </div>
+  <!-- Akhir Pencarian Otomatis -->
+  <!-- Geolocation
   <br> &nbsp;&nbsp;
   <button ion-button icon-left (click)="bukaModal()">
     <ion-icon name="pin"></ion-icon>
@@ -45,9 +57,7 @@
   </button>
   <br> &nbsp;&nbsp;
   <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas2"></div>
-  
-  <ion-input type="hidden" [(ngModel)]="longitude"></ion-input>
-  <ion-input type="hidden" [(ngModel)]="latitude"></ion-input>
+  END Geolocation-->
   <!-- FOTO -->
   <ion-item>
     Foto

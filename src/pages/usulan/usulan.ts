@@ -11,7 +11,7 @@ import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 //Camera
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import { LocationSelectPage } from '../../pages/location-select/location-select';
+//import { LocationSelectPage } from '../../pages/location-select/location-select';
 
 // INDEX USULAN //
 @Component({
@@ -296,10 +296,13 @@ export class UsulandetailPage {
 @Component({
   templateUrl: 'usulan-create.html',
   //Set komponen * Wajib *
-  entryComponents:[ UsulanPage,LocationSelectPage ],
+  entryComponents:[ UsulanPage ],
   providers: [ GoogleMapsProvider ]
 })
 export class UsulancreatePage {
+  //Pencarian MAP
+  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   //Camera
   public photos : any;
   public imageURI:any;
@@ -318,13 +321,24 @@ export class UsulancreatePage {
   satuan:String;
   latitude:any;
   longitude:any;
-  
-  constructor(public zone: NgZone,private geolocation2: Geolocation,
+
+  //Pencarian MAP
+  autocompleteService: any;
+  placesService: any;
+  query: string = '';
+  places: any = [];
+  searchDisabled: boolean;
+  saveDisabled: boolean;
+  location: any;
+
+  constructor(public maps: GoogleMapsProvider,public zone: NgZone,
+    private geolocation2: Geolocation,
     private googleMaps2: GoogleMaps,private transfer: FileTransfer,
     private camera: Camera,private modalCtrl:ModalController,
     public nav: NavController,public platform: Platform,
     public actionSheetCtrl: ActionSheetController,public loadincontroller:LoadingController,
     public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
+    this.searchDisabled = true;
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
       this.nav.pop();
@@ -353,21 +367,80 @@ export class UsulancreatePage {
       }
     );
     this.loadMap2();
+    //Pencarian MAP
+    let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
+      this.autocompleteService = new google.maps.places.AutocompleteService();
+      this.placesService = new google.maps.places.PlacesService(this.maps.map);
+      this.searchDisabled = false;
+    });
+  }
+  //Pencarian MAP
+  selectPlace(place){
+    //Kosongkan data
+    this.places = [];
+    let location = {
+        lat: null,
+        lng: null,
+        name: place.name
+    };
+    //Set Posisi Map Baru
+    this.placesService.getDetails({placeId: place.place_id}, (details) => {
+        this.zone.run(() => {
+            location.name = details.name;
+            location.lat = details.geometry.location.lat();
+            location.lng = details.geometry.location.lng();
+            //this.saveDisabled = false;
+            //Posisi Center
+            this.maps.map.setCenter({lat: location.lat, lng: location.lng});
+            this.location = location;
+            this.query = details.name;
+            //Marker Baru
+            this.maps.clearMarkers();
+            let marker = new google.maps.Marker({
+                map: this.maps.map,
+                animation: google.maps.Animation.DROP,
+                position: {lat: location.lat, lng: location.lng}
+            });
+            this.maps.markers.push(marker);
+            //Simpan Posisi Baru
+            this.latitude = location.lat;
+            this.longitude = location.lng;
+        });
+    });
   }
 
-  bukaModal() {
+  searchPlace(){
+      this.saveDisabled = true;
+      if(this.query.length > 0 && !this.searchDisabled) {
+          let config = {
+              types: ['geocode'],
+              input: this.query
+          }
+          this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+              if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
+                  this.places = [];
+                  predictions.forEach((prediction) => {
+                      this.places.push(prediction);
+                  });
+              }
+          });
+      } else {
+          this.places = [];
+      }
+  }
+  
+  /*bukaModal() {
     let modal = this.modalCtrl.create(LocationSelectPage);
     modal.present();
-  }
+  }*/
   loadMap2() {
   //Geolocation
-  let watch2 = this.geolocation2.watchPosition();
-  watch2.subscribe((data) => {
+  let watch2 = this.geolocation2.getCurrentPosition().then((data) => {
   
   this.latitude = data.coords.latitude;
   this.longitude = data.coords.longitude;
     
-    let mapOptions2: GoogleMapOptions = {
+    /*let mapOptions2: GoogleMapOptions = {
       camera: {
         target: {
           lat: data.coords.latitude,
@@ -406,7 +479,7 @@ export class UsulancreatePage {
                 //alert('clicked');
               });
           });
-      });
+      });*/
     });
   }
   
@@ -510,7 +583,7 @@ export class UsulancreatePage {
     });
     loadingdata.present();
     //Mengambil value dari input field untuk dimasukkan ke UsulanArray
-    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.latitude,this.longitude))
+    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.longitude,this.latitude))
     .subscribe(
       (data:UsulanArray)=>{
         //Push
