@@ -27,9 +27,34 @@ export class ProfilePage {
   email:any;
   nomor_telepon:Number;
 
-  constructor(params: NavParams,public nav: NavController,
+  constructor(public platform:Platform,params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public profileservice:ProfileserviceProvider,
     public _toast:ToastController,public alertCtrl: AlertController,private storage: Storage) {
+    //TOMBOL EXIT
+    this.platform.ready().then(() => {
+      this.platform.registerBackButtonAction(() => {
+          let confirm = this.alertCtrl.create({
+            title: 'Konfirmasi',
+            message: 'Anda Ingin Keluar dari Aplikasi',
+            buttons: [
+              {
+                text: 'Tidak',
+                role: 'cancel',
+                handler: () => {
+                
+                }
+              },
+              {
+                text: 'Ya',
+                handler: () => {
+                  navigator['app'].exitApp();
+                }
+              }
+            ]
+          });
+          confirm.present();                
+      });
+    });
   }
   
   //Tampil data awal

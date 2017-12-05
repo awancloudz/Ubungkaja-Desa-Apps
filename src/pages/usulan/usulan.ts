@@ -7,7 +7,7 @@ import { UsulanArray } from '../../pages/usulan/usulanarray';
 //Google Maps
 import { GoogleMaps, Geocoder, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
-//import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 //Camera
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
@@ -24,7 +24,31 @@ export class UsulanPage {
   deskripsi:Text;
   constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,public alertCtrl: AlertController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController) {
-  
+    //TOMBOL EXIT
+    this.platform.ready().then(() => {
+      this.platform.registerBackButtonAction(() => {
+          let confirm = this.alertCtrl.create({
+            title: 'Konfirmasi',
+            message: 'Anda Ingin Keluar dari Aplikasi',
+            buttons: [
+              {
+                text: 'Tidak',
+                role: 'cancel',
+                handler: () => {
+                
+                }
+              },
+              {
+                text: 'Ya',
+                handler: () => {
+                  navigator['app'].exitApp();
+                }
+              }
+            ]
+          });
+          confirm.present();                
+      });
+    });
   }
   doRefresh(refresher) {
     //console.log('Begin async operation', refresher);
@@ -81,6 +105,13 @@ export class UsulanPage {
               message: 'Yakin Menghapus Data',
               buttons: [
                 {
+                  text: 'Tidak',
+                  role: 'cancel',
+                  handler: () => {
+                    //console.log('Batal');
+                  }
+                },
+                {
                   text: 'Ya',
                   handler: () => {
                     //Hapus Susulan
@@ -97,13 +128,6 @@ export class UsulanPage {
                       }
                     );
                     //End Hapus Susulan
-                  }
-                },
-                {
-                  text: 'Tidak',
-                  role: 'cancel',
-                  handler: () => {
-                    //console.log('Batal');
                   }
                 }
               ]
@@ -152,9 +176,14 @@ export class UsulandetailPage {
   latitude:number;
   longitude:number;
   
-  constructor (private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
+  constructor (public platform: Platform,private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
     this.item = params.data.item;
+    //Hapus Back
+    let backAction =  platform.registerBackButtonAction(() => {
+      this.nav.pop();
+      backAction();
+    },2)
   }
 
   ionViewDidLoad() {
@@ -231,6 +260,13 @@ export class UsulandetailPage {
       message: 'Yakin Menghapus Data',
       buttons: [
         {
+          text: 'Tidak',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Batal');
+          }
+        },
+        {
           text: 'Ya',
           handler: () => {
             //Hapus Susulan
@@ -249,13 +285,6 @@ export class UsulandetailPage {
             //End Hapus Susulan
             
           }
-        },
-        {
-          text: 'Tidak',
-          role: 'cancel',
-          handler: () => {
-            //console.log('Batal');
-          }
         }
       ]
     });
@@ -268,6 +297,7 @@ export class UsulandetailPage {
   templateUrl: 'usulan-create.html',
   //Set komponen * Wajib *
   entryComponents:[ UsulanPage,LocationSelectPage ],
+  providers: [ GoogleMapsProvider ]
 })
 export class UsulancreatePage {
   //Camera
@@ -294,8 +324,13 @@ export class UsulancreatePage {
     private camera: Camera,private modalCtrl:ModalController,
     public nav: NavController,public platform: Platform,
     public actionSheetCtrl: ActionSheetController,public loadincontroller:LoadingController,
-    public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) 
-    {}
+    public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
+    //Hapus Back
+    let backAction =  platform.registerBackButtonAction(() => {
+      this.nav.pop();
+      backAction();
+    },2)
+    }
   //Tampil data awal
   ionViewDidLoad() {
     //Loading bar
@@ -515,9 +550,14 @@ export class UsulaneditPage {
   latitude:number;
   longitude:number;
 
-  constructor(private googleMaps3: GoogleMaps,params: NavParams,public nav: NavController,
+  constructor(public platform: Platform,private googleMaps3: GoogleMaps,params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
     this.item = params.data.item;
+    //Hapus Back
+    let backAction =  platform.registerBackButtonAction(() => {
+      this.nav.pop();
+      backAction();
+    },2)
   }
   
   //Tampil data awal

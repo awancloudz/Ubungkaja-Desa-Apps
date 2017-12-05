@@ -28,9 +28,14 @@ export class LocationSelectPage {
   saveDisabled: boolean;
   location: any; 
   
-  constructor(public navCtrl: NavController, public zone: NgZone, public maps: GoogleMapsProvider, public platform: Platform, public geolocation: Geolocation, public viewCtrl: ViewController) {
+  constructor(public nav:NavController,public navCtrl: NavController, public zone: NgZone, public maps: GoogleMapsProvider, public platform: Platform, public geolocation: Geolocation, public viewCtrl: ViewController) {
     this.searchDisabled = true;
-    this.saveDisabled = true;
+    //this.saveDisabled = true;
+    //Hapus Back
+    let backAction =  platform.registerBackButtonAction(() => {
+        this.nav.pop();
+        backAction();
+      },2)
 }
 
 ionViewDidLoad(): void {

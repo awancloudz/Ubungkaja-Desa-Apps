@@ -24,6 +24,7 @@ import { SettingPage } from '../pages/setting/setting';
 import { LoginPage } from '../pages/login/login';
 import { ProfildesaPage } from '../pages/profildesa/profildesa';
 import { LocationSelectPage } from '../pages/location-select/location-select';
+import { BelanjaPage } from '../pages/belanja/belanja';
 //Modul standart ionic
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -44,6 +45,7 @@ import { ProfilePageModule } from '../pages/profile/profile.module';
 import { SettingPageModule } from '../pages/setting/setting.module';
 import { ProfildesaPageModule } from '../pages/profildesa/profildesa.module';
 import { LocationSelectPageModule } from '../pages/location-select/location-select.module';
+import { BelanjaPageModule } from '../pages/belanja/belanja.module';
 
 @NgModule({
   //Deklarasi variabel page
@@ -74,7 +76,8 @@ import { LocationSelectPageModule } from '../pages/location-select/location-sele
     ProfildesaPageModule,
     PengaduanPageModule,
     AntrianPageModule,
-    LocationSelectPageModule
+    LocationSelectPageModule,
+    BelanjaPageModule
   ],
   bootstrap: [IonicApp],
   //Komponen Aplikasi
@@ -93,7 +96,8 @@ import { LocationSelectPageModule } from '../pages/location-select/location-sele
     ProfildesaPage,
     PengaduanPage,
     AntrianPage,
-    LocationSelectPage
+    LocationSelectPage,
+    BelanjaPage
   ],
   //Service Provider
   providers: [
