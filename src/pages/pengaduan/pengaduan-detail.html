@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-title>
+        Detail Pengaduan
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <h3>{{ item.judul }}</h3>
+    <p><b>Tanggal : </b>{{ item.tanggal }}</p>
+    <p><b>Kategori :</b> {{ item.kategoripengaduan.namakategori }}</p>
+    <p><b>Lokasi</b></p>
+    <div style="height: 50%;background-color: rgba(0, 0, 0, 0);" id="map_canvas"></div>
+    <p><b>Foto</b></p>
+    <ion-slides pager>
+      <ion-slide *ngFor="let photo of item.fotopengaduan">
+        <img style="height: 70vh; width: auto; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fotoupload/{{photo.foto}}" class="slide-image">
+      </ion-slide>
+    </ion-slides>
+    <p><b>Detail Usulan</b> </p>
+    <p>{{ item.deskripsi }}</p>  
+    <p *ngIf="item.privasipengaduan == 1"><b>Privasi Pengaduan : </b>Public</p>
+    <p *ngIf="item.privasipengaduan == 2"><b>Privasi Pengaduan : </b>Private</p>
+    <p *ngIf="item.privasiidentitas == 1"><b>Privasi Identitas : </b>Public</p>
+    <p *ngIf="item.privasiidentitas == 2"><b>Privasi Identitas : </b>Private</p>
+  </ion-content>
+  <ion-fab bottom right>
+    <button ion-fab color="primary" style="margin-bottom:10px" (click)="tomboledit(item)">
+        <ion-icon name="create" style="zoom:1.3"></ion-icon>
+    </button>
+  
+    <button ion-fab color="primary" (click)="tombolhapus(item)">
+      <ion-icon name="trash" style="zoom:1.3"></ion-icon>
+    </button>
+  </ion-fab>

@@ -1,0 +1,111 @@
+<ion-header>
+        <ion-navbar color="primary">
+         
+          <ion-title>
+            Ubah Pengaduan
+          </ion-title>
+      
+        </ion-navbar>
+      </ion-header>
+      
+      <ion-content padding>
+      <ion-list>
+        <ion-input type="hidden" [(ngModel)]="id" value="{{ item.id }}"></ion-input>
+        <ion-item>
+          <ion-label floating>Tanggal</ion-label>
+          <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="tanggal" 
+          monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des"
+          ></ion-datetime>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label floating>Judul Pengaduan</ion-label>
+          <ion-input type="text" [(ngModel)]="judul" value="{{ item.judul }}"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label floating>Kategori Pengaduan</ion-label>
+          <ion-select [(ngModel)]="id_kategoripengaduan" interface="popover">
+              <ion-option ion-item value="{{ item.id_kategoripengaduan }}"></ion-option>
+            <ion-option ion-item *ngFor="let item of items.koleksi2" value="{{ item.id }}">{{ item.namakategori }}</ion-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-input type="hidden" [(ngModel)]="id_warga" value="{{ item.id_warga }}"></ion-input>
+        <ion-input type="hidden" [(ngModel)]="id_warga" value="{{ item.id_dusun }}"></ion-input>
+        <br> &nbsp;&nbsp;
+        <button ion-button icon-left>
+          <ion-icon name="pin"></ion-icon>
+          Lokasi
+        </button>
+        <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas3"></div>
+        <ion-input type="hidden" [(ngModel)]="longitude" value="{{ item.longitude }}"></ion-input>
+        <ion-input type="hidden" [(ngModel)]="latitude" value="{{ item.latitude }}"></ion-input>  
+        <ion-item>
+          Foto
+          <ion-slides pager>
+              <ion-slide *ngFor="let photo of item.fotopengaduan">
+                <img style="height: 70vh; width: auto; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fotoupload/{{photo.foto}}" class="slide-image">
+              </ion-slide>
+            </ion-slides>
+            <ion-toolbar></ion-toolbar>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label floating>Deskripsi Usulan</ion-label>
+          <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi" value="{{ item.deskripsi }}"></ion-textarea>
+        </ion-item>
+        
+        <ion-list radio-group [(ngModel)]="privasipengaduan">
+        <ion-item>
+        <ion-label>Privasi Pengaduan</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Public</ion-label>
+            <ion-radio value="1" checked="true"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>Private</ion-label>
+            <ion-radio value="2"></ion-radio>
+        </ion-item>
+        </ion-list>
+        <ion-list radio-group [(ngModel)]="privasiidentitas">
+            <ion-item>
+            <ion-label>Privasi Identitas</ion-label>
+            </ion-item>
+            <ion-item>
+            <ion-label>Public</ion-label>
+            <ion-radio value="1" checked="true"></ion-radio>
+            </ion-item>
+            <ion-item>
+            <ion-label>Private</ion-label>
+            <ion-radio value="2"></ion-radio>
+            </ion-item>
+        </ion-list>
+        <ion-input type="hidden" [(ngModel)]="status" value="{{ item.status }}"></ion-input>
+      
+      </ion-list>
+        <ion-fab bottom right >
+          <button ion-fab>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+          
+          <ion-fab-list side="top" style="margin-left:-50px;bottom:-17px">
+              <button ion-fab (click)="editusulan()" color="primary">
+                  <ion-icon name="checkmark"style="zoom:1.2"></ion-icon>
+              </button>
+          </ion-fab-list>
+          
+          <ion-fab-list side="left" >
+            <button ion-fab (click)="takePhoto()" color="primary">
+            <ion-icon name="ios-camera-outline" style="zoom:1.4" ></ion-icon>
+          </button>
+          </ion-fab-list>
+      
+          <ion-fab-list side="top">
+            <button ion-fab color="primary" (click)="tombolhapus(item)">
+              <ion-icon name="trash" style="zoom:1.1"></ion-icon>
+            </button>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-content>

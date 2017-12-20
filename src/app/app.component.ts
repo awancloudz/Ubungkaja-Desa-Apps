@@ -38,7 +38,7 @@ export class MyApp {
       { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
       { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
       { title: 'Pengaduan Saya',  icon: "ios-paper-plane", component: PengaduanPage },
-      { title: 'Antrian',  icon: "ios-paper-outline", component: AntrianPage },
+      { title: 'Layanan',  icon: "ios-paper-outline", component: AntrianPage },
       { title: 'Belanja',  icon: "cart", component: BelanjaPage },
       { title: 'Profile',  icon: "person", component: ProfilePage },
       { title: 'Logout',  icon: "power", component: SettingPage },

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { PengaduanPage } from './pengaduan';
+import { PengaduanPage,PengaduandetailPage,PengaduancreatePage,PengaduaneditPage } from './pengaduan';
 
 @NgModule({
   declarations: [
-    PengaduanPage,
+    PengaduanPage,PengaduandetailPage,PengaduancreatePage,PengaduaneditPage
   ],
   imports: [
     IonicPageModule.forChild(PengaduanPage),

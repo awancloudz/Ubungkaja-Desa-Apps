@@ -17,7 +17,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { UsulanPage,UsulandetailPage,UsulancreatePage,UsulaneditPage } from '../pages/usulan/usulan';
 import { BeritaPage,BeritaDusunPage } from '../pages/berita/berita';
-import { PengaduanPage } from '../pages/pengaduan/pengaduan';
+import { PengaduanPage,PengaduandetailPage,PengaduancreatePage,PengaduaneditPage } from '../pages/pengaduan/pengaduan';
 import { AntrianPage } from '../pages/antrian/antrian';
 import { ProfilePage } from '../pages/profile/profile';
 import { SettingPage } from '../pages/setting/setting';
@@ -46,6 +46,8 @@ import { SettingPageModule } from '../pages/setting/setting.module';
 import { ProfildesaPageModule } from '../pages/profildesa/profildesa.module';
 import { LocationSelectPageModule } from '../pages/location-select/location-select.module';
 import { BelanjaPageModule } from '../pages/belanja/belanja.module';
+import { PengaduanserviceProvider } from '../providers/pengaduanservice/pengaduanservice';
+import { AntrianserviceProvider } from '../providers/antrianservice/antrianservice';
 
 @NgModule({
   //Deklarasi variabel page
@@ -94,7 +96,7 @@ import { BelanjaPageModule } from '../pages/belanja/belanja.module';
     SettingPage,
     LoginPage,
     ProfildesaPage,
-    PengaduanPage,
+    PengaduanPage,PengaduandetailPage,PengaduancreatePage,PengaduaneditPage,
     AntrianPage,
     LocationSelectPage,
     BelanjaPage
@@ -115,7 +117,9 @@ import { BelanjaPageModule } from '../pages/belanja/belanja.module';
     Geolocation,
     ConnectivityServiceProvider, 
     GoogleMapsProvider,          
-    Network,                      
+    Network,
+    PengaduanserviceProvider,
+    AntrianserviceProvider,                      
   ]
 })
 export class AppModule {}

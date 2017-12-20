@@ -1,21 +1,34 @@
-<!--
-  Generated template for the PengaduanPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Pengaduan</ion-title>
+    <ion-title>Pengaduan Saya</ion-title>
   </ion-navbar>
 </ion-header>
 
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+    pullingIcon="arrow-dropdown"
+    pullingText="Scroll ke bawah untuk refresh"
+    refreshingSpinner="crescent"
+    refreshingText="Refreshing..">
+  </ion-refresher-content>
+  </ion-refresher>
 
-<ion-content padding>
-<ion-card-content>
-<img src="assets/img/progress.png">
-</ion-card-content>
+    <ion-list>
+      <button ion-item *ngFor="let item of items.koleksi" (click)="tomboldetail(item)" (press)="tomboltahan(item)">
+        {{ item.judul }}
+        <ion-badge *ngIf="item.status == 1" color="pending" item-end>Awal</ion-badge>
+        <ion-badge *ngIf="item.status == 2" color="secondary" item-end>Progress</ion-badge>
+        <ion-badge *ngIf="item.status == 3" color="primary" item-end>Selesai</ion-badge>
+      </button>
+    </ion-list>
+
+    <ion-fab bottom right>
+      <button ion-fab (click)="tombolcreate()">
+        <ion-icon name="md-create" style="zoom:1.3"></ion-icon>
+      </button>
+    </ion-fab>
 </ion-content>

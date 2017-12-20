@@ -1,0 +1,126 @@
+<ion-header>
+    <ion-navbar color="primary">
+      
+      <ion-title>
+        Pengaduan Baru
+      </ion-title>
+     
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding class="card-background-page">
+  <ion-list>
+      <ion-input type="hidden" [(ngModel)]="id"></ion-input>
+  
+    <ion-item>
+      <ion-label floating>Tanggal</ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY" min="2017" max="2030" [(ngModel)]="tanggal"
+      monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des"
+      ></ion-datetime>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Judul Pengaduan</ion-label>
+      <ion-input type="text" [(ngModel)]="judul"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label floating>Kategori</ion-label>
+      <ion-select [(ngModel)]="id_kategoripengaduan" interface="popover">
+        <ion-option ion-item *ngFor="let item of items.koleksi2" value="{{ item.id }}">{{ item.namakategori }}</ion-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-input type="hidden" [(ngModel)]="id_dusun" value="1"></ion-input>
+    <ion-input type="hidden" [(ngModel)]="id_warga" value="1"></ion-input>
+    <ion-input type="hidden" [(ngModel)]="latitude"></ion-input>
+    <ion-input type="hidden" [(ngModel)]="longitude"></ion-input>
+    <br>&nbsp;
+    <!-- Pencarian Otomatis -->
+     <ion-toolbar>
+        <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()" placeholder="Pencarian Lokasi"></ion-searchbar>
+    </ion-toolbar>
+    <ion-list>
+        <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
+    </ion-list>
+    <div #pleaseConnect id="please-connect">
+        <p>Silahkan Konek ke Internet...</p>
+    </div>
+    <div #map id="map" padding style="height: 350px;">
+        <ion-spinner></ion-spinner>
+    </div>
+    <!-- Akhir Pencarian Otomatis -->
+    <!-- Geolocation
+    <br> &nbsp;&nbsp;
+    <button ion-button icon-left (click)="bukaModal()">
+      <ion-icon name="pin"></ion-icon>
+      Lokasi
+    </button>
+    <br> &nbsp;&nbsp;
+    <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas2"></div>
+    END Geolocation-->
+    <!-- FOTO -->
+    <ion-item>
+      Foto
+      <ion-slides pager>
+        <ion-slide *ngFor="let photo of photos; let id = index">
+          <ion-toolbar>
+            <ion-buttons end>
+              <button ion-button color="primary" (click)="deletePhoto(id)">
+                <ion-icon name="close"></ion-icon>
+              </button>
+            </ion-buttons>
+          </ion-toolbar>
+          <img [src]="photo" class="slide-image" style="height: 70vh; width: auto; margin: auto; display: block;"/>
+          <ion-toolbar></ion-toolbar>
+        </ion-slide>
+      </ion-slides>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label floating>Deskripsi</ion-label>
+      <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi"></ion-textarea>
+    </ion-item>
+    <ion-list radio-group [(ngModel)]="privasipengaduan">
+      <ion-item>
+      <ion-label>Privasi Pengaduan</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Public</ion-label>
+        <ion-radio value="1" checked="true"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Private</ion-label>
+        <ion-radio value="2"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group [(ngModel)]="privasiidentitas">
+        <ion-item>
+        <ion-label>Privasi Identitas</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Public</ion-label>
+          <ion-radio value="1" checked="true"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Private</ion-label>
+          <ion-radio value="2"></ion-radio>
+        </ion-item>
+      </ion-list>
+    <ion-input type="hidden" [(ngModel)]="status" value="1"></ion-input>
+  </ion-list>
+  <br><br><br><br><br><br>
+    <ion-fab bottom right>
+      <ion-buttons>
+        <button ion-fab (click)="tambahpengaduan()" style="margin-bottom:10px">
+          <ion-icon name="checkmark" style="zoom:1.4"></ion-icon>
+        </button>
+      </ion-buttons>
+  
+      <ion-buttons>
+        <button ion-fab (click)="takePhoto()">
+          <ion-icon name="ios-camera-outline" style="zoom:1.6" ></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-fab>
+  </ion-content>

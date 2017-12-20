@@ -9,10 +9,7 @@
 <ion-content padding>
   <h3>{{ item.judul }}</h3>
   <p><b>Tanggal : </b>{{ item.tanggal }}</p>
-  <p *ngIf="item.id_kategori == 1"><b>Kategori :</b> Penyelenggaraan Pemerintahan Desa</p>
-  <p *ngIf="item.id_kategori == 2"><b>Kategori :</b> Pelaksanaan Pembangunan Masyarakat</p>
-  <p *ngIf="item.id_kategori == 3"><b>Kategori :</b> Pembinaan Kemasyarakatan</p>
-  <p *ngIf="item.id_kategori == 4"><b>Kategori :</b> Pemberdayaan Masyarakat</p>
+  <p><b>Kategori :</b> {{ item.kategori.namakategori }}</p>
   <p><b>Lokasi</b></p>
   <div style="height: 50%;background-color: rgba(0, 0, 0, 0);" id="map_canvas"></div>
   <p><b>Foto</b></p>
