@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { OneSignal } from '@ionic-native/onesignal';
 // Mengambil halaman UTAMA yg sudah dibuat
 import { HomePage } from '../pages/home/home';
 import { UsulanPage } from '../pages/usulan/usulan';
@@ -29,7 +30,8 @@ export class MyApp {
   pages: Array<{title: string, icon: string, component: any}>;
   warga: Array<{nama: string}>;
 
-  constructor(private storage: Storage,public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(private storage: Storage,public platform: Platform, public statusBar: StatusBar, 
+    public splashScreen: SplashScreen,private oneSignal: OneSignal) {
     this.initializeApp();
 
     // Value Variable dari tombol menu
@@ -56,6 +58,20 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      
+      this.oneSignal.startInit('0cd199c8-a64b-4b4d-be1f-913897925183', '1038653536158');
+
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+
+      this.oneSignal.handleNotificationReceived().subscribe(() => {
+      // do something when notification is received
+      });
+
+      this.oneSignal.handleNotificationOpened().subscribe(() => {
+        // do something when a notification is opened
+      });
+
+      this.oneSignal.endInit();
     });
   }
 

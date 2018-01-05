@@ -12,6 +12,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 //Mengambil modul http
 import { HttpModule} from '@angular/http';
 import { Network } from '@ionic-native/network';
+//Push Notifications
+import { OneSignal } from '@ionic-native/onesignal';
 // Mengambil SEMUA halaman yg sudah dibuat
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -119,7 +121,8 @@ import { AntrianserviceProvider } from '../providers/antrianservice/antrianservi
     GoogleMapsProvider,          
     Network,
     PengaduanserviceProvider,
-    AntrianserviceProvider,                      
+    AntrianserviceProvider,  
+    OneSignal,                    
   ]
 })
 export class AppModule {}
