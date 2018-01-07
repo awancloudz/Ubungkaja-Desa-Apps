@@ -29,7 +29,7 @@ export class MyApp {
   //Tipe Variable untuk tombol menu
   pages: Array<{title: string, icon: string, component: any}>;
   warga: Array<{nama: string}>;
-
+  ids: any;
   constructor(private storage: Storage,public platform: Platform, public statusBar: StatusBar, 
     public splashScreen: SplashScreen,private oneSignal: OneSignal) {
     this.initializeApp();
@@ -69,8 +69,9 @@ export class MyApp {
 
       this.oneSignal.handleNotificationOpened().subscribe(() => {
         // do something when a notification is opened
+        this.nav.setRoot(UsulanPage);
       });
-
+        
       this.oneSignal.endInit();
     });
   }

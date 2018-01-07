@@ -50,6 +50,7 @@ import { LocationSelectPageModule } from '../pages/location-select/location-sele
 import { BelanjaPageModule } from '../pages/belanja/belanja.module';
 import { PengaduanserviceProvider } from '../providers/pengaduanservice/pengaduanservice';
 import { AntrianserviceProvider } from '../providers/antrianservice/antrianservice';
+import { HomeserviceProvider } from '../providers/homeservice/homeservice';
 
 @NgModule({
   //Deklarasi variabel page
@@ -122,7 +123,8 @@ import { AntrianserviceProvider } from '../providers/antrianservice/antrianservi
     Network,
     PengaduanserviceProvider,
     AntrianserviceProvider,  
-    OneSignal,                    
+    OneSignal,
+    HomeserviceProvider,                    
   ]
 })
 export class AppModule {}
