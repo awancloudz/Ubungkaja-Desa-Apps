@@ -58,7 +58,13 @@
 
   <ion-item>
     <ion-label floating>Satuan</ion-label>
-    <ion-input type="text" [(ngModel)]="satuan" value="{{ item.satuan }}"></ion-input>
+    <!--<ion-input type="text" [(ngModel)]="satuan" value="{{ item.satuan }}"></ion-input>-->
+    <ion-select [(ngModel)]="satuan" interface="popover">
+      <ion-option ion-item value="Orang">Orang</ion-option>
+      <ion-option ion-item value="Meter">Meter</ion-option>
+      <ion-option ion-item value="Unit">Unit</ion-option>
+      <ion-option ion-item value="Paket">Paket</ion-option>
+    </ion-select>
   </ion-item>
 
   <ion-item>
