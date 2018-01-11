@@ -96,7 +96,31 @@
     <ion-label floating>Deskripsi Usulan</ion-label>
     <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi"></ion-textarea>
   </ion-item>
-
+  <ion-item>
+    Proposal <br>
+    <ion-buttons>
+      <button ion-button (click)="takeFileProposal()">
+        <ion-icon name="md-attach" style="zoom:1.4"></ion-icon>&nbsp;Pilih File
+      </button>
+      <button ion-button (click)="takePhotoProposal()">
+        <ion-icon name="md-expand" style="zoom:1.4"></ion-icon>&nbsp;Ambil Foto
+      </button>
+    </ion-buttons>
+    <i>*File yang diperbolehkan (.pdf,doc,jpg,png)</i>
+    <ion-slides pager>
+      <ion-slide *ngFor="let prop of files; let id = index">
+        <ion-toolbar>
+          <ion-buttons end>
+            <button ion-button color="primary" (click)="deletePhotoProp(id)">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-toolbar>
+        <img [src]="prop" class="slide-image" style="height: 70vh; width: auto; margin: auto; display: block;"/>
+        <ion-toolbar></ion-toolbar>
+      </ion-slide>
+    </ion-slides>
+  </ion-item>
   <ion-input type="hidden" [(ngModel)]="status" value="1"></ion-input>
 </ion-list>
   <ion-fab bottom right>

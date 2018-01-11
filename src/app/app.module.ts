@@ -6,6 +6,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { Camera} from '@ionic-native/camera';
+import { FileChooser } from '@ionic-native/file-chooser';
 //Google Maps
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -117,6 +118,7 @@ import { HomeserviceProvider } from '../providers/homeservice/homeservice';
     File,
     FileTransfer,
     Camera,
+    FileChooser,
     Geolocation,
     ConnectivityServiceProvider, 
     GoogleMapsProvider,          

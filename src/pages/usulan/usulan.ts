@@ -11,6 +11,7 @@ import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 //Camera
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { FileChooser } from '@ionic-native/file-chooser';
 //import { LocationSelectPage } from '../../pages/location-select/location-select';
 
 // INDEX USULAN //
@@ -307,6 +308,11 @@ export class UsulancreatePage {
   public photos : any;
   public imageURI:any;
   public imageFileName:any;
+  //Proposal
+  public files : any;
+  public files1 : any;
+  public fileURI:any;
+  public fileFileName:any;
   
   map2: GoogleMap;
   items:UsulanArray[]=[];
@@ -337,7 +343,8 @@ export class UsulancreatePage {
     private camera: Camera,private modalCtrl:ModalController,
     public nav: NavController,public platform: Platform,
     public actionSheetCtrl: ActionSheetController,public loadincontroller:LoadingController,
-    public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
+    public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
+    private fileChooser: FileChooser) {
     this.searchDisabled = true;
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
@@ -485,29 +492,11 @@ export class UsulancreatePage {
   
   ngOnInit() {
     this.photos = [];
-  }
-  deletePhoto(index) {
-    let confirm = this.alertCtrl.create({
-        title: 'Yakin Menghapus Foto Ini ?',
-        message: '',
-        buttons: [
-          {
-            text: 'Tidak',
-            handler: () => {
-              console.log('Disagree clicked');
-            }
-          }, {
-            text: 'Ya',
-            handler: () => {
-              console.log('Agree clicked');
-              this.photos.splice(index, 1);
-            }
-          }
-        ]
-      });
-    confirm.present();
+    this.files = [];
+    this.files1 = [];
   }
 
+  //Foto usulan
   takePhoto() {
     const options : CameraOptions = {
       quality: 25, // picture quality
@@ -543,7 +532,6 @@ export class UsulancreatePage {
     }
   
     fileTransfer.upload(this.imageURI, 'http://forkomperbekelbali.com/desa/public/api/upload', options)
-    //fileTransfer.upload(this.imageURI, 'http://192.168.43.19:8000/api/upload', options)
       .then((data) => {
       this.imageFileName = "upload.jpg";
       loader.dismiss();
@@ -553,6 +541,137 @@ export class UsulancreatePage {
       loader.dismiss();
       this.presentToast(err);
     });
+  }
+
+  deletePhoto(index) {
+    let confirm = this.alertCtrl.create({
+        title: 'Yakin Menghapus Foto Ini ?',
+        message: '',
+        buttons: [
+          {
+            text: 'Tidak',
+            handler: () => {
+              console.log('Disagree clicked');
+            }
+          }, {
+            text: 'Ya',
+            handler: () => {
+              console.log('Agree clicked');
+              this.photos.splice(index, 1);
+            }
+          }
+        ]
+      });
+    confirm.present();
+  }
+
+  //Proposal
+  takePhotoProposal() {
+    const options : CameraOptions = {
+      quality: 25, // picture quality
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    }
+    this.camera.getPicture(options).then((imageData) => {
+        this.fileURI = imageData;
+        this.files.push(this.fileURI);
+        this.files.reverse();
+        this.uploadPhotoProposal();
+      }, (err) => {
+        console.log(err);
+        this.presentToast(err);
+      });
+  }
+
+  takeFileProposal(){
+    this.fileChooser.open().then((uri) => {
+      this.fileURI = uri;
+      this.files1.push(this.fileURI);
+      this.files1.reverse();
+      this.uploadFileProposal();
+    }, (err) => {
+      console.log(err);
+      this.presentToast(err);
+    });
+  }
+
+  uploadPhotoProposal() {
+    let loader = this.loadincontroller.create({
+      content: "Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+  
+    let options: FileUploadOptions = {
+      fileKey: 'prop',
+      params: {'id_warga' : this.id_warga },
+      fileName: 'image.jpg',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: {}
+    }
+  
+    fileTransfer.upload(this.fileURI, 'http://forkomperbekelbali.com/desa/public/api/uploadproposal', options)
+      .then((data) => {
+      this.fileFileName = "upload.jpg";
+      loader.dismiss();
+      this.presentToast("Upload Sukses");
+    }, (err) => {
+      console.log(err);
+      loader.dismiss();
+      this.presentToast(err);
+    });
+  }
+
+  uploadFileProposal() {
+    let loader2 = this.loadincontroller.create({
+      content: "Uploading..."
+    });
+    loader2.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+  
+    let options: FileUploadOptions = {
+      fileKey: 'prop',
+      params: {'id_warga' : this.id_warga },
+      fileName: 'file.pdf',
+      chunkedMode: false,
+      mimeType: "application/pdf",
+      headers: {}
+    }
+  
+    fileTransfer.upload(this.fileURI, 'http://forkomperbekelbali.com/desa/public/api/uploadproposal', options)
+      .then((data) => {
+      this.fileFileName = "file.pdf";
+      loader2.dismiss();
+      this.presentToast("Upload Sukses");
+    }, (err) => {
+      console.log(err);
+      loader2.dismiss();
+      this.presentToast(err);
+    });
+  }
+
+  deletePhotoProp(index) {
+    let confirm = this.alertCtrl.create({
+        title: 'Yakin Menghapus Proposal Ini ?',
+        message: '',
+        buttons: [
+          {
+            text: 'Tidak',
+            handler: () => {
+              console.log('Disagree clicked');
+            }
+          }, {
+            text: 'Ya',
+            handler: () => {
+              console.log('Agree clicked');
+              this.files.splice(index, 1);
+            }
+          }
+        ]
+      });
+    confirm.present();
   }
 
   presentToast(msg) {
