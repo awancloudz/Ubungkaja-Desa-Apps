@@ -13,17 +13,17 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BeritaserviceProvider {
   private items:BeritaArray[]=[];
-  //private url:string="http://192.168.43.19:8000/api/berita";
   private url:string="http://forkomperbekelbali.com/desa/public/api/berita";
+  private url2:string="http://forkomperbekelbali.com/desa/public/api/beritahasil";
   constructor(public _http: Http) {}
 
-  tampilkanberita()
+  tampilkanberita(iddesa)
   {
-   return this._http.get(this.url)
+   return this._http.get(this.url+"/"+iddesa)
    .map((response:Response)=>response.json());
   }
   tampilkandetail(item:BeritaArray){
-    return this._http.get(this.url+"/"+item.id)
+    return this._http.get(this.url2+"/"+item.id)
     .map((response:Response)=>response.json());
   }
 }

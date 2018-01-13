@@ -19,7 +19,6 @@ export class LoginserviceProvider {
   //Deklarasi variabel
   private items:LoginArray[]=[];
   //Memanggil URL Api
-  //private url:string="http://192.168.43.19:8000/api/loginuser/";
   private url:string="http://forkomperbekelbali.com/desa/public/api/loginuser/";
   constructor(public _http: Http) {
   }

@@ -20,15 +20,14 @@ export class UsulanserviceProvider {
   //Deklarasi variabel
   private items:UsulanArray[]=[];
   //Memanggil URL Api
-  //private url:string="http://192.168.43.19:8000/api/usulan";
   private url:string="http://forkomperbekelbali.com/desa/public/api/usulan";
   constructor(public _http: Http) {
   }
 
   //Tampilkan usulan
-  tampilkanusulan()
+  tampilkanusulan(iduser)
   {
-   return this._http.get(this.url)
+   return this._http.get(this.url+"/"+iduser)
    .map((response:Response)=>response.json());
   }
   

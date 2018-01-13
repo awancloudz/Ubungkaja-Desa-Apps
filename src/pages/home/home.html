@@ -8,31 +8,23 @@
 </ion-header>
 
 <ion-content padding>
-  <!--<h3 *ngFor="let user of warga">Selamat Datang, {{ user.nama }}</h3>
-  <p align="justify">
-  Aplikasi Desa Terpadu ini diciptakan untuk memenuhi kebutuhan masyarakat desa agar bisa terhubung langsung dengan Kepala Desa beserta perangkatnya.
-  Salurkan aspirasi anda untuk mendukung pembangunan desa dengan mengusulkan rencana anggaran, maupun antrian pengurusan surat menyurat, bahkan pengaduan masalah secara online. Untuk memulai silahkan klik tombol di bawah ini.
-  </p>
-
-  <ion-row>
-    <ion-col style="text-align:center">
-    <button ion-button secondary menuToggle color="primary" round>Mulai</button>
-    </ion-col>
-  </ion-row>-->
   <ion-item><b>Usulan Warga Terbaru</b></ion-item>
-  <ion-card class="adv-map">
+  <div *ngFor="let item2 of items2.koleksi; let i=index; let l=last;">
+  <ion-card class="adv-map" *ngIf="l == true">
     <div style="position: relative">
-      <img src="assets/img/desa.jpg">
-      <ion-fab right top>
-        <button ion-fab color="primary">
-          <ion-icon name="md-eye"></ion-icon>
-        </button>
-      </ion-fab>
+      <ion-slides pager>
+        <div *ngFor="let photo of items2.koleksifoto">
+        <ion-slide *ngIf="item2.id == photo.id">
+          <img style="height: 300px; width: 300px; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fotoupload/{{photo.foto}}" class="slide-image">
+          <ion-toolbar></ion-toolbar>
+        </ion-slide>
+        </div>
+      </ion-slides>
     </div>
     <ion-item>
       <ion-icon color="subtle" large item-start name='ios-create-outline'></ion-icon>
-      <h2>Judul Usulan</h2>
-      <p>Pembangunan Jalan Desa, Dusun A, Gang I</p>
+      <h2>{{ item2.judul }}</h2>
+      <p>{{ item2.deskripsi }}</p>
     </ion-item>
     <ion-item>
       <ion-icon color="subtle" large item-start name='pin'></ion-icon>
@@ -41,12 +33,12 @@
     </ion-item>
     <ion-item actions>
       <span ion-text item-start color="subtle">Diusulkan Oleh</span>
-      <span ion-text item-start color="secondary" class="item-bold">Awan A</span>
+      <span ion-text item-start color="secondary" class="item-bold">{{ item2.warga.nama }}</span>
       <button ion-button color="secondary" clear item-end icon-start>
         Detail &nbsp;
         <ion-icon name='ios-arrow-forward'></ion-icon>
       </button>
     </ion-item>
-  
   </ion-card>
+  </div>
 </ion-content>

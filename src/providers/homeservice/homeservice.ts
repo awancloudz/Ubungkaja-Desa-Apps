@@ -8,6 +8,7 @@ import { Http,Response,RequestOptions,Headers } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 
 import 'rxjs/add/operator/map';
+import { UsulanArray } from '../../pages/usulan/usulanarray';
 /*
   Generated class for the HomeserviceProvider provider.
 
@@ -18,11 +19,18 @@ import 'rxjs/add/operator/map';
 export class HomeserviceProvider {
   //Deklarasi variabel
   private items:HomeArray[]=[];
+  private items2:UsulanArray[]=[];
   //Memanggil URL Api
   private url:string="http://forkomperbekelbali.com/desa/public/api/perangkat";
+  private url2:string="http://forkomperbekelbali.com/desa/public/api/usulanbaru";
   constructor(public _http: Http) {
   }
-
+    //Tampilkan usulan
+    tampilkanusulanbaru(iddesa)
+    {
+     return this._http.get(this.url2+"/"+iddesa)
+     .map((response:Response)=>response.json());
+    }
   //Cek + Tambah perangkat
   tambahperangkat(item:HomeArray){
     let body = JSON.stringify(item);

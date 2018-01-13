@@ -13,7 +13,7 @@ import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileChooser } from '@ionic-native/file-chooser';
 //import { LocationSelectPage } from '../../pages/location-select/location-select';
-
+import { Storage } from '@ionic/storage';
 // INDEX USULAN //
 @Component({
   templateUrl: 'usulan.html',
@@ -24,7 +24,7 @@ export class UsulanPage {
   judul:String;
   deskripsi:Text;
   constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,public alertCtrl: AlertController,
-    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController) {
+    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,private storage: Storage) {
     //TOMBOL EXIT
     this.platform.ready().then(() => {
       this.platform.registerBackButtonAction(() => {
@@ -67,20 +67,23 @@ export class UsulanPage {
       content:"Loading..."
     });
     loadingdata.present();
-    //Tampilkan data dari server
-    this.usulanservice.tampilkanusulan().subscribe(
-      //Jika data sudah berhasil di load
-      (data:UsulanArray[])=>{
-        this.items=data;
-      },
-      //Jika Error
-      function (error){   
-      },
-      //Tutup Loading
-      function(){
-        loadingdata.dismiss();
-      }
-    );
+    //Ambil data ID dari storage
+    this.storage.get('id_user').then((iduser) => {
+      //Tampilkan data dari server
+      this.usulanservice.tampilkanusulan(iduser).subscribe(
+        //Jika data sudah berhasil di load
+        (data:UsulanArray[])=>{
+          this.items=data;
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+          loadingdata.dismiss();
+        }
+      );
+    });
   }
 
   //Action ketika tombol di klik
@@ -178,7 +181,8 @@ export class UsulandetailPage {
   longitude:number;
   
   constructor (public platform: Platform,private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
-    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
+    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
+    private storage: Storage) {
     this.item = params.data.item;
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
@@ -193,20 +197,23 @@ export class UsulandetailPage {
       content:"Loading..."
     });
     loadingdata.present();
-    //Tampilkan data dari server
-    this.usulanservice.tampilkanusulan().subscribe(
-      //Jika data sudah berhasil di load
-      (data:UsulanArray[])=>{
-        //this.items=data;
-      },
-      //Jika Error
-      function (error){   
-      },
-      //Tutup Loading
-      function(){
-        loadingdata.dismiss();
-      }
-    );
+    //Ambil data ID dari storage
+    this.storage.get('id_user').then((iduser) => {
+      //Tampilkan data dari server
+      this.usulanservice.tampilkanusulan(iduser).subscribe(
+        //Jika data sudah berhasil di load
+        (data:UsulanArray[])=>{
+          //this.items=data;
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+          loadingdata.dismiss();
+        }
+      );
+    });
     this.loadMap(this.item);
     
   }
@@ -344,7 +351,7 @@ export class UsulancreatePage {
     public nav: NavController,public platform: Platform,
     public actionSheetCtrl: ActionSheetController,public loadincontroller:LoadingController,
     public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
-    private fileChooser: FileChooser) {
+    private fileChooser: FileChooser,private storage: Storage) {
     this.searchDisabled = true;
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
@@ -359,20 +366,24 @@ export class UsulancreatePage {
       content:"Loading..."
     });
     loadingdata.present();
-    //Tampilkan data dari server
-    this.usulanservice.tampilkanusulan().subscribe(
-      //Jika data sudah berhasil di load
-      (data:UsulanArray[])=>{
-        this.items=data;
-      },
-      //Jika Error
-      function (error){   
-      },
-      //Tutup Loading
-      function(){
-        loadingdata.dismiss();
-      }
-    );
+    //Ambil data ID dari storage
+    this.storage.get('id_user').then((iduser) => {
+      this.id_warga = iduser;
+      //Tampilkan data dari server
+      this.usulanservice.tampilkanusulan(iduser).subscribe(
+        //Jika data sudah berhasil di load
+        (data:UsulanArray[])=>{
+          this.items=data;
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+          loadingdata.dismiss();
+        }
+      );
+    });
     this.loadMap2();
     //Pencarian MAP
     let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then(() => {
@@ -743,7 +754,8 @@ export class UsulaneditPage {
   longitude:number;
 
   constructor(public platform: Platform,private googleMaps3: GoogleMaps,params: NavParams,public nav: NavController,
-    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
+    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
+    private storage: Storage) {
     this.item = params.data.item;
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
@@ -759,20 +771,23 @@ export class UsulaneditPage {
       content:"Loading..."
     });
     loadingdata.present();
-    //Tampilkan data dari server
-    this.usulanservice.tampilkanusulan().subscribe(
-      //Jika data sudah berhasil di load
-      (data:UsulanArray[])=>{
-        this.items=data;
-      },
-      //Jika Error
-      function (error){   
-      },
-      //Tutup Loading
-      function(){
-        loadingdata.dismiss();
-      }
-    );
+    //Ambil data ID dari storage
+    this.storage.get('id_user').then((iduser) => {
+      //Tampilkan data dari server
+      this.usulanservice.tampilkanusulan(iduser).subscribe(
+        //Jika data sudah berhasil di load
+        (data:UsulanArray[])=>{
+          this.items=data;
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+          loadingdata.dismiss();
+        }
+      );
+    });
     this.loadMap3(this.item);
   }
   loadMap3(item) {

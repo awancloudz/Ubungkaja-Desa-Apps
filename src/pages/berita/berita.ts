@@ -3,6 +3,7 @@ import { NavController, NavParams, Platform, ActionSheetController, LoadingContr
 import { BeritaserviceProvider} from '../../providers/beritaservice/beritaservice';
 import { BeritaArray } from '../../pages/berita/beritaarray';
 import { UsulandetailPage } from '../../pages/usulan/usulan';
+import { Storage } from '@ionic/storage';
 /**
  * Generated class for the BeritaPage page.
  *
@@ -17,7 +18,8 @@ import { UsulandetailPage } from '../../pages/usulan/usulan';
 export class BeritaPage {
   items:BeritaArray[]=[];
   constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
-    public loadincontroller:LoadingController,public beritaservice:BeritaserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
+    public loadincontroller:LoadingController,public beritaservice:BeritaserviceProvider,public _toast:ToastController,public alertCtrl: AlertController
+    ,public storage: Storage) {
     //TOMBOL EXIT
     this.platform.ready().then(() => {
       this.platform.registerBackButtonAction(() => {
@@ -51,20 +53,19 @@ export class BeritaPage {
       content:"Loading..."
     });
     loadingdata.present();
-
-    this.beritaservice.tampilkanberita().subscribe(
-
-      (data:BeritaArray[])=>{
-        this.items=data;
-      },
-
-      function (error){   
-      },
-
-      function(){
-        loadingdata.dismiss();
-      }
-    );
+    //Ambil data ID dari storage
+    this.storage.get('id_desa').then((iddesa) => {
+      this.beritaservice.tampilkanberita(iddesa).subscribe(
+        (data:BeritaArray[])=>{
+          this.items=data;
+        },
+        function (error){   
+        },
+        function(){
+          loadingdata.dismiss();
+        }
+      );
+    });
   }
   tomboldetail(item) {
     this.nav.push(BeritaDusunPage, { item: item });
@@ -81,7 +82,8 @@ export class BeritaDusunPage {
   id:Number;
   items:BeritaArray[]=[];
   constructor(params: NavParams,public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
-    public loadincontroller:LoadingController,public beritaservice:BeritaserviceProvider,public _toast:ToastController,public alertCtrl: AlertController) {
+    public loadincontroller:LoadingController,public beritaservice:BeritaserviceProvider,public _toast:ToastController,public alertCtrl: AlertController
+    ,public storage: Storage) {
     this.item = params.data.item;
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
@@ -96,24 +98,26 @@ export class BeritaDusunPage {
       content:"Loading..."
     });
     loadingdata.present();
-    
-    this.beritaservice.tampilkanberita().subscribe(
-      (data:BeritaArray[])=>{
-        //console.log(this.item);
-        //Detail Usulan
-        this.beritaservice.tampilkandetail(new BeritaArray(this.item.id)).subscribe(
-          (data:BeritaArray[])=>{
-            this.items=data;
-            console.log(this.items);
-          }
-        );
-      },
-      function (error){   
-      },
-      function(){
-        loadingdata.dismiss();
-      }
-    );
+    //Ambil data ID dari storage
+    this.storage.get('id_desa').then((iddesa) => {
+      this.beritaservice.tampilkanberita(iddesa).subscribe(
+        (data:BeritaArray[])=>{
+          //console.log(this.item);
+          //Detail Usulan
+          this.beritaservice.tampilkandetail(new BeritaArray(this.item.id)).subscribe(
+            (data:BeritaArray[])=>{
+              this.items=data;
+              console.log(this.items);
+            }
+          );
+        },
+        function (error){   
+        },
+        function(){
+          loadingdata.dismiss();
+        }
+      );
+    });
   }
   tomboldetail(item2) {
     this.nav.push(UsulandetailPage, { item: item2 });

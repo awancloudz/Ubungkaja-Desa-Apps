@@ -62,6 +62,8 @@ ceklogin(){
             this.storage.set('id_user', data[key].id);
             this.storage.set('nama_warga', data[key].nama);
             this.storage.set('no_ktp', data[key].noktp);
+            this.storage.set('id_dusun', data[key].id_dusun);
+            this.storage.set('id_desa', data[key].id_profiledesa);
            }
            else{
               gagal.present();

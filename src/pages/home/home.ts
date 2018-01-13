@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController,AlertController,Platform } from 'ionic-angular';
+import { NavController,AlertController,Platform,LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { OneSignal } from '@ionic-native/onesignal';
 //Tambahkan Provider
 import { HomeserviceProvider } from '../../providers/homeservice/homeservice';
 //Tambahkan Variabel Global
 import { HomeArray } from '../../pages/home/homearray';
+import { UsulanArray } from '../../pages/usulan/usulanarray';
 
 @Component({
   selector: 'page-home',
@@ -14,12 +15,14 @@ import { HomeArray } from '../../pages/home/homearray';
 export class HomePage {
   warga: Array<{nama: string}>;
   items:HomeArray[]=[];
+  items2:UsulanArray[]=[];
   id:Number;
   id_warga: Number;
   app_id: String;
 
   constructor(public platform: Platform, public navCtrl: NavController,public storage: Storage,
-    public homeservice:HomeserviceProvider,public alertCtrl: AlertController,public oneSignal: OneSignal) {
+    public homeservice:HomeserviceProvider,public alertCtrl: AlertController,public oneSignal: OneSignal,
+    public loadincontroller:LoadingController) {
     //TOMBOL EXIT
     this.platform.ready().then(() => {
       this.platform.registerBackButtonAction(() => {
@@ -73,6 +76,29 @@ export class HomePage {
       this.warga = [
         { nama: val },
       ];
+    });
+
+    //Loading bar
+    let loadingdata=this.loadincontroller.create({
+      content:"Loading..."
+    });
+    loadingdata.present();
+    //Ambil data ID dari storage
+    this.storage.get('id_desa').then((iddesa) => {
+      //Tampilkan data dari server
+      this.homeservice.tampilkanusulanbaru(iddesa).subscribe(
+        //Jika data sudah berhasil di load
+        (data2:UsulanArray[])=>{
+          this.items2=data2;
+        },
+        //Jika Error
+        function (error){   
+        },
+        //Tutup Loading
+        function(){
+          loadingdata.dismiss();
+        }
+      );
     });
   }
   
