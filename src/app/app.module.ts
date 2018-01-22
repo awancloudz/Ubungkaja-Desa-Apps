@@ -19,7 +19,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { UsulanPage,UsulandetailPage,UsulancreatePage,UsulaneditPage } from '../pages/usulan/usulan';
-import { BeritaPage,BeritaDusunPage } from '../pages/berita/berita';
+import { BeritaPage,BeritaDusunPage,BeritaDetailPage } from '../pages/berita/berita';
 import { PengaduanPage,PengaduandetailPage,PengaduancreatePage,PengaduaneditPage } from '../pages/pengaduan/pengaduan';
 import { AntrianPage } from '../pages/antrian/antrian';
 import { ProfilePage } from '../pages/profile/profile';
@@ -95,7 +95,7 @@ import { HomeserviceProvider } from '../providers/homeservice/homeservice';
     UsulancreatePage,
     UsulaneditPage,
     BeritaPage,
-    BeritaDusunPage,
+    BeritaDusunPage,BeritaDetailPage,
     ProfilePage,
     SettingPage,
     LoginPage,

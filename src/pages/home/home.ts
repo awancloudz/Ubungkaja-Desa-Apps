@@ -82,6 +82,10 @@ export class HomePage {
     let loadingdata=this.loadincontroller.create({
       content:"Loading..."
     });
+    let info = this.alertCtrl.create({
+      title: 'Tidak Terhubung ke server',
+      message: 'Silahkan Periksa koneksi internet anda...',
+    });
     loadingdata.present();
     //Ambil data ID dari storage
     this.storage.get('id_desa').then((iddesa) => {
@@ -92,7 +96,12 @@ export class HomePage {
           this.items2=data2;
         },
         //Jika Error
-        function (error){   
+        function (error){  
+          //Jika Koneksi Tidak ada
+          if(error.status == 0){
+            info.present();
+          }
+          loadingdata.dismiss(); 
         },
         //Tutup Loading
         function(){

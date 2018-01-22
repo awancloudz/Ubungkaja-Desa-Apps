@@ -2,8 +2,13 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
 import { BeritaserviceProvider} from '../../providers/beritaservice/beritaservice';
 import { BeritaArray } from '../../pages/berita/beritaarray';
-import { UsulandetailPage } from '../../pages/usulan/usulan';
+import { UsulanserviceProvider} from '../../providers/usulanservice/usulanservice';
+import { UsulanArray } from '../../pages/usulan/usulanarray';
 import { Storage } from '@ionic/storage';
+//Google Maps
+import { GoogleMaps, Geocoder, GoogleMap, GoogleMapsEvent, GoogleMapOptions, CameraPosition, MarkerOptions, Marker } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
+import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 /**
  * Generated class for the BeritaPage page.
  *
@@ -74,8 +79,7 @@ export class BeritaPage {
 
 @Component({
   selector: 'page-berita',
-  templateUrl: 'berita-dusun.html',
-  entryComponents:[ UsulandetailPage ], 
+  templateUrl: 'berita-dusun.html' 
 })
 export class BeritaDusunPage {
   item;
@@ -97,6 +101,10 @@ export class BeritaDusunPage {
     let loadingdata=this.loadincontroller.create({
       content:"Loading..."
     });
+    let info = this.alertCtrl.create({
+      title: 'Tidak Terhubung ke server',
+      message: 'Silahkan Periksa koneksi internet anda...',
+    });
     loadingdata.present();
     //Ambil data ID dari storage
     this.storage.get('id_desa').then((iddesa) => {
@@ -111,7 +119,12 @@ export class BeritaDusunPage {
             }
           );
         },
-        function (error){   
+        function (error){
+          //Jika Koneksi Tidak ada
+          if(error.status == 0){
+            info.present();
+          }
+          loadingdata.dismiss();   
         },
         function(){
           loadingdata.dismiss();
@@ -120,6 +133,112 @@ export class BeritaDusunPage {
     });
   }
   tomboldetail(item2) {
-    this.nav.push(UsulandetailPage, { item: item2 });
+    this.nav.push(BeritaDetailPage, { item: item2 });
+  }
+}
+
+// DETAIL USULAN //
+@Component ({
+    templateUrl: 'berita-detail.html',
+})
+
+export class BeritaDetailPage {
+  item;
+  map: GoogleMap;
+  items:UsulanArray[]=[];
+  id:Number;
+  tanggal:Date;
+  judul:String;
+  id_kategori:Number;
+  id_warga:Number;
+  deskripsi:Text;
+  status:Number;
+  volume:String;
+  satuan:String;
+  pria:String;
+  wanita:String;
+  rtm:String;
+  lokasi:String;
+  latitude:any;
+  longitude:any;
+  
+  constructor (public platform: Platform,private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
+    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
+    private storage: Storage) {
+    this.item = params.data.item;
+    //Hapus Back
+    let backAction =  platform.registerBackButtonAction(() => {
+      this.nav.pop();
+      backAction();
+    },2)
+  }
+
+  ionViewDidLoad() {
+    //Loading bar
+    let loadingdata=this.loadincontroller.create({
+      content:"Loading..."
+    });
+
+    loadingdata.present();
+    //Ambil data ID dari storage
+    this.storage.get('id_user').then((iduser) => {
+      //Tampilkan data dari server
+      this.usulanservice.tampilkanusulan(iduser).subscribe(
+        //Jika data sudah berhasil di load
+        (data:UsulanArray[])=>{
+          //this.items=data;
+        },
+        //Jika Error
+        function (error){   
+
+        },
+        //Tutup Loading
+        function(){
+          loadingdata.dismiss();
+        }
+      );
+    });
+    this.loadMap(this.item);
+    
+  }
+  
+  loadMap(item) {
+    let mapOptions: GoogleMapOptions = {
+      camera: {
+        target: {
+          lat: item.latitude,
+          lng: item.longitude
+        },
+        zoom: 18,
+        tilt: 30
+      }
+    };
+    this.map = this.googleMaps.create('map_canvas', mapOptions);
+    // Wait the MAP_READY before using any methods.
+    this.map.one(GoogleMapsEvent.MAP_READY)
+      .then(() => {
+        console.log('Map is ready!');
+        // Now you can use all methods safely.
+        this.map.addMarker({
+            draggable: true,
+            title: 'Lokasi',
+            icon: 'blue',
+            animation: 'DROP',
+            position: {
+              lat: item.latitude,
+              lng: item.longitude
+            },
+            size:	{ 
+               width: 200,
+               height: 200 
+            }
+          })
+          .then(marker => {
+            marker.on(GoogleMapsEvent.MARKER_CLICK)
+              .subscribe(() => {
+                //jika diklik
+              });
+          });
+      });
   }
 }

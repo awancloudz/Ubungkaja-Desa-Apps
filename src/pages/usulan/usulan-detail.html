@@ -12,6 +12,7 @@
   <p><b>Kategori :</b> {{ item.kategori.namakategori }}</p>
   <p><b>Lokasi</b></p>
   <div style="height: 50%;background-color: rgba(0, 0, 0, 0);" id="map_canvas"></div>
+  <p><b>Detail Lokasi : </b> {{ item.lokasi }}</p>
   <p><b>Foto</b></p>
   <ion-slides pager>
     <ion-slide *ngFor="let photo of item.fotousulan">
@@ -20,6 +21,10 @@
   </ion-slides>
   <p><b>Volume : </b> {{ item.volume }}</p>
   <p><b>Satuan : </b> {{ item.satuan }}</p>
+  <p>Penerima Manfaat</p>
+  <p><b>Laki-Laki : </b> {{ item.pria }}</p>
+  <p><b>Wanita : </b> {{ item.wanita }}</p>
+  <p><b>Rumah Tangga Miskin : </b> {{ item.rtm }}</p>
   <p><b>Detail Usulan</b> </p>
   <p>{{ item.deskripsi }}</p>  
 </ion-content>

@@ -47,6 +47,10 @@ ceklogin(){
   let loadingdata=this.loadincontroller.create({
       content:"Proses Login..."
   });
+  let info = this.alertCtrl.create({
+    title: 'Tidak Terhubung ke server',
+    message: 'Silahkan Periksa koneksi internet anda...',
+  });
   loadingdata.present();
   //Mengambil value dari input field untuk dimasukkan ke UsulanArray
   this.loginservice.tambahlogin(new LoginArray(this.noktp,this.password))
@@ -75,7 +79,11 @@ ceklogin(){
       }
     },
     function(error){
-
+      //Jika Koneksi Tidak ada
+      if(error.status == 0){
+        info.present();
+      }
+      loadingdata.dismiss();
     },
     function(){
     //Sembunyikan Loading

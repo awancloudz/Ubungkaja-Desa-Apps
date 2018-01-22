@@ -66,6 +66,10 @@ export class UsulanPage {
     let loadingdata=this.loadincontroller.create({
       content:"Loading..."
     });
+    let info = this.alertCtrl.create({
+      title: 'Tidak Terhubung ke server',
+      message: 'Silahkan Periksa koneksi internet anda...',
+    });
     loadingdata.present();
     //Ambil data ID dari storage
     this.storage.get('id_user').then((iduser) => {
@@ -76,7 +80,12 @@ export class UsulanPage {
           this.items=data;
         },
         //Jika Error
-        function (error){   
+        function (error){  
+          //Jika Koneksi Tidak ada
+          if(error.status == 0){
+            info.present();
+          }
+          loadingdata.dismiss();
         },
         //Tutup Loading
         function(){
@@ -177,8 +186,14 @@ export class UsulandetailPage {
   id_warga:Number;
   deskripsi:Text;
   status:Number;
-  latitude:number;
-  longitude:number;
+  volume:String;
+  satuan:String;
+  pria:String;
+  wanita:String;
+  rtm:String;
+  lokasi:String;
+  latitude:any;
+  longitude:any;
   
   constructor (public platform: Platform,private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
@@ -332,6 +347,10 @@ export class UsulancreatePage {
   status:Number;
   volume:String;
   satuan:String;
+  pria:String;
+  wanita:String;
+  rtm:String;
+  lokasi:String;
   latitude:any;
   longitude:any;
 
@@ -713,7 +732,7 @@ export class UsulancreatePage {
     });
     loadingdata.present();
     //Mengambil value dari input field untuk dimasukkan ke UsulanArray
-    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.longitude,this.latitude))
+    this.usulanservice.tambahusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.longitude,this.latitude,this.pria,this.wanita,this.rtm,this.lokasi))
     .subscribe(
       (data:UsulanArray)=>{
         //Push
@@ -750,6 +769,10 @@ export class UsulaneditPage {
   status:Number;
   volume:String;
   satuan:String;
+  pria:String;
+  wanita:String;
+  rtm:String;
+  lokasi:String;
   latitude:number;
   longitude:number;
 
@@ -846,7 +869,7 @@ export class UsulaneditPage {
     });
     loadingdata.present();
     //Mengambil value dari edit field untuk dimasukkan ke UsulanArray
-    this.usulanservice.editusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.longitude,this.latitude))
+    this.usulanservice.editusulan(new UsulanArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.longitude,this.latitude,this.pria,this.wanita,this.rtm,this.lokasi))
     .subscribe(
       (data:any)=>{
         //Kirim Variable UsulanArray ke Usulanservice.ts

@@ -13,11 +13,10 @@
   <ion-input type="hidden" [(ngModel)]="id" value="{{ item.id }}"></ion-input>
   <ion-item>
     <ion-label floating>Tanggal</ion-label>
-    <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="tanggal" 
-    monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des"
+    <ion-datetime displayFormat="DD MMM YYYY" min="2015" [(ngModel)]="tanggal"
+    monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des" doneText="Pilih" cancelText="Batal"
     ></ion-datetime>
   </ion-item>
-
   <ion-item>
     <ion-label floating>Judul Usulan</ion-label>
     <ion-input type="text" [(ngModel)]="judul" value="{{ item.judul }}"></ion-input>

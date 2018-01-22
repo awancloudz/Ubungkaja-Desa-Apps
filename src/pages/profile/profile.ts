@@ -65,6 +65,10 @@ export class ProfilePage {
       let loadingdata=this.loadincontroller.create({
         content:"Loading..."
       });
+      let info = this.alertCtrl.create({
+        title: 'Tidak Terhubung ke server',
+        message: 'Silahkan Periksa koneksi internet anda...',
+      });
       loadingdata.present();
       //Tampilkan data dari server
       this.profileservice.tampilkanprofile(val).subscribe(
@@ -80,7 +84,12 @@ export class ProfilePage {
           }
         },
         //Jika Error
-        function (error){   
+        function (error){  
+          //Jika Koneksi Tidak ada
+          if(error.status == 0){
+            info.present();
+          }
+          loadingdata.dismiss(); 
         },
         //Tutup Loading
         function(){

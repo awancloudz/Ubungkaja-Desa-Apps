@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { BeritaPage,BeritaDusunPage } from './berita';
+import { BeritaPage,BeritaDusunPage,BeritaDetailPage } from './berita';
 
 @NgModule({
   declarations: [
-    BeritaPage,BeritaDusunPage
+    BeritaPage,BeritaDusunPage,BeritaDetailPage
   ],
   imports: [
     IonicPageModule.forChild(BeritaPage),
