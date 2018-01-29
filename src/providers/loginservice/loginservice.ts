@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 //Tambahakan aksilogin
 import { LoginArray } from '../../pages/login/loginarray';
+import { DaftarArray } from '../../pages/login/daftararray';
 //Tambahkan Response,Request,Header
 import { Http,Response,RequestOptions,Headers } from '@angular/http';
 //Tambahkan Obervable
@@ -19,14 +20,27 @@ export class LoginserviceProvider {
   //Deklarasi variabel
   private items:LoginArray[]=[];
   //Memanggil URL Api
-  private url:string="http://forkomperbekelbali.com/desa/public/api/loginuser/";
+  private url:string="http://forkomperbekelbali.com/desa/public/api/loginuser";
+  private url2:string="http://forkomperbekelbali.com/desa/public/api/daftaruser";
   constructor(public _http: Http) {
   }
 
-//Tambah login
-tambahlogin(item:LoginArray){
-  return this._http.get(this.url+item.noktp)
+//Cek Daftar
+loginuser(item:LoginArray){
+  return this._http.get(this.url+"/"+item.noktp+"/password/"+item.password)
   .map((response:Response)=>response.json());
+}
+cekdaftar(item:LoginArray){
+  return this._http.get(this.url2+"/"+item.noktp)
+  .map((response:Response)=>response.json());
+}
+daftaruser(item:DaftarArray){
+  let body = JSON.stringify(item);
+  let headers = new Headers({ 'Content-Type': 'application/json' });
+  let options = new RequestOptions({ headers: headers });
+  return this._http.post(this.url2,
+                body, options)
+               .map((response:Response)=>response.json());
 }
 
 }
