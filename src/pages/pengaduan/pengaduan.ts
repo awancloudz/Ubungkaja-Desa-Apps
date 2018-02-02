@@ -19,7 +19,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-
+declare var google; 
 @IonicPage()
 @Component({
   selector: 'page-pengaduan',

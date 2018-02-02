@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import { Platform } from 'ionic-angular';
 import { ConnectivityServiceProvider } from '../../providers/connectivity-service/connectivity-service';
 import { Geolocation } from '@ionic-native/geolocation';
+declare var google; 
 /*
   Generated class for the GoogleMapsProvider provider.
 

@@ -14,6 +14,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { FileChooser } from '@ionic-native/file-chooser';
 //import { LocationSelectPage } from '../../pages/location-select/location-select';
 import { Storage } from '@ionic/storage';
+declare var google; 
 // INDEX USULAN //
 @Component({
   templateUrl: 'usulan.html',
