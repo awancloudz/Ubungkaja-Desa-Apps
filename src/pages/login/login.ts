@@ -298,7 +298,7 @@ cekdaftar(){
             this.fotowajah = "wajah_" + this.username + ".jpg";
             
             loadingdata.present();
-            this.loginservice.daftaruser(new DaftarArray(this.id,this.name,this.username,this.password,this.level,this.status,this.id_dusun,this.fotoktp,this.fotowajah))
+            this.loginservice.daftaruser(new DaftarArray(this.id,this.name,this.username,this.password,this.level,this.status,this.id_dusun,this.fotoktp,this.fotowajah,this.nohp,this.email))
             .subscribe(
               (data:DaftarArray)=>{
                 this.uploadFile();
