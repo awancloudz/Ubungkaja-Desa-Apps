@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ProfileserviceProvider {
   private items:ProfileArray[]=[];
-  private url:string="http://forkomperbekelbali.com/desa/public/api/warga/";
+  private url:string="http://forkomperbekelbali.com/desa/public/api/warga";
   constructor(public _http: Http) {
   }
 
@@ -20,7 +20,7 @@ export class ProfileserviceProvider {
   //Tampilkan profile
   tampilkanprofile(val)
   {
-    return this._http.get(this.url+val)
+    return this._http.get(this.url+"/"+val)
    .map((response:Response)=>response.json());
   }
   //Edit Usulan
@@ -28,7 +28,7 @@ export class ProfileserviceProvider {
     let body = JSON.stringify(item);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this._http.put(this.url+item.id,
+    return this._http.put(this.url,
                   body, options)
                  .map((response:Response)=>response.json());
   }

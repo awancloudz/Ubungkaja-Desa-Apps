@@ -19,6 +19,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { UsulanPage,UsulandetailPage,UsulancreatePage,UsulaneditPage } from '../pages/usulan/usulan';
+import { UsulanDusunPage,UsulanDusundetailPage } from '../pages/usulandusun/usulandusun';
 import { BeritaPage,BeritaDusunPage,BeritaDetailPage } from '../pages/berita/berita';
 import { PengaduanPage,PengaduandetailPage,PengaduancreatePage,PengaduaneditPage } from '../pages/pengaduan/pengaduan';
 import { AntrianPage } from '../pages/antrian/antrian';
@@ -44,6 +45,7 @@ import { PengaduanPageModule } from '../pages/pengaduan/pengaduan.module';
 import { AntrianPageModule } from '../pages/antrian/antrian.module';
 import { LoginPageModule } from '../pages/login/login.module';
 import { UsulanPageModule } from '../pages/usulan/usulan.module';
+import { UsulanDusunPageModule } from '../pages/usulandusun/usulandusun.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { SettingPageModule } from '../pages/setting/setting.module';
 import { ProfildesaPageModule } from '../pages/profildesa/profildesa.module';
@@ -52,6 +54,7 @@ import { BelanjaPageModule } from '../pages/belanja/belanja.module';
 import { PengaduanserviceProvider } from '../providers/pengaduanservice/pengaduanservice';
 import { AntrianserviceProvider } from '../providers/antrianservice/antrianservice';
 import { HomeserviceProvider } from '../providers/homeservice/homeservice';
+import { UsulandusunserviceProvider } from '../providers/usulandusunservice/usulandusunservice';
 
 @NgModule({
   //Deklarasi variabel page
@@ -77,6 +80,7 @@ import { HomeserviceProvider } from '../providers/homeservice/homeservice';
     BeritaPageModule,
     LoginPageModule,
     UsulanPageModule,
+    UsulanDusunPageModule,
     ProfilePageModule,
     SettingPageModule,
     ProfildesaPageModule,
@@ -94,6 +98,8 @@ import { HomeserviceProvider } from '../providers/homeservice/homeservice';
     UsulandetailPage,
     UsulancreatePage,
     UsulaneditPage,
+    UsulanDusunPage,
+    UsulanDusundetailPage,
     BeritaPage,
     BeritaDusunPage,BeritaDetailPage,
     ProfilePage,
@@ -126,7 +132,8 @@ import { HomeserviceProvider } from '../providers/homeservice/homeservice';
     PengaduanserviceProvider,
     AntrianserviceProvider,  
     OneSignal,
-    HomeserviceProvider,                    
+    HomeserviceProvider,
+    UsulandusunserviceProvider,                    
   ]
 })
 export class AppModule {}

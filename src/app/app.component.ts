@@ -7,6 +7,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 // Mengambil halaman UTAMA yg sudah dibuat
 import { HomePage } from '../pages/home/home';
 import { UsulanPage } from '../pages/usulan/usulan';
+import { UsulanDusunPage } from '../pages/usulandusun/usulandusun';
 import { BeritaPage } from '../pages/berita/berita';
 import { ProfilePage } from '../pages/profile/profile';
 import { SettingPage } from '../pages/setting/setting';
@@ -38,6 +39,7 @@ export class MyApp {
     this.pages = [
       { title: 'Home', icon: "home", component: HomePage },
       { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
+      //{ title: 'Usulan Warga',  icon: "ios-create", component: UsulanDusunPage },
       { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
       //{ title: 'Pengaduan Saya',  icon: "ios-paper-plane", component: PengaduanPage },
       //{ title: 'Layanan',  icon: "ios-paper-outline", component: AntrianPage },
@@ -45,6 +47,7 @@ export class MyApp {
       { title: 'Profile',  icon: "person", component: ProfilePage },
       { title: 'Logout',  icon: "power", component: SettingPage },
     ];
+
     this.storage.get('nama_warga').then((val) => {
       this.warga = [
         { nama: val },

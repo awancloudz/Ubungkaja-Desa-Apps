@@ -13,11 +13,11 @@
     
     <ion-title>Profile</ion-title>
     
-    <ion-buttons end>
+    <!--<ion-buttons end>
       <button ion-button icon-only (click)="editprofile(item)">
         <ion-icon name="ios-checkmark-circle-outline" style="zoom:1.4"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons>-->
   
   </ion-navbar>
 </ion-header>
@@ -30,7 +30,7 @@
   
   <ion-item>
     <ion-label floating>No.KTP</ion-label>
-    <ion-input type="number" [(ngModel)]="noktp"></ion-input>
+    <ion-input type="number" [(ngModel)]="noktp" disabled></ion-input>
   </ion-item>
   
   <ion-item>
@@ -44,43 +44,52 @@
   </ion-item>
   
   <ion-item>
-    <ion-label floating>Nama Dusun</ion-label>
-    <ion-select interface="popover" [(ngModel)]="id_dusun" >
-      <ion-option value="1">Dusun Dolog</ion-option>
-      <ion-option value="2">Dusun Tlogosari</ion-option>
-      <ion-option value="3">Dusun Sampokong</ion-option>
+    <ion-label floating>Dusun</ion-label>
+    <ion-select [(ngModel)]="id_dusun" interface="popover" disabled>
+      <ion-option ion-item *ngFor="let item of items" value="{{ item.id_dusun }}" selected>{{ item.dusun.nama }}</ion-option>
     </ion-select>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Tanggal Lahir</ion-label>
     <ion-datetime displayFormat="DD MMM YYYY"
-    monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des"
-     ></ion-datetime>
+    monthShortNames="Jan, Feb, Mar, Apr, Mei, Jun, Jul, Agt, Sept, Okt, Nov, Des" [(ngModel)]="tanggal_lahir"></ion-datetime>
   </ion-item>
   
   <ion-item>
     <ion-label floating>Jenis Kelamin</ion-label>
-    <ion-select interface="popover" [(ngModel)]="jenis_kelamin" >
-      <ion-option value="1">Laki-Laki</ion-option>
-      <ion-option value="2">Perempuan</ion-option>
+    <ion-select interface="popover" [(ngModel)]="jenis_kelamin" *ngFor="let item of items">
+        <div *ngIf="item.jenis_kelamin == 'L'">
+          <ion-option value="{{ item.jenis_kelamin }}" selected>Laki-Laki</ion-option>
+          <ion-option value="P">Perempuan</ion-option>
+        </div>
+        <div *ngIf="item.jenis_kelamin == 'P'">
+          <ion-option value="L">Laki-Laki</ion-option>
+          <ion-option value="{{ item.jenis_kelamin }}" selected>Perempuan</ion-option>
+        </div>
     </ion-select>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Nomor Telepon</ion-label>
-    <ion-input type="tel" [(ngModel)]="nomor_telepon"></ion-input>
+    <ion-input type="text" [(ngModel)]="nohp"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Email</ion-label>
-    <ion-input type="email" [(ngModel)]="email"></ion-input>
+    <ion-input type="text" [(ngModel)]="email"></ion-input>
   </ion-item>
 
-  <ion-item>
+  <!--<ion-item>
     <ion-label floating>Password</ion-label>
     <ion-input type="password" [(ngModel)]="password"></ion-input>
-  </ion-item>
-
+  </ion-item>-->
 </ion-list>
+  <ion-fab bottom right>
+    <ion-buttons>
+      <button ion-fab (click)="editprofile()" style="margin-bottom:10px">
+        <ion-icon name="checkmark" style="zoom:1.4"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-fab>
 </ion-content>

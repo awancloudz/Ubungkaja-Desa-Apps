@@ -25,6 +25,9 @@ export class SettingPage {
     this.storage.set('id_user', null);
     this.storage.set('nama_warga', null);
     this.storage.set('no_ktp', null);
+    this.storage.set('level', null);
+    this.storage.set('id_dusun', null);
+    this.storage.set('id_desa',null);
     this.navCtrl.setRoot(LoginPage);
   }
 
