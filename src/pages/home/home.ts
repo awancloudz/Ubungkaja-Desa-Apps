@@ -13,7 +13,6 @@ import { UsulanArray } from '../../pages/usulan/usulanarray';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  warga: Array<{nama: string}>;
   items:HomeArray[]=[];
   items2:UsulanArray[]=[];
   id:Number;
@@ -49,7 +48,7 @@ export class HomePage {
       });
 
       //Check App ID
-      this.oneSignal.getIds().then((ids) => {
+      /*this.oneSignal.getIds().then((ids) => {
         this.app_id = ids.userId;
         //Cek ID Warga
         this.storage.get('id_user').then((val) => {
@@ -68,16 +67,10 @@ export class HomePage {
         });
         //End Cek ID Warga
       });
-      //End Cek App ID
+      //End Cek App ID*/
     });
   }
   ionViewDidLoad(){
-    this.storage.get('nama_warga').then((val) => {
-      this.warga = [
-        { nama: val },
-      ];
-    });
-
     //Loading bar
     let loadingdata=this.loadincontroller.create({
       content:"Loading..."

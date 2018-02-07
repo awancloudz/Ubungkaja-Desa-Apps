@@ -15,8 +15,14 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
+    <ion-list *ngIf="level">
       <button menuClose ion-item icon-left *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon [name]="p.icon">{{p.name}}</ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+    <ion-list *ngIf="!level">
+      <button menuClose ion-item icon-left *ngFor="let p of pages2" (click)="openPage(p)">
         <ion-icon [name]="p.icon">{{p.name}}</ion-icon>
         {{p.title}}
       </button>

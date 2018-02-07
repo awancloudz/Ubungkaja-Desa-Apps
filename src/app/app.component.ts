@@ -1,6 +1,6 @@
 import { Storage } from '@ionic/storage';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { OneSignal } from '@ionic-native/onesignal';
@@ -26,20 +26,22 @@ export class MyApp {
 
   //halaman yang pertama kali dipanggil
   rootPage: any = LoginPage;
-
+  level = false;
   //Tipe Variable untuk tombol menu
   pages: Array<{title: string, icon: string, component: any}>;
+  pages2: Array<{title: string, icon: string, component: any}>;
   warga: Array<{nama: string}>;
   ids: any;
   constructor(private storage: Storage,public platform: Platform, public statusBar: StatusBar, 
-    public splashScreen: SplashScreen,private oneSignal: OneSignal) {
+    public splashScreen: SplashScreen,private oneSignal: OneSignal,private events: Events) {
+    //Variabel Awal
+    this.warga = [];
     this.initializeApp();
-
+    this.listenToLoginEvents();
     // Value Variable dari tombol menu
     this.pages = [
       { title: 'Home', icon: "home", component: HomePage },
       { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
-      //{ title: 'Usulan Warga',  icon: "ios-create", component: UsulanDusunPage },
       { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
       //{ title: 'Pengaduan Saya',  icon: "ios-paper-plane", component: PengaduanPage },
       //{ title: 'Layanan',  icon: "ios-paper-outline", component: AntrianPage },
@@ -48,11 +50,13 @@ export class MyApp {
       { title: 'Logout',  icon: "power", component: SettingPage },
     ];
 
-    this.storage.get('nama_warga').then((val) => {
-      this.warga = [
-        { nama: val },
-      ];
-    });
+    this.pages2 = [
+      { title: 'Home', icon: "home", component: HomePage },
+      { title: 'Usulan Warga',  icon: "ios-create", component: UsulanDusunPage },
+      { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
+      { title: 'Logout',  icon: "power", component: SettingPage },
+    ];
+
   }
 
   initializeApp() {
@@ -83,5 +87,21 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  listenToLoginEvents() {
+    this.events.subscribe('user:warga', (data) => {
+      this.level = true;
+      this.warga = [
+        { nama: data },
+      ];
+    });
+
+    this.events.subscribe('user:dusun', (data) => {
+      this.level = false;
+      this.warga = [
+        { nama: data },
+      ];
+    });
   }
 }

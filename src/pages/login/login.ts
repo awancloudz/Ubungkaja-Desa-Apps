@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
+import { Events,NavController, NavParams, Platform, ActionSheetController, LoadingController ,ToastController,AlertController } from 'ionic-angular';
 //Tambahkan Provider
 import { LoginserviceProvider } from '../../providers/loginservice/loginservice';
 //Tambahkan Variabel Global
@@ -29,7 +29,7 @@ export class LoginPage {
   password:String;
   constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public loadincontroller:LoadingController,public loginservice:LoginserviceProvider,public _toast:ToastController,
-    public alertCtrl: AlertController,private storage: Storage) {
+    public alertCtrl: AlertController,private storage: Storage,private events: Events) {
   }
 
 ionViewDidLoad(){
@@ -71,6 +71,14 @@ ceklogin(){
             this.storage.set('level', data[key].level);
             this.storage.set('id_dusun', data[key].id_dusun);
             this.storage.set('id_desa', data[key].id_profiledesa);
+            //Verifikasi Level Login
+            if(data[key].level == "warga"){
+              this.events.publish('user:warga',data[key].nama);
+            }
+            else if(data[key].level == "dusun"){
+              this.events.publish('user:dusun',data[key].nama);
+            }
+            //Redirect Home
             this.nav.setRoot(HomePage);
          }
          else{
