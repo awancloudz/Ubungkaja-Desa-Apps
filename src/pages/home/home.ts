@@ -46,28 +46,6 @@ export class HomePage {
           });
           confirm.present();                
       });
-
-      //Check App ID
-      /*this.oneSignal.getIds().then((ids) => {
-        this.app_id = ids.userId;
-        //Cek ID Warga
-        this.storage.get('id_user').then((val) => {
-          this.id_warga = val;
-          //Cek + Simpan Perangkat
-          this.homeservice.tambahperangkat(new HomeArray(this.id,this.id_warga,this.app_id))
-          .subscribe(
-            (data:HomeArray)=>{
-            },
-            function(error){
-            },
-            function(){
-            }
-          );
-          //End Cek simpan perangkat
-        });
-        //End Cek ID Warga
-      });
-      //End Cek App ID*/
     });
   }
   ionViewDidLoad(){

@@ -8,6 +8,11 @@ import { DaftarArray } from '../../pages/login/daftararray';
 //Set direktori redirect * Wajib *
 import { HomePage } from '../../pages/home/home';
 import { Storage } from '@ionic/storage';
+//Tambahkan Provider
+import { HomeserviceProvider } from '../../providers/homeservice/homeservice';
+//Tambahkan Variabel Global
+import { HomeArray } from '../../pages/home/homearray';
+import { OneSignal } from '@ionic-native/onesignal';
 //Camera
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
@@ -27,9 +32,13 @@ export class LoginPage {
   items:LoginArray[]=[];
   noktp:String;
   password:String;
+  id:Number;
+  id_warga: Number;
+  app_id: String;
   constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public loadincontroller:LoadingController,public loginservice:LoginserviceProvider,public _toast:ToastController,
-    public alertCtrl: AlertController,private storage: Storage,private events: Events) {
+    public alertCtrl: AlertController,private storage: Storage,private events: Events,
+    public homeservice:HomeserviceProvider,public oneSignal: OneSignal) {
   }
 
 ionViewDidLoad(){
@@ -78,6 +87,24 @@ ceklogin(){
             else if(data[key].level == "dusun"){
               this.events.publish('user:dusun',data[key].nama);
             }
+            //Check App ID Notifikasi
+            this.oneSignal.getIds().then((ids) => {
+              this.app_id = ids.userId;
+              this.id_warga = data[key].id;
+                //Cek + Simpan Perangkat
+                this.homeservice.tambahperangkat(new HomeArray(this.id,this.id_warga,this.app_id))
+                .subscribe(
+                  (data:HomeArray)=>{
+                  },
+                  function(error){
+                  },
+                  function(){
+                  }
+                );
+                //End Cek simpan perangkat
+            });
+            //End Cek App ID
+
             //Redirect Home
             this.nav.setRoot(HomePage);
          }
