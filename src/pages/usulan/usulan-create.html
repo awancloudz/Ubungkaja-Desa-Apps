@@ -1,16 +1,17 @@
 <ion-header>
   <ion-navbar color="primary">
     
-    <ion-title>
-      Usulan Baru
-    </ion-title>
+    <ion-title style="margin-left: -12px">Usulan Baru</ion-title>
    
   </ion-navbar>
+
 </ion-header>
 
 <ion-content padding class="card-background-page">
-<ion-list>
-    <ion-input type="hidden" [(ngModel)]="id"></ion-input>
+
+  <ion-list>
+
+  <ion-input type="hidden" [(ngModel)]="id"></ion-input>
 
   <ion-item>
     <ion-label floating>Tanggal</ion-label>
@@ -95,7 +96,8 @@
       <ion-option ion-item value="Paket">Paket</ion-option>
     </ion-select>
   </ion-item>
-  <h4>&nbsp;&nbsp;&nbsp;Penerima Manfaat :</h4>
+
+  <ion-title style="text-align: center ; margin-top: 30px">Penerima Manfaat</ion-title>
   <ion-item>
     <ion-label floating>Laki-Laki</ion-label>
     <ion-input type="text" [(ngModel)]="pria"></ion-input>
@@ -112,17 +114,27 @@
     <ion-label floating>Deskripsi Usulan</ion-label>
     <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi"></ion-textarea>
   </ion-item>
+
+  <ion-title style="text-align: center ; margin-top: 20px">Proposal</ion-title>
+
   <ion-item>
-    Proposal <br>
-    <ion-buttons>
-      <button ion-button (click)="takeFileProposal()">
-        <ion-icon name="md-attach" style="zoom:1.4"></ion-icon>&nbsp;Pilih File
+
+    <ion-row>
+      <ion-col>
+      <button ion-button full style="text-transform: none ; text-align: center" (click)="takeFileProposal()">
+        <ion-icon name="ios-attach-outline" style="zoom:1.6 ; padding-right: 5px"></ion-icon>Upload File
       </button>
-      <button ion-button (click)="takePhotoProposal()">
-        <ion-icon name="md-expand" style="zoom:1.4"></ion-icon>&nbsp;Ambil Foto
+    </ion-col>
+    <ion-col>
+      <button ion-button full style="text-transform: none ; text-align: center" (click)="takePhotoProposal()">
+        <ion-icon name="ios-camera-outline" style="zoom:1.6 ; padding-right: 5px" ></ion-icon>Foto Doc
       </button>
-    </ion-buttons>
-    <i>*File yang diperbolehkan (.pdf,doc,jpg,png)</i>
+    </ion-col>
+    </ion-row>
+    
+    
+    <h6><i>*Format File (.pdf,doc,jpg,png)</i></h6>
+
     <ion-slides pager>
       <ion-slide *ngFor="let prop of files; let id = index">
         <ion-toolbar>
@@ -136,9 +148,12 @@
         <ion-toolbar></ion-toolbar>
       </ion-slide>
     </ion-slides>
+
   </ion-item>
+
   <ion-input type="hidden" [(ngModel)]="status" value="1"></ion-input>
 </ion-list>
+
   <ion-fab bottom right>
     <ion-buttons>
       <button ion-fab (click)="tambahusulan()" style="margin-bottom:10px">

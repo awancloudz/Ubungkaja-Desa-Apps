@@ -28,8 +28,8 @@ export class MyApp {
   rootPage: any = LoginPage;
   level = false;
   //Tipe Variable untuk tombol menu
-  pages: Array<{title: string, icon: string, component: any}>;
-  pages2: Array<{title: string, icon: string, component: any}>;
+  pages: Array<{title: string, icon: string, color: any,component: any}>;
+  pages2: Array<{title: string, icon: string, color: any,component: any}>;
   warga: Array<{nama: string}>;
   ids: any;
   constructor(private storage: Storage,public platform: Platform, public statusBar: StatusBar, 
@@ -40,21 +40,21 @@ export class MyApp {
     this.listenToLoginEvents();
     // Value Variable dari tombol menu
     this.pages = [
-      { title: 'Home', icon: "home", component: HomePage },
-      { title: 'Usulan Saya',  icon: "ios-create", component: UsulanPage },
-      { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
-      //{ title: 'Pengaduan Saya',  icon: "ios-paper-plane", component: PengaduanPage },
-      //{ title: 'Layanan',  icon: "ios-paper-outline", component: AntrianPage },
-      { title: 'Belanja',  icon: "cart", component: BelanjaPage },
-      { title: 'Profile',  icon: "person", component: ProfilePage },
-      { title: 'Logout',  icon: "power", component: SettingPage },
+      { title: 'Home', icon: "home", color: "iconprimary" ,  component: HomePage },
+      { title: 'Usulan Saya', icon: "edit", color: "iconprimary", component: UsulanPage },
+      { title: 'Hasil Musyawarah',  icon: "calendar-check-o", color: "iconprimary", component: BeritaPage },
+      //{ title: 'Pengaduan Saya',  icon: "ios-paper-plane", color: "iconprimary", component: PengaduanPage },
+      //{ title: 'Layanan',  icon: "ios-paper-outline", color: "iconprimary", component: AntrianPage },
+      { title: 'Belanja',  icon: "shopping-cart", color: "iconprimary", component: BelanjaPage },
+      { title: 'Profile',  icon: "user", color: "iconprimary", component: ProfilePage },
+      { title: 'Logout',  icon: "sign-out", color: "iconprimary", component: SettingPage },
     ];
 
     this.pages2 = [
-      { title: 'Home', icon: "home", component: HomePage },
-      { title: 'Usulan Warga',  icon: "ios-create", component: UsulanDusunPage },
-      { title: 'Hasil Musyawarah',  icon: "md-calendar", component: BeritaPage },
-      { title: 'Logout',  icon: "power", component: SettingPage },
+      { title: 'Home', icon: "home", color: "iconprimary" ,  component: HomePage },
+      { title: 'Usulan Warga', icon: "edit", color: "iconprimary", component: UsulanDusunPage },
+      { title: 'Hasil Musyawarah',  icon: "calendar-check-o", color: "iconprimary", component: BeritaPage },
+      { title: 'Logout',  icon: "sign-out", color: "iconprimary", component: SettingPage },
     ];
 
   }

@@ -1,31 +1,44 @@
 <ion-menu [content]="content">
   <ion-header>
 
-    <ion-item color="primary">
-      <ion-avatar round>
-          <img src="assets/img/person3.jpeg" style="height:120px;width:120px">
-      </ion-avatar>
-    
-    
-      <ion-toolbar color="primary">
-        <ion-title><p *ngFor="let user of warga">{{ user.nama }}</p></ion-title>
-      </ion-toolbar>
-    </ion-item>
-
+      <ion-item color="primary" *ngIf="level">
+          <ion-avatar round>
+              <img class="avatar-depan" style= "height: 100px;width: 100px" src="assets/img/person3.jpeg" >
+          </ion-avatar>
+        
+          <ion-toolbar color="primary">
+            <ion-title><p *ngFor="let user of warga" style="text-align:center;font-size: 18px" >{{ user.nama }}</p></ion-title>
+          </ion-toolbar>
+        </ion-item>
+        <ion-item color="primary" *ngIf="!level">
+          
+        </ion-item>
   </ion-header>
 
   <ion-content>
     <ion-list *ngIf="level">
-      <button menuClose ion-item icon-left *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon [name]="p.icon">{{p.name}}</ion-icon>
-        {{p.title}}
-      </button>
+        <button menuClose ion-item icon-left *ngFor="let p of pages" (click)="openPage(p)">
+            <ion-grid>
+              <ion-row style="height: 15px">
+                <ion-col col-2 style="margin-top: -10px" ><i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i></ion-col>
+                <ion-col col-10 style="margin-top: -7px" >{{p.title}}</ion-col>
+              </ion-row>
+            </ion-grid>
+            <!--<i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i>
+            {{p.title}}-->
+          </button>
     </ion-list>
     <ion-list *ngIf="!level">
-      <button menuClose ion-item icon-left *ngFor="let p of pages2" (click)="openPage(p)">
-        <ion-icon [name]="p.icon">{{p.name}}</ion-icon>
-        {{p.title}}
-      </button>
+        <button menuClose ion-item icon-left *ngFor="let p of pages2" (click)="openPage(p)">
+            <ion-grid>
+              <ion-row style="height: 15px">
+                <ion-col col-2 style="margin-top: -10px" ><i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i></ion-col>
+                <ion-col col-10 style="margin-top: -7px" >{{p.title}}</ion-col>
+              </ion-row>
+            </ion-grid>
+            <!--<i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i>
+            {{p.title}}-->
+          </button>
     </ion-list>
   </ion-content>
 
