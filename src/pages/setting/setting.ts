@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,Events } from 'ionic-angular';
 //Set direktori redirect * Wajib *
 import { LoginPage } from '../../pages/login/login';
 import { Storage } from '@ionic/storage';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the SettingPage page.
  *
@@ -18,7 +19,7 @@ import { Storage } from '@ionic/storage';
 })
 export class SettingPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: Storage,private events: Events) {
   }
 
   ionViewDidLoad() {
@@ -28,7 +29,8 @@ export class SettingPage {
     this.storage.set('level', null);
     this.storage.set('id_dusun', null);
     this.storage.set('id_desa',null);
-    this.navCtrl.setRoot(LoginPage);
+    this.events.publish('user:umum');
+    this.navCtrl.setRoot(HomePage);
   }
 
 }

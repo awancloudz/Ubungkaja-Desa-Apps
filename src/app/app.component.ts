@@ -25,21 +25,47 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   //halaman yang pertama kali dipanggil
-  rootPage: any = LoginPage;
-  level = false;
+  rootPage: any = HomePage;
+  level = "umum";
   //Tipe Variable untuk tombol menu
-  pages: Array<{title: string, icon: string, color: any,component: any}>;
-  pages2: Array<{title: string, icon: string, color: any,component: any}>;
+  pages_login: Array<{title: string, icon: string, color: any,component: any}>;
+  pages_umum: Array<{title: string, icon: string, color: any,component: any}>;
+  pages_warga: Array<{title: string, icon: string, color: any,component: any}>;
+  pages_dusun: Array<{title: string, icon: string, color: any,component: any}>;
   warga: Array<{nama: string}>;
   ids: any;
   constructor(private storage: Storage,public platform: Platform, public statusBar: StatusBar, 
     public splashScreen: SplashScreen,private oneSignal: OneSignal,private events: Events) {
-    //Variabel Awal
+    //Variabel Awal Kosong
+    this.pages_umum = [];
+    this.pages_warga = [];
+    this.pages_dusun = [];
     this.warga = [];
+    
+    //Set User Umum
+    this.events.publish('user:umum');
+
+    //Deteksi Awal User
     this.initializeApp();
     this.listenToLoginEvents();
+
     // Value Variable dari tombol menu
-    this.pages = [
+    this.pages_login = [
+      { title: 'Login/Daftar',  icon: "sign-in", color: "iconprimary", component: LoginPage },
+    ];
+    this.pages_umum = [
+      { title: 'Home', icon: "home", color: "iconprimary" ,  component: HomePage },
+      { title: 'Wisata', icon: "home", color: "iconprimary" ,  component: '' },
+      { title: 'Kuliner', icon: "home", color: "iconprimary" ,  component: '' },
+      { title: 'Event', icon: "home", color: "iconprimary" ,  component: '' },
+      { title: 'Berita', icon: "home", color: "iconprimary" ,  component: '' },
+      { title: 'Karir', icon: "home", color: "iconprimary" ,  component: '' },
+      { title: 'Info Harga', icon: "home", color: "iconprimary" ,  component: '' },
+      { title: 'Usulan', icon: "edit", color: "iconprimary", component: '' },
+      { title: 'Laporan', icon: "edit", color: "iconprimary", component: '' },
+      { title: 'Layanan', icon: "edit", color: "iconprimary", component: '' },
+    ];
+    this.pages_warga = [
       { title: 'Home', icon: "home", color: "iconprimary" ,  component: HomePage },
       { title: 'Usulan Saya', icon: "edit", color: "iconprimary", component: UsulanPage },
       { title: 'Hasil Musyawarah',  icon: "calendar-check-o", color: "iconprimary", component: BeritaPage },
@@ -50,7 +76,7 @@ export class MyApp {
       { title: 'Logout',  icon: "sign-out", color: "iconprimary", component: SettingPage },
     ];
 
-    this.pages2 = [
+    this.pages_dusun = [
       { title: 'Home', icon: "home", color: "iconprimary" ,  component: HomePage },
       { title: 'Usulan Warga', icon: "edit", color: "iconprimary", component: UsulanDusunPage },
       { title: 'Hasil Musyawarah',  icon: "calendar-check-o", color: "iconprimary", component: BeritaPage },
@@ -89,16 +115,24 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
+  login(){
+    this.nav.setRoot(LoginPage);
+  }
+  //Fungsi Deteksi Level User
   listenToLoginEvents() {
+    this.events.subscribe('user:umum', () => {
+      this.level = "umum";
+    });
+
     this.events.subscribe('user:warga', (data) => {
-      this.level = true;
+      this.level = "warga";
       this.warga = [
         { nama: data },
       ];
     });
 
     this.events.subscribe('user:dusun', (data) => {
-      this.level = false;
+      this.level = "dusun";
       this.warga = [
         { nama: data },
       ];

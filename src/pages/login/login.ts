@@ -42,11 +42,11 @@ export class LoginPage {
   }
 
 ionViewDidLoad(){
-  this.storage.get('id_user').then((val) => {
+  /*this.storage.get('id_user').then((val) => {
     if(val != null){
       this.nav.setRoot(HomePage);
     }
-  });
+  });*/
 }
 //Cek Data Login
 ceklogin(){

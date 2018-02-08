@@ -55,6 +55,7 @@ import { PengaduanserviceProvider } from '../providers/pengaduanservice/pengadua
 import { AntrianserviceProvider } from '../providers/antrianservice/antrianservice';
 import { HomeserviceProvider } from '../providers/homeservice/homeservice';
 import { UsulandusunserviceProvider } from '../providers/usulandusunservice/usulandusunservice';
+import { KategoriserviceProvider } from '../providers/kategoriservice/kategoriservice';
 
 @NgModule({
   //Deklarasi variabel page
@@ -133,7 +134,8 @@ import { UsulandusunserviceProvider } from '../providers/usulandusunservice/usul
     AntrianserviceProvider,  
     OneSignal,
     HomeserviceProvider,
-    UsulandusunserviceProvider,                    
+    UsulandusunserviceProvider,
+    KategoriserviceProvider,                    
   ]
 })
 export class AppModule {}

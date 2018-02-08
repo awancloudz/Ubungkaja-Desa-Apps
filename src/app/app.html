@@ -1,23 +1,41 @@
 <ion-menu [content]="content">
   <ion-header>
-
-      <ion-item color="primary" *ngIf="level">
-          <ion-avatar round>
-              <img class="avatar-depan" style= "height: 100px;width: 100px" src="assets/img/person3.jpeg" >
-          </ion-avatar>
+      <ion-item color="primary" *ngIf="level == 'warga' || level == 'dusun'">
+        <ion-avatar round>
+          <img class="avatar-depan" style= "height: 100px;width: 100px" src="assets/img/person3.jpeg" >
+        </ion-avatar>
         
-          <ion-toolbar color="primary">
-            <ion-title><p *ngFor="let user of warga" style="text-align:center;font-size: 18px" >{{ user.nama }}</p></ion-title>
-          </ion-toolbar>
-        </ion-item>
-        <ion-item color="primary" *ngIf="!level">
-          
-        </ion-item>
+        <ion-toolbar color="primary">
+          <ion-title><p *ngFor="let user of warga" style="text-align:center;font-size: 18px" >{{ user.nama }}</p></ion-title>
+        </ion-toolbar>
+      </ion-item>
+      <ion-item color="primary" *ngIf="level == 'umum'">
+        <ion-avatar round>
+          <img class="avatar-depan" style= "height: 100px;width: 100px" src="assets/img/person3.jpeg" >
+        </ion-avatar>
+        
+        <ion-toolbar color="primary">
+          <ion-title><p style="text-align:center;font-size: 18px">Kamu Belum Login ?</p></ion-title>
+          <a menuClose style="text-decoration: none;" (click)="login()"><font color="white">Klik disini untuk login</font></a>
+        </ion-toolbar>
+      </ion-item>
   </ion-header>
 
   <ion-content>
-    <ion-list *ngIf="level">
-        <button menuClose ion-item icon-left *ngFor="let p of pages" (click)="openPage(p)">
+      <ion-list *ngIf="level == 'umum'">
+        <button menuClose ion-item icon-left *ngFor="let p of pages_umum" (click)="openPage(p)">
+            <ion-grid>
+              <ion-row style="height: 15px">
+                <ion-col col-2 style="margin-top: -10px" ><i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i></ion-col>
+                <ion-col col-10 style="margin-top: -7px" >{{p.title}}</ion-col>
+              </ion-row>
+            </ion-grid>
+            <!--<i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i>
+            {{p.title}}-->
+        </button>
+    </ion-list>
+    <ion-list *ngIf="level == 'warga'">
+        <button menuClose ion-item icon-left *ngFor="let p of pages_warga" (click)="openPage(p)">
             <ion-grid>
               <ion-row style="height: 15px">
                 <ion-col col-2 style="margin-top: -10px" ><i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i></ion-col>
@@ -28,8 +46,8 @@
             {{p.title}}-->
           </button>
     </ion-list>
-    <ion-list *ngIf="!level">
-        <button menuClose ion-item icon-left *ngFor="let p of pages2" (click)="openPage(p)">
+    <ion-list *ngIf="level == 'dusun'">
+        <button menuClose ion-item icon-left *ngFor="let p of pages_dusun" (click)="openPage(p)">
             <ion-grid>
               <ion-row style="height: 15px">
                 <ion-col col-2 style="margin-top: -10px" ><i class="fa fa-{{p.icon}} {{p.color}} {{p.size}}" aria-hidden="true" style="font-size:25px"></i></ion-col>
