@@ -24,6 +24,8 @@ export class UsulanDusunPage {
   items:UsulanDusunArray[]=[];
   judul:String;
   deskripsi:Text;
+  dusun:Number;
+
   constructor(public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,public alertCtrl: AlertController,
     public loadincontroller:LoadingController,public usulanservice:UsulandusunserviceProvider,public _toast:ToastController,private storage: Storage) {
     //TOMBOL EXIT
@@ -73,12 +75,13 @@ export class UsulanDusunPage {
     });
     loadingdata.present();
     //Ambil data ID dari storage
-    this.storage.get('id_user').then((iduser) => {
+    this.storage.get('id_dusun').then((iddusun) => {
       //Tampilkan data dari server
-      this.usulanservice.tampilkanusulan(iduser).subscribe(
+      this.usulanservice.tampilkanusulan().subscribe(
         //Jika data sudah berhasil di load
         (data:UsulanDusunArray[])=>{
           this.items=data;
+          this.dusun = iddusun;
         },
         //Jika Error
         function (error){  
@@ -99,74 +102,6 @@ export class UsulanDusunPage {
   //Action ketika tombol di klik
   tomboldetail(item) {
     this.nav.push(UsulanDusundetailPage, { item: item });
-  }
-  tombolcreate() {
-    //this.nav.push(UsulancreatePage);
-  }
-  tomboltahan(item) {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Action',
-      cssClass: 'action-sheets-basic-page',
-      buttons: [
-        {
-          text: 'Hapus',
-          role: 'destructive',
-          icon: !this.platform.is('ios') ? 'trash' : null,
-          handler: () => {
-            //Alert Konfirmasi
-            let confirm = this.alertCtrl.create({
-              title: 'Konfirmasi',
-              message: 'Yakin Menghapus Data',
-              buttons: [
-                {
-                  text: 'Tidak',
-                  role: 'cancel',
-                  handler: () => {
-                    //console.log('Batal');
-                  }
-                },
-                {
-                  text: 'Ya',
-                  handler: () => {
-                    //Hapus Susulan
-                    this.usulanservice.hapususulan(item).subscribe(
-                      (data:any)=>{
-                        let mes=this._toast.create({
-                        message:'Data dihapus',
-                        duration:2000,
-                        position:'top'
-                        });
-                        //this.items.splice(this.items.indexOf(item),1);
-                        mes.present();
-                        this.nav.setRoot(UsulanDusunPage);
-                      }
-                    );
-                    //End Hapus Susulan
-                  }
-                }
-              ]
-            });
-            confirm.present();
-          }
-        },
-        {
-          text: 'Edit',
-          icon: !this.platform.is('ios') ? 'create' : null,
-          handler: () => {
-            //this.nav.push(UsulaneditPage, { item: item });
-          }
-        },
-        {
-          text: 'Batal',
-          role: 'cancel', 
-          icon: !this.platform.is('ios') ? 'close' : null,
-          handler: () => {
-            
-          }
-        }
-      ]
-    });
-    actionSheet.present();
   }
 }
 
@@ -195,7 +130,6 @@ export class UsulanDusundetailPage {
   lokasi:String;
   latitude:any;
   longitude:any;
-  
   constructor (public platform: Platform,private googleMaps: GoogleMaps, params: NavParams,public nav: NavController,
     public loadincontroller:LoadingController,public usulanservice:UsulandusunserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
     private storage: Storage) {
@@ -214,9 +148,9 @@ export class UsulanDusundetailPage {
     });
     loadingdata.present();
     //Ambil data ID dari storage
-    this.storage.get('id_user').then((iduser) => {
+    this.storage.get('id_dusun').then((iddusun) => {
       //Tampilkan data dari server
-      this.usulanservice.tampilkanusulan(iduser).subscribe(
+      this.usulanservice.tampilkanusulan().subscribe(
         //Jika data sudah berhasil di load
         (data:UsulanDusunArray[])=>{
           //this.items=data;
@@ -231,7 +165,6 @@ export class UsulanDusundetailPage {
       );
     });
     this.loadMap(this.item);
-    
   }
   
   loadMap(item) {
@@ -273,46 +206,45 @@ export class UsulanDusundetailPage {
           });
       });
   }
-  
-  tomboledit(item){
-    //this.nav.push(UsulaneditPage, { item: item });
+
+  diterima(item){
+    this.id = item.id;
+    this.id_warga = item.id_warga;
+    this.status = 2;
+    this.verifikasi();
   }
-  tombolhapus(item){
-    //Alert Konfirmasi
-    let confirm = this.alertCtrl.create({
-      title: 'Konfirmasi',
-      message: 'Yakin Menghapus Data',
-      buttons: [
-        {
-          text: 'Tidak',
-          role: 'cancel',
-          handler: () => {
-            //console.log('Batal');
-          }
-        },
-        {
-          text: 'Ya',
-          handler: () => {
-            //Hapus Susulan
-            this.usulanservice.hapususulan(item).subscribe(
-              (data:any)=>{
-                let mes=this._toast.create({
-                message:'Data dihapus',
-                duration:2000,
-                position:'top'
-                });
-                //this.items.splice(this.items.indexOf(item),1);
-                mes.present();
-                this.nav.setRoot(UsulanDusunPage);
-              }
-            );
-            //End Hapus Susulan
-            
-          }
-        }
-      ]
+  ditolak(item){
+    this.id = item.id;
+    this.id_warga = item.id_warga;
+    this.status = 3;
+    this.verifikasi();
+  }
+  verifikasi(){
+    //Pemberitahuan
+    let alert = this.alertCtrl.create({
+      title: 'Informasi',
+      subTitle: 'Verifikasi Sukses',
+      buttons: ['OK']
     });
-    confirm.present();
+    //Loading Data
+    let loadingdata=this.loadincontroller.create({
+        content:"Verifikasi Usulan..."
+    });
+    loadingdata.present();
+    //Mengambil value dari edit field untuk dimasukkan ke UsulanArray
+    this.usulanservice.editusulan(new UsulanDusunArray(this.id,this.tanggal,this.judul,this.id_kategori,this.id_warga,this.deskripsi,this.status,this.volume,this.satuan,this.longitude,this.latitude,this.pria,this.wanita,this.rtm,this.lokasi))
+    .subscribe(
+      (data:any)=>{
+        loadingdata.dismiss();
+        this.nav.setRoot(UsulanDusunPage);
+      },
+      function(error){
+
+      },
+      function(){
+        alert.present();
+      }
+    );  
   }
 }
 

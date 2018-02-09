@@ -55,15 +55,15 @@ export class MyApp {
     ];
     this.pages_umum = [
       { title: 'Home', icon: "home", color: "iconprimary" ,  component: HomePage },
-      { title: 'Wisata', icon: "home", color: "iconprimary" ,  component: '' },
-      { title: 'Kuliner', icon: "home", color: "iconprimary" ,  component: '' },
-      { title: 'Event', icon: "home", color: "iconprimary" ,  component: '' },
-      { title: 'Berita', icon: "home", color: "iconprimary" ,  component: '' },
-      { title: 'Karir', icon: "home", color: "iconprimary" ,  component: '' },
-      { title: 'Info Harga', icon: "home", color: "iconprimary" ,  component: '' },
+      { title: 'Wisata', icon: "map-signs", color: "iconprimary" ,  component: '' },
+      { title: 'Kuliner', icon: "coffee", color: "iconprimary" ,  component: '' },
+      { title: 'Event', icon: "ticket", color: "iconprimary" ,  component: '' },
+      { title: 'Berita', icon: "list", color: "iconprimary" ,  component: '' },
+      { title: 'Karir', icon: "briefcase", color: "iconprimary" ,  component: '' },
+      { title: 'Info Harga', icon: "tags", color: "iconprimary" ,  component: '' },
       { title: 'Usulan', icon: "edit", color: "iconprimary", component: '' },
-      { title: 'Laporan', icon: "edit", color: "iconprimary", component: '' },
-      { title: 'Layanan', icon: "edit", color: "iconprimary", component: '' },
+      { title: 'Pengaduan', icon: "eye", color: "iconprimary", component: '' },
+      { title: 'Layanan', icon: "exchange", color: "iconprimary", component: '' },
     ];
     this.pages_warga = [
       { title: 'Home', icon: "home", color: "iconprimary" ,  component: HomePage },
@@ -102,7 +102,13 @@ export class MyApp {
 
       this.oneSignal.handleNotificationOpened().subscribe(() => {
         // do something when a notification is opened
-        this.nav.setRoot(UsulanPage);
+        if(this.level == "warga"){
+          this.nav.setRoot(UsulanPage);
+        }
+        else if(this.level == "dusun"){
+          this.nav.setRoot(UsulanDusunPage);
+        }
+        
       });
         
       this.oneSignal.endInit();
