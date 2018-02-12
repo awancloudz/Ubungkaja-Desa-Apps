@@ -8,7 +8,7 @@
 
 <ion-content padding>
 <ion-list>
-  <ion-input type="hidden" [(ngModel)]="id" value="{{ item.id }}"></ion-input>
+  <ion-input type="hidden" [(ngModel)]="id"></ion-input>
   <ion-item>
     <ion-label floating>Tanggal</ion-label>
     <ion-datetime displayFormat="DD MMM YYYY" min="2015" [(ngModel)]="tanggal"
@@ -17,26 +17,46 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Judul Usulan</ion-label>
-    <ion-input type="text" [(ngModel)]="judul" value="{{ item.judul }}"></ion-input>
+    <ion-input type="text" [(ngModel)]="judul"></ion-input>
   </ion-item>
   
   <ion-item>
     <ion-label floating>Kategori</ion-label>
     <ion-select [(ngModel)]="id_kategori" interface="popover">
-      <ion-option ion-item *ngFor="let item of items.koleksi2" value="{{ item.id }}">{{ item.namakategori }}</ion-option>
+      <ion-option ion-item *ngFor="let item2 of items.koleksi2" value="{{ item2.id }}">{{ item2.namakategori }}</ion-option>
     </ion-select>
   </ion-item>
   
-  <ion-input type="hidden" [(ngModel)]="id_warga" value="{{ item.id_warga }}"></ion-input>
+  <ion-input type="hidden" [(ngModel)]="id_warga"></ion-input>
   
   <button ion-button icon-left style="text-align: center">
     <ion-icon name="pin"></ion-icon>
     Lokasi
   </button>
   <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas3"></div>
-  <ion-input type="hidden" [(ngModel)]="longitude" value="{{ item.longitude }}"></ion-input>
-  <ion-input type="hidden" [(ngModel)]="latitude" value="{{ item.latitude }}"></ion-input>  
+  <ion-input type="hidden" [(ngModel)]="longitude"></ion-input>
+  <ion-input type="hidden" [(ngModel)]="latitude"></ion-input>  
   <ion-item>
+    <ion-label floating>Keterangan Lokasi <br><i>*misal: RT/RW/Dusun</i></ion-label>
+    <ion-input type="text" [(ngModel)]="lokasi"></ion-input>
+  </ion-item>
+  <ion-item>
+    Foto
+    <ion-slides pager>
+      <ion-slide *ngFor="let photo of photos; let id = index">
+        <ion-toolbar>
+          <ion-buttons end>
+            <button ion-button color="primary" (click)="deletePhoto(id)">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-toolbar>
+        <img [src]="photo" class="slide-image" style="height: 70vh; width: auto; margin: auto; display: block;"/>
+        <ion-toolbar></ion-toolbar>
+      </ion-slide>
+    </ion-slides>
+  </ion-item>
+  <!--<ion-item>
     Foto
     <ion-slides pager>
         <ion-slide *ngFor="let photo of item.fotousulan">
@@ -44,11 +64,10 @@
         </ion-slide>
       </ion-slides>
       <ion-toolbar></ion-toolbar>
-  </ion-item>
-
+  </ion-item>-->
   <ion-item>
     <ion-label floating>Volume</ion-label>
-    <ion-input type="text" [(ngModel)]="volume" value="{{ item.volume }}"></ion-input>
+    <ion-input type="text" [(ngModel)]="volume"></ion-input>
   </ion-item>
 
   <ion-item>
@@ -61,10 +80,22 @@
       <ion-option ion-item value="Paket">Paket</ion-option>
     </ion-select>
   </ion-item>
-
+  <ion-title style="text-align: center ; margin-top: 30px">Penerima Manfaat</ion-title>
+  <ion-item>
+    <ion-label floating>Laki-Laki</ion-label>
+    <ion-input type="text" [(ngModel)]="pria"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Perempuan</ion-label>
+    <ion-input type="text" [(ngModel)]="wanita"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Rumah Tangga Miskin</ion-label>
+    <ion-input type="text" [(ngModel)]="rtm"></ion-input>
+  </ion-item>
   <ion-item>
     <ion-label floating>Deskripsi Usulan</ion-label>
-    <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi" value="{{ item.deskripsi }}"></ion-textarea>
+    <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi"></ion-textarea>
   </ion-item>
 
   <ion-input type="hidden" [(ngModel)]="status" value="{{ item.status }}"></ion-input>

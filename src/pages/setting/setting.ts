@@ -30,7 +30,7 @@ export class SettingPage {
     this.storage.set('id_dusun', null);
     this.storage.set('id_desa',null);
     this.events.publish('user:umum');
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

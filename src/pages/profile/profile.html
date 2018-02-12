@@ -58,15 +58,9 @@
   
   <ion-item>
     <ion-label floating>Jenis Kelamin</ion-label>
-    <ion-select interface="popover" [(ngModel)]="jenis_kelamin" *ngFor="let item of items">
-        <div *ngIf="item.jenis_kelamin == 'L'">
-          <ion-option value="{{ item.jenis_kelamin }}" selected>Laki-Laki</ion-option>
-          <ion-option value="P">Perempuan</ion-option>
-        </div>
-        <div *ngIf="item.jenis_kelamin == 'P'">
-          <ion-option value="L">Laki-Laki</ion-option>
-          <ion-option value="{{ item.jenis_kelamin }}" selected>Perempuan</ion-option>
-        </div>
+    <ion-select interface="popover" [(ngModel)]="jenis_kelamin">
+      <ion-option value="L">Laki-Laki</ion-option>
+      <ion-option value="P">Perempuan</ion-option>
     </ion-select>
   </ion-item>
 

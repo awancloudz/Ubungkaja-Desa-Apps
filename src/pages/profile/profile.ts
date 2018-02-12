@@ -84,6 +84,7 @@ export class ProfilePage {
             this.tanggal_lahir = data[key].tanggal_lahir;
             this.email = data[key].email;
             this.nohp = data[key].nohp;
+            this.jenis_kelamin = data[key].jenis_kelamin;
           }
         },
         //Jika Error

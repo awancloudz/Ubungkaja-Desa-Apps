@@ -12,6 +12,7 @@ import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { FileChooser } from '@ionic-native/file-chooser';
+import { File } from '@ionic-native/file';
 //import { LocationSelectPage } from '../../pages/location-select/location-select';
 import { Storage } from '@ionic/storage';
 declare var google; 
@@ -758,6 +759,16 @@ export class UsulancreatePage {
   entryComponents:[ UsulanPage ],
 })
 export class UsulaneditPage {
+  //Camera
+  public photos_awal : any;
+  public photos : any;
+  public imageURI:any;
+  public imageFileName:any;
+  //Proposal
+  public files : any;
+  public files1 : any;
+  public fileURI:any;
+  public fileFileName:any;
   item;
   map3: GoogleMap;
   items:UsulanArray[]=[];
@@ -776,18 +787,41 @@ export class UsulaneditPage {
   lokasi:String;
   latitude:number;
   longitude:number;
+  fotousulan:String;
 
   constructor(public platform: Platform,private googleMaps3: GoogleMaps,params: NavParams,public nav: NavController,
-    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
-    private storage: Storage) {
+    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,
+    public alertCtrl: AlertController,private storage: Storage,private transfer: FileTransfer,private camera: Camera,private file: File) {
     this.item = params.data.item;
+    this.photos_awal = [];
+    this.photos = [];
+    //Tampilkan Value
+    this.id = this.item.id;
+    this.tanggal = this.item.tanggal;
+    this.judul = this.item.judul;
+    this.id_warga = this.item.id_warga;
+    this.id_kategori = this.item.id_kategori;
+    this.longitude = this.item.longitude;
+    this.latitude = this.item.latitude;
+    this.lokasi = this.item.lokasi;
+    this.volume = this.item.volume;
+    this.satuan = this.item.satuan;
+    this.pria = this.item.pria;
+    this.wanita = this.item.wanita;
+    this.rtm = this.item.rtm; 
+    this.deskripsi = this.item.deskripsi; 
+    
+    //Push Foto dari Server ke Lokal
+    for(var i in this.item.fotousulan){
+      this.photos_awal.push(this.item.fotousulan[i].foto);
+    }
+    this.downloadImage(this.photos_awal);
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
       this.nav.pop();
       backAction();
     },2)
   }
-  
   //Tampil data awal
   ionViewDidLoad() {
     //Loading bar
@@ -857,6 +891,100 @@ export class UsulaneditPage {
           });
       });
   }
+  takePhoto() {
+    const options : CameraOptions = {
+      quality: 25, // picture quality
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    }
+    this.camera.getPicture(options).then((imageData) => {
+        this.imageURI = imageData;
+        this.photos.push(this.imageURI);
+        this.photos.reverse();
+        this.uploadFile();
+      }, (err) => {
+        console.log(err);
+        this.presentToast(err);
+      });
+  }
+  uploadFile() {
+    let loader = this.loadincontroller.create({
+      content: "Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+  
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      params: {'id_warga' : this.id_warga },
+      fileName: 'image.jpg',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: {}
+    }
+  
+    fileTransfer.upload(this.imageURI, 'http://forkomperbekelbali.com/desa/public/api/upload', options)
+      .then((data) => {
+      this.imageFileName = "upload.jpg";
+      loader.dismiss();
+      this.presentToast("Upload Sukses");
+    }, (err) => {
+      console.log(err);
+      loader.dismiss();
+      this.presentToast(err);
+    });
+  }
+
+  deletePhoto(index) {
+    let confirm = this.alertCtrl.create({
+        title: 'Yakin Menghapus Foto Ini ?',
+        message: '',
+        buttons: [
+          {
+            text: 'Tidak',
+            handler: () => {
+              console.log('Disagree clicked');
+            }
+          }, {
+            text: 'Ya',
+            handler: () => {
+              console.log('Agree clicked');
+              this.photos.splice(index, 1);
+            }
+          }
+        ]
+      });
+    confirm.present();
+  }
+  downloadImage(photos_awal) {
+    photos_awal.forEach(element => {
+      this.platform.ready().then(() => {
+        const fileTransfer:FileTransferObject = this.transfer.create();
+        //const imageLocation = `${this.file.applicationDirectory}www/assets/img/${element}`;
+        const imageLocation = `http://forkomperbekelbali.com/desa/public/fotoupload/${element}`;
+
+        fileTransfer.download(imageLocation, this.file.applicationStorageDirectory + element).then((entry) => {
+          this.photos.push(entry.toURL());
+        }, (error) => {
+
+        });
+      });
+    });
+  }
+  presentToast(msg) {
+    let toast = this._toast.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+  
+    toast.onDidDismiss(() => {
+      console.log('Tutup');
+    });
+  
+    toast.present();
+  }
   editusulan(lama:UsulanArray,baru:UsulanArray){
     //Pemberitahuan
     let alert = this.alertCtrl.create({
@@ -889,5 +1017,40 @@ export class UsulaneditPage {
       }
     );  
   }
-  
+  tombolhapus(item){
+    //Alert Konfirmasi
+    let confirm = this.alertCtrl.create({
+      title: 'Konfirmasi',
+      message: 'Yakin Menghapus Data',
+      buttons: [
+        {
+          text: 'Tidak',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Batal');
+          }
+        },
+        {
+          text: 'Ya',
+          handler: () => {
+            //Hapus Susulan
+            this.usulanservice.hapususulan(item).subscribe(
+              (data:any)=>{
+                let mes=this._toast.create({
+                message:'Data dihapus',
+                duration:2000,
+                position:'top'
+                });
+                //this.items.splice(this.items.indexOf(item),1);
+                mes.present();
+                this.nav.setRoot(UsulanPage);
+              }
+            );
+            //End Hapus Susulan
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
 }

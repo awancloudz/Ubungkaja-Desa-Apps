@@ -47,6 +47,19 @@ ionViewDidLoad(){
       this.nav.setRoot(HomePage);
     }
   });*/
+  this.storage.get('level').then((val) => {
+    this.storage.get('nama_warga').then((nama) => {
+      if(nama != null){
+        if(val == "warga"){
+          this.events.publish('user:warga',nama);
+        }
+        else if( val == "dusun"){
+          this.events.publish('user:dusun',nama);
+        }
+        this.nav.setRoot(HomePage);
+      }
+    });
+  });
 }
 //Cek Data Login
 ceklogin(){
