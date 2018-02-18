@@ -142,6 +142,9 @@ ceklogin(){
 daftar(){
   this.nav.push(DaftarPage);
 }
+lupapassword(){
+  this.nav.push(ForgotPage);
+}
 }
 
 @Component({
@@ -392,5 +395,23 @@ cekdaftar(){
 }
 login(){
   this.nav.setRoot(LoginPage);
+}
+}
+
+@Component({
+  templateUrl: 'forgot.html',
+  //Set komponen * Wajib *
+  entryComponents:[ LoginPage ], 
+})
+export class ForgotPage {
+
+  constructor(
+    public nav: NavController,public platform: Platform,public actionSheetCtrl: ActionSheetController,
+    public loadincontroller:LoadingController,public loginservice:LoginserviceProvider,public _toast:ToastController,
+    public alertCtrl: AlertController) {
+  }
+
+ceklupa(){
+  
 }
 }

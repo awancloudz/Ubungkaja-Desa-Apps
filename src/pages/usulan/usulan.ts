@@ -468,10 +468,6 @@ export class UsulancreatePage {
       }
   }
   
-  /*bukaModal() {
-    let modal = this.modalCtrl.create(LocationSelectPage);
-    modal.present();
-  }*/
   loadMap2() {
   //Geolocation
   let watch2 = this.geolocation2.getCurrentPosition().then((data) => {
@@ -546,7 +542,17 @@ export class UsulancreatePage {
         this.presentToast(err);
       });
   }
-
+  takeFile(){
+    this.fileChooser.open().then((imageData2) => {
+      this.imageURI = imageData2;
+      this.photos.push(this.imageURI);
+      this.photos.reverse();
+      this.uploadFile();
+    }, (err) => {
+      console.log(err);
+      this.presentToast(err);
+    });
+  }
   uploadFile() {
     let loader = this.loadincontroller.create({
       content: "Uploading..."
@@ -619,9 +625,9 @@ export class UsulancreatePage {
   takeFileProposal(){
     this.fileChooser.open().then((uri) => {
       this.fileURI = uri;
-      this.files1.push(this.fileURI);
-      this.files1.reverse();
-      this.uploadFileProposal();
+      this.files.push(this.fileURI);
+      this.files.reverse();
+      this.uploadPhotoProposal();
     }, (err) => {
       console.log(err);
       this.presentToast(err);
@@ -656,7 +662,7 @@ export class UsulancreatePage {
     });
   }
 
-  uploadFileProposal() {
+  /*uploadFileProposal() {
     let loader2 = this.loadincontroller.create({
       content: "Uploading..."
     });
@@ -666,15 +672,15 @@ export class UsulancreatePage {
     let options: FileUploadOptions = {
       fileKey: 'prop',
       params: {'id_warga' : this.id_warga },
-      fileName: 'file.pdf',
+      fileName: 'image.jpg',
       chunkedMode: false,
-      mimeType: "application/pdf",
+      mimeType: "image/jpeg",
       headers: {}
     }
   
     fileTransfer.upload(this.fileURI, 'http://forkomperbekelbali.com/desa/public/api/uploadproposal', options)
       .then((data) => {
-      this.fileFileName = "file.pdf";
+      this.fileFileName = "upload.jpg";
       loader2.dismiss();
       this.presentToast("Upload Sukses");
     }, (err) => {
@@ -682,7 +688,7 @@ export class UsulancreatePage {
       loader2.dismiss();
       this.presentToast(err);
     });
-  }
+  }*/
 
   deletePhotoProp(index) {
     let confirm = this.alertCtrl.create({
@@ -757,14 +763,19 @@ export class UsulancreatePage {
   templateUrl: 'usulan-edit.html',
   //Set komponen * Wajib *
   entryComponents:[ UsulanPage ],
+  providers: [ GoogleMapsProvider ]
 })
 export class UsulaneditPage {
+  //Pencarian MAP
+  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   //Camera
   public photos_awal : any;
   public photos : any;
   public imageURI:any;
   public imageFileName:any;
   //Proposal
+  public files_awal : any;
   public files : any;
   public files1 : any;
   public fileURI:any;
@@ -789,12 +800,27 @@ export class UsulaneditPage {
   longitude:number;
   fotousulan:String;
 
-  constructor(public platform: Platform,private googleMaps3: GoogleMaps,params: NavParams,public nav: NavController,
-    public loadincontroller:LoadingController,public usulanservice:UsulanserviceProvider,public _toast:ToastController,
-    public alertCtrl: AlertController,private storage: Storage,private transfer: FileTransfer,private camera: Camera,private file: File) {
+  //Pencarian MAP
+  autocompleteService: any;
+  placesService: any;
+  query: string = '';
+  places: any = [];
+  searchDisabled: boolean;
+  saveDisabled: boolean;
+  location: any;
+
+  constructor(public maps3: GoogleMapsProvider,public zone: NgZone,
+    private geolocation3: Geolocation,private googleMaps3: GoogleMaps,
+    public platform: Platform,params: NavParams,public nav: NavController,
+    private fileChooser: FileChooser,public loadincontroller:LoadingController,
+    public usulanservice:UsulanserviceProvider,public _toast:ToastController,public alertCtrl: AlertController,
+    private storage: Storage,private transfer: FileTransfer,private camera: Camera,private file: File) {
+    this.searchDisabled = true;
     this.item = params.data.item;
     this.photos_awal = [];
     this.photos = [];
+    this.files_awal = [];
+    this.files = [];
     //Tampilkan Value
     this.id = this.item.id;
     this.tanggal = this.item.tanggal;
@@ -816,12 +842,17 @@ export class UsulaneditPage {
       this.photos_awal.push(this.item.fotousulan[i].foto);
     }
     this.downloadImage(this.photos_awal);
+    for(var i in this.item.proposalusulan){
+      this.files_awal.push(this.item.proposalusulan[i].file);
+    }
+    this.downloadFile(this.files_awal);
     //Hapus Back
     let backAction =  platform.registerBackButtonAction(() => {
       this.nav.pop();
       backAction();
     },2)
   }
+  
   //Tampil data awal
   ionViewDidLoad() {
     //Loading bar
@@ -846,51 +877,84 @@ export class UsulaneditPage {
         }
       );
     });
-    this.loadMap3(this.item);
-  }
-  loadMap3(item) {
-
-    let mapOptions3: GoogleMapOptions = {
-      camera: {
-        target: {
-          lat: item.latitude,
-          lng: item.longitude
-        },
-        zoom: 18,
-        tilt: 30
-      }
+    //Pencarian MAP
+    var var_lat = parseFloat(this.item.latitude);
+    var var_lng = parseFloat(this.item.longitude);
+    let location = {
+      lat: var_lat,
+      lng: var_lng,
     };
-    
-    this.map3 = this.googleMaps3.create('map_canvas3', mapOptions3);
-    
-    // Wait the MAP_READY before using any methods.
-    this.map3.one(GoogleMapsEvent.MAP_READY)
-      .then(() => {
-        console.log('Map is ready!');
-
-        // Now you can use all methods safely.
-        this.map3.addMarker({
-            draggable: true,
-            title: 'Lokasi',
-            icon: 'blue',
-            animation: 'DROP',
-            position: {
-              lat: item.latitude,
-              lng: item.longitude
-            },
-            size:	{ 
-               width: 200,
-               height: 200 
-            }
-          })
-          .then(marker => {
-            marker.on(GoogleMapsEvent.MARKER_CLICK)
-              .subscribe(() => {
-                //alert('clicked');
-              });
-          });
+    let mapLoaded = this.maps3.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then((data) => {
+      //Map Baru
+      let latLng = new google.maps.LatLng(var_lat,var_lng);
+      let baru = this.maps3.map.setCenter(latLng);
+      //Set Map
+      this.autocompleteService = new google.maps.places.AutocompleteService();
+      this.placesService = new google.maps.places.PlacesService(this.maps3.map);
+      //Marker Baru
+      this.maps3.clearMarkers();
+      let marker = new google.maps.Marker({
+          map: this.maps3.map,
+          animation: google.maps.Animation.DROP,
+          position: {lat: location.lat, lng: location.lng}
       });
+      this.maps3.markers.push(marker);
+    });
   }
+  //Pencarian MAP
+  selectPlace(place){
+    //Kosongkan data
+    this.places = [];
+    let location = {
+        lat: null,
+        lng: null,
+        name: place.name
+    };
+    //Set Posisi Map Baru
+    this.placesService.getDetails({placeId: place.place_id}, (details) => {
+        this.zone.run(() => {
+            location.name = details.name;
+            location.lat = details.geometry.location.lat();
+            location.lng = details.geometry.location.lng();
+            //this.saveDisabled = false;
+            //Posisi Center
+            this.maps3.map.setCenter({lat: location.lat, lng: location.lng});
+            this.location = location;
+            this.query = details.name;
+            //Marker Baru
+            this.maps3.clearMarkers();
+            let marker = new google.maps.Marker({
+                map: this.maps3.map,
+                animation: google.maps.Animation.DROP,
+                position: {lat: location.lat, lng: location.lng}
+            });
+            this.maps3.markers.push(marker);
+            //Simpan Posisi Baru
+            this.latitude = location.lat;
+            this.longitude = location.lng;
+        });
+    });
+  }
+  searchPlace(){
+    this.saveDisabled = true;
+    if(this.query.length > 0 && !this.searchDisabled) {
+        let config = {
+            types: ['geocode'],
+            input: this.query
+        }
+        this.autocompleteService.getPlacePredictions(config, (predictions, status) => {
+            if(status == google.maps.places.PlacesServiceStatus.OK && predictions){
+                this.places = [];
+                predictions.forEach((prediction) => {
+                    this.places.push(prediction);
+                });
+            }
+        });
+    } else {
+        this.places = [];
+    }
+  }
+
   takePhoto() {
     const options : CameraOptions = {
       quality: 25, // picture quality
@@ -907,6 +971,17 @@ export class UsulaneditPage {
         console.log(err);
         this.presentToast(err);
       });
+  }
+  takeFile(){
+    this.fileChooser.open().then((imageData2) => {
+      this.imageURI = imageData2;
+      this.photos.push(this.imageURI);
+      this.photos.reverse();
+      this.uploadFile();
+    }, (err) => {
+      console.log(err);
+      this.presentToast(err);
+    });
   }
   uploadFile() {
     let loader = this.loadincontroller.create({
@@ -957,6 +1032,66 @@ export class UsulaneditPage {
       });
     confirm.present();
   }
+
+  //Proposal
+  takePhotoProposal() {
+    const options : CameraOptions = {
+      quality: 25, // picture quality
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    }
+    this.camera.getPicture(options).then((imageData) => {
+        this.fileURI = imageData;
+        this.files.push(this.fileURI);
+        this.files.reverse();
+        this.uploadPhotoProposal();
+      }, (err) => {
+        console.log(err);
+        this.presentToast(err);
+      });
+  }
+
+  takeFileProposal(){
+    this.fileChooser.open().then((uri) => {
+      this.fileURI = uri;
+      this.files.push(this.fileURI);
+      this.files.reverse();
+      this.uploadPhotoProposal();
+    }, (err) => {
+      console.log(err);
+      this.presentToast(err);
+    });
+  }
+
+  uploadPhotoProposal() {
+    let loader = this.loadincontroller.create({
+      content: "Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+  
+    let options: FileUploadOptions = {
+      fileKey: 'prop',
+      params: {'id_warga' : this.id_warga },
+      fileName: 'image.jpg',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: {}
+    }
+  
+    fileTransfer.upload(this.fileURI, 'http://forkomperbekelbali.com/desa/public/api/uploadproposal', options)
+      .then((data) => {
+      this.fileFileName = "upload.jpg";
+      loader.dismiss();
+      this.presentToast("Upload Sukses");
+    }, (err) => {
+      console.log(err);
+      loader.dismiss();
+      this.presentToast(err);
+    });
+  }
+
   downloadImage(photos_awal) {
     photos_awal.forEach(element => {
       this.platform.ready().then(() => {
@@ -972,6 +1107,22 @@ export class UsulaneditPage {
       });
     });
   }
+  downloadFile(files_awal) {
+    files_awal.forEach(element => {
+      this.platform.ready().then(() => {
+        const fileTransfer:FileTransferObject = this.transfer.create();
+        //const imageLocation = `${this.file.applicationDirectory}www/assets/img/${element}`;
+        const imageLocation = `http://forkomperbekelbali.com/desa/public/fileupload/${element}`;
+
+        fileTransfer.download(imageLocation, this.file.applicationStorageDirectory + element).then((entry) => {
+          this.files.push(entry.toURL());
+        }, (error) => {
+
+        });
+      });
+    });
+  }
+
   presentToast(msg) {
     let toast = this._toast.create({
       message: msg,

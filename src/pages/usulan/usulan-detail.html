@@ -27,6 +27,12 @@
   <p><b>Rumah Tangga Miskin : </b> {{ item.rtm }}</p>
   <p><b>Detail Usulan</b> </p>
   <p>{{ item.deskripsi }}</p>  
+  <p><b>Proposal</b></p>
+  <ion-slides pager>
+    <ion-slide *ngFor="let photo2 of item.proposalusulan">
+      <img style="height: 70vh; width: auto; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fileupload/{{photo2.file}}" class="slide-image">
+    </ion-slide>
+  </ion-slides>
 </ion-content>
 <ion-fab bottom right>
   <button ion-fab color="primary" style="margin-bottom:10px" (click)="tomboledit(item)">

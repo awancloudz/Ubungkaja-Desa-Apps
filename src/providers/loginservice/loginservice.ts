@@ -22,6 +22,7 @@ export class LoginserviceProvider {
   //Memanggil URL Api
   private url:string="http://forkomperbekelbali.com/desa/public/api/loginuser";
   private url2:string="http://forkomperbekelbali.com/desa/public/api/daftaruser";
+  private url3:string="http://forkomperbekelbali.com/desa/public/api/resetpassword";
   constructor(public _http: Http) {
   }
 
@@ -42,5 +43,12 @@ daftaruser(item:DaftarArray){
                 body, options)
                .map((response:Response)=>response.json());
 }
-
+resetpassword(item:DaftarArray){
+  let body = JSON.stringify(item);
+  let headers = new Headers({ 'Content-Type': 'application/json' });
+  let options = new RequestOptions({ headers: headers });
+  return this._http.post(this.url2,
+                body, options)
+               .map((response:Response)=>response.json());
+}
 }

@@ -59,13 +59,30 @@
   <br> &nbsp;&nbsp;
   <div padding style="height: 350px;background-color: rgba(0, 0, 0, 0);" id="map_canvas2"></div>
   END Geolocation-->
-  <!-- FOTO -->
+  
   <ion-item>
     <ion-label floating>Keterangan Lokasi <br><i>*misal: RT/RW/Dusun</i></ion-label>
     <ion-input type="text" [(ngModel)]="lokasi"></ion-input>
   </ion-item>
+
+  <!-- FOTO -->
+  <ion-title style="text-align: center ; margin-top: 20px">Foto</ion-title>
+
   <ion-item>
-    Foto
+
+    <ion-row>
+      <ion-col>
+      <button ion-button full style="text-transform: none ; text-align: center" (click)="takeFile()">
+        <ion-icon name="images" style="zoom:1.6 ; padding-right: 5px"></ion-icon>Dari Album
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button full style="text-transform: none ; text-align: center" (click)="takePhoto()">
+        <ion-icon name="camera" style="zoom:1.6 ; padding-right: 5px" ></ion-icon>Ambil Foto
+      </button>
+    </ion-col>
+    </ion-row>
+
     <ion-slides pager>
       <ion-slide *ngFor="let photo of photos; let id = index">
         <ion-toolbar>
@@ -115,6 +132,7 @@
     <ion-textarea rows="5" cols="5" [(ngModel)]="deskripsi"></ion-textarea>
   </ion-item>
 
+  <!-- Proposal -->
   <ion-title style="text-align: center ; margin-top: 20px">Proposal</ion-title>
 
   <ion-item>
@@ -122,19 +140,16 @@
     <ion-row>
       <ion-col>
       <button ion-button full style="text-transform: none ; text-align: center" (click)="takeFileProposal()">
-        <ion-icon name="ios-attach-outline" style="zoom:1.6 ; padding-right: 5px"></ion-icon>Upload File
+        <ion-icon name="images" style="zoom:1.6 ; padding-right: 5px"></ion-icon>Dari Album
       </button>
     </ion-col>
     <ion-col>
       <button ion-button full style="text-transform: none ; text-align: center" (click)="takePhotoProposal()">
-        <ion-icon name="ios-camera-outline" style="zoom:1.6 ; padding-right: 5px" ></ion-icon>Foto Doc
+        <ion-icon name="camera" style="zoom:1.6 ; padding-right: 5px" ></ion-icon>Ambil Foto
       </button>
     </ion-col>
     </ion-row>
     
-    
-    <h6><i>*Format File (.pdf,doc,jpg,png)</i></h6>
-
     <ion-slides pager>
       <ion-slide *ngFor="let prop of files; let id = index">
         <ion-toolbar>
@@ -161,10 +176,10 @@
       </button>
     </ion-buttons>
 
-    <ion-buttons>
+    <!--<ion-buttons>
       <button ion-fab (click)="takePhoto()">
         <ion-icon name="ios-camera-outline" style="zoom:1.6" ></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons>-->
   </ion-fab>
 </ion-content>
