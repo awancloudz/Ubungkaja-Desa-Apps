@@ -77,7 +77,7 @@ export class UsulanDusunPage {
     //Ambil data ID dari storage
     this.storage.get('id_dusun').then((iddusun) => {
       //Tampilkan data dari server
-      this.usulanservice.tampilkanusulan().subscribe(
+      this.usulanservice.tampilkanusulan(iddusun).subscribe(
         //Jika data sudah berhasil di load
         (data:UsulanDusunArray[])=>{
           this.items=data;

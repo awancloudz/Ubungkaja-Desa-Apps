@@ -19,7 +19,7 @@
 
     <ion-list>
       <div *ngFor="let item of items">
-      <button ion-item *ngIf="item.warga.id_dusun == dusun" (click)="tomboldetail(item)">
+        <button ion-item *ngFor="let item of items" (click)="tomboldetail(item)" (press)="tomboltahan(item)">
         {{ item.judul }}
         <ion-badge *ngIf="item.status == 1" color="pending" item-end>Direview</ion-badge>
         <ion-badge *ngIf="item.status == 2" color="primary" item-end>Diterima</ion-badge>

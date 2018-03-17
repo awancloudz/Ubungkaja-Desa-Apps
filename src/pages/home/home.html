@@ -9,12 +9,12 @@
 
 <ion-content padding>
   <ion-item><b>Usulan Warga Terbaru</b></ion-item>
-  <div *ngFor="let item2 of items2.koleksi; let i=index; let l=last;">
+  <div *ngFor="let item2 of items2; let i=index; let l=last;">
   <ion-card class="adv-map" *ngIf="l == true">
     <div style="position: relative">
       <ion-slides pager>
-        <div *ngFor="let photo of items2.koleksifoto">
-        <ion-slide *ngIf="item2.id == photo.id">
+        <div *ngFor="let photo of item2.fotousulan">
+        <ion-slide>
           <img style="height: 300px; width: 300px; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fotoupload/{{photo.foto}}" class="slide-image">
           <ion-toolbar></ion-toolbar>
         </ion-slide>
@@ -32,9 +32,9 @@
       <p>Jalan Dusun Kaja, I No.5</p>
     </ion-item>
     <ion-item actions>
-      <span ion-text item-start color="subtle">Diusulkan Oleh</span>
+      <span ion-text item-start color="subtle">Oleh</span>
       <span ion-text item-start color="secondary" class="item-bold">{{ item2.warga.nama }}</span>
-      <button ion-button color="secondary" clear item-end icon-start>
+      <button ion-button color="secondary" clear item-end icon-start (click)="tomboldetail(item2)">
         Detail &nbsp;
         <ion-icon name='ios-arrow-forward'></ion-icon>
       </button>

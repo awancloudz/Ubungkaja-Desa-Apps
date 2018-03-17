@@ -26,9 +26,9 @@ export class HomeserviceProvider {
   constructor(public _http: Http) {
   }
     //Tampilkan usulan
-    tampilkanusulanbaru(iddesa)
+    tampilkanusulanbaru()
     {
-     return this._http.get(this.url2+"/"+iddesa)
+     return this._http.get(this.url2)
      .map((response:Response)=>response.json());
     }
   //Cek + Tambah perangkat

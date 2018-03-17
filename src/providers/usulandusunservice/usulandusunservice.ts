@@ -25,9 +25,9 @@ export class UsulandusunserviceProvider {
   }
 
   //Tampilkan usulan
-  tampilkanusulan()
+  tampilkanusulan(iddusun)
   {
-   return this._http.get(this.url)
+   return this._http.get(this.url+"/"+iddusun)
    .map((response:Response)=>response.json());
   }
   

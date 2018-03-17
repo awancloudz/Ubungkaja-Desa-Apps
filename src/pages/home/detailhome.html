@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar color="primary">
+  
+      <ion-title style="margin-left: -12px">Detail Usulan</ion-title>
+  
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <h3>{{ item.judul }}</h3>
+    <p><b>Tanggal : </b>{{ item.tanggal }}</p>
+    <p><b>Kategori :</b> {{ item.kategori.namakategori }}</p>
+    <p><b>Lokasi</b></p>
+    <div style="height: 50%;background-color: rgba(0, 0, 0, 0);" id="map_canvas"></div>
+    <p><b>Detail Lokasi : </b> {{ item.lokasi }}</p>
+    <p><b>Foto</b></p>
+    <ion-slides pager>
+      <ion-slide *ngFor="let photo of item.fotousulan">
+        <img style="height: 70vh; width: auto; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fotoupload/{{photo.foto}}" class="slide-image">
+      </ion-slide>
+    </ion-slides>
+    <p><b>Volume : </b> {{ item.volume }}</p>
+    <p><b>Satuan : </b> {{ item.satuan }}</p>
+    <p>Penerima Manfaat</p>
+    <p><b>Laki-Laki : </b> {{ item.pria }}</p>
+    <p><b>Wanita : </b> {{ item.wanita }}</p>
+    <p><b>Rumah Tangga Miskin : </b> {{ item.rtm }}</p>
+    <p><b>Detail Usulan</b> </p>
+    <p>{{ item.deskripsi }}</p>  
+    <p><b>Proposal</b></p>
+    <ion-slides pager>
+      <ion-slide *ngFor="let photo2 of item.proposalusulan">
+        <img style="height: 70vh; width: auto; margin: auto; display: block;" src="http://forkomperbekelbali.com/desa/public/fileupload/{{photo2.file}}" class="slide-image">
+      </ion-slide>
+    </ion-slides>
+  </ion-content>
